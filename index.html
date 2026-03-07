@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>النضال نيوز | Alnidal News</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --main: #e11d48; --bg: #f8fafc; --text: #1e293b; }
+        body { background: var(--bg); color: var(--text); font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; }
+        
+        .navbar { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--main); text-decoration: none; }
+        .update-time { font-size: 12px; color: #64748b; }
+
+        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&q=80&w=1000'); background-size: cover; background-position: center; color: white; padding: 60px 5%; text-align: center; margin-bottom: 40px; }
+        .hero h1 { font-size: 36px; margin: 0; }
+
+        .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; padding: 0 5% 50px 5%; max-width: 1200px; margin: 0 auto; }
+        
+        .news-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; display: flex; flex-direction: column; }
+        .news-card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        
+        .news-img { height: 200px; background-size: cover; background-position: center; }
+        .news-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .news-title { font-size: 18px; margin: 0 0 12px 0; line-height: 1.5; color: #0f172a; }
+        .news-desc { font-size: 14px; color: #475569; margin-bottom: 20px; line-height: 1.6; flex-grow: 1; }
+        
+        .read-more { display: inline-block; background: var(--main); color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; font-size: 14px; text-align: center; transition: 0.2s; }
+        .read-more:hover { opacity: 0.9; }
+
+        footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" class="logo">النضال نيوز 📰</a>
+        <div class="update-time">آخر تحديث: 2026-03-07 | 07:41 AM</div>
+    </div>
+
+    <div class="hero">
+        <h1>أخبار العالم بين يديك</h1>
+        <p>تغطية شاملة ومباشرة من قلب الحدث</p>
+    </div>
+
+    <div class="container">
+        
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">هجمات تستهدف دولا خليجية ووزير الدفاع السعودي يحذر طهران</h3>
+                    <p class="news-desc">شهدت منطقة الخليج موجة واسعة من الهجمات بالصواريخ الباليستية والطائرات المسيرة، استهدفت منشآت حيوية وقواعد عسكرية في الس...</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d9%87%d8%ac%d9%85%d8%a7%d8%aa-%d8%aa%d8%b3%d8%aa%d9%87%d8%af%d9%81-%d8%af%d9%88%d9%84%d8%a7-%d8%ae%d9%84%d9%8a%d8%ac%d9%8a%d8%a9-%d9%88%d9%88%d8%b2%d9%8a%d8%b1-%d8%a7%d9%84%d8%af%d9%81%d8%a7%d8%b9?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">واشنطن تتخطى الكونغرس وتقر صفقة ذخائر لإسرائيل بـ151 مليون دولار</h3>
+                    <p class="news-desc">وافقت واشنطن على بيع ذخائر عسكرية لإسرائيل بقيمة 151.8 مليون دولار عبر تفعيل صلاحيات الطوارئ لتجاوز مراجعة الكونغرس....</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d9%88%d8%a7%d8%b4%d9%86%d8%b7%d9%86-%d8%aa%d8%aa%d8%ae%d8%b7%d9%89-%d8%a7%d9%84%d9%83%d9%88%d9%86%d8%ba%d8%b1%d8%b3-%d9%88%d8%aa%d9%82%d8%b1-%d8%b5%d9%81%d9%82%d8%a9-%d8%b0%d8%ae%d8%a7%d8%a6%d8%b1?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">أكسيوس: الأكراد العراقيون قرروا البقاء على الحياد وهذه دوافعهم</h3>
+                    <p class="news-desc">يرى تقرير لموقع &quot;أكسيوس&quot; أن إقليم كردستان العراق يجد نفسه حاليا في مواجهة &quot;كماشة&quot; ثلاثية الأبعاد، في...</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d8%a3%d9%83%d8%b3%d9%8a%d9%88%d8%b3-%d8%a7%d9%84%d8%a3%d9%83%d8%b1%d8%a7%d8%af-%d8%a7%d9%84%d8%b9%d8%b1%d8%a7%d9%82%d9%8a%d9%88%d9%86-%d9%82%d8%b1%d8%b1%d9%88%d8%a7?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">البيت الأبيض يسعى لاتخاذ إجراءات أكثر جرأة بشأن أسعار الطاقة جراء الحرب</h3>
+                    <p class="news-desc">نقلت رويترز عن مصدرين مطلعين قولهما إن البيت الأبيض يطلب من الوكالات الاتحادية تكثيف الجهود لمعالجة ارتفاع أسعار الطاقة ...</p>
+                    <a href="https://www.aljazeera.net/ebusiness/2026/3/7/%d8%a7%d9%84%d8%a8%d9%8a%d8%aa-%d8%a7%d9%84%d8%a3%d8%a8%d9%8a%d8%b6-%d8%a7%d8%aa%d8%ae%d8%a7%d8%b0-%d8%a5%d8%ac%d8%b1%d8%a7%d8%a1%d8%a7%d8%aa-%d8%a3%d8%b3%d8%b9%d8%a7%d8%b1-%d8%b7%d8%a7%d9%82%d8%a9?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">مسؤولون أوروبيون وقادة من الشرق الأوسط يناقشون تطورات الحرب بالمنطقة</h3>
+                    <p class="news-desc">يعقد رئيس المجلس الأوروبي ورئيسة المفوضية الأوروبية اجتماعا عبر الفيديو مع قادة من الشرق الأوسط، الاثنين المقبل، لمناقشة...</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d9%85%d8%ad%d8%a7%d8%af%d8%ab%d8%a7%d8%aa-%d8%a8%d9%8a%d9%86-%d9%85%d8%b3%d8%a4%d9%88%d9%84%d9%8a%d9%86-%d8%a8%d8%a7%d9%84%d8%a7%d8%aa%d8%ad%d8%a7%d8%af?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">محلل أمريكي: هذا ما يريده ترمب من إرسال قوات برية لإيران</h3>
+                    <p class="news-desc">قناة &quot;إن بي سي نيوز&quot; نقلت عن مصادر أن الرئيس الأمريكي ناقش فكرة نشر قوات برية مع مساعدين ومسؤولين جمهوريين، وه...</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d9%85%d8%ad%d9%84%d9%84-%d8%a3%d9%85%d8%b1%d9%8a%d9%83%d9%8a-%d9%87%d8%b0%d8%a7-%d9%85%d8%a7-%d9%8a%d8%b1%d9%8a%d8%af%d9%87-%d8%aa%d8%b1%d9%85%d8%a8-%d9%85%d9%86-%d8%a5%d8%b1%d8%b3%d8%a7%d9%84?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">من تبريز إلى طهران.. صور فضائية تكشف حجم الضربات الأمريكية الإسرائيلية</h3>
+                    <p class="news-desc">تكشف صور أقمار صناعية أضرارا واسعة في قاعدة تبريز الصاروخية ومجمع بارشين العسكري، ومقر قيادة قوى الأمن الداخلي في طهران،...</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d9%85%d9%86-%d8%aa%d8%a8%d8%b1%d9%8a%d8%b2-%d8%a5%d9%84%d9%89-%d8%b7%d9%87%d8%b1%d8%a7%d9%86-%d8%b5%d9%88%d8%b1-%d9%81%d8%b6%d8%a7%d8%a6%d9%8a%d8%a9-%d8%aa%d9%83%d8%b4%d9%81-%d8%ad%d8%ac%d9%85?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">البنتاغون يقلّل من أهمية تقارير عن تعاون استخباري روسي مع إيران</h3>
+                    <p class="news-desc">بعد انتشار تقارير تتحدث عن تزويد روسيا إيران بمعلومات استخباراتية عن مواقع عسكرية أمريكية في الشرق الأوسط، قلل مسؤولون أ...</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d8%a7%d9%84%d8%a8%d9%86%d8%aa%d8%a7%d8%ba%d9%88%d9%86-%d9%8a%d9%82%d9%84%d9%84-%d9%85%d9%86-%d8%a3%d9%87%d9%85%d9%8a%d8%a9-%d8%aa%d9%82%d8%a7%d8%b1%d9%8a%d8%b1-%d8%b9%d9%86?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">لقد ضلّ طريقه.. ترمب "يطرد" كارلسون من "ماغا" بسبب إيران</h3>
+                    <p class="news-desc">قالت صحيفة إندبندنت إن الإعلامي المحافظ تاكر كارلسون انتقد بشدة قرار مهاجمة إيران، ووصفه بأنه &quot;مقزز وشرير للغاية&qu...</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d9%84%d9%82%d8%af-%d8%b6%d9%84-%d8%b7%d8%b1%d9%8a%d9%82%d9%87-%d8%aa%d8%b1%d9%85%d8%a8-%d9%8a%d8%b7%d8%b1%d8%af-%d9%83%d8%a7%d8%b1%d9%84%d8%b3%d9%88%d9%86-%d9%85%d9%86?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">كيف يتم استخدام الصورة كسلاح في الحرب الحالية؟</h3>
+                    <p class="news-desc">يقول الدكتور خالد العزي إن إبعاد الصورة في هذه الحرب والتلاعب الكبير الذي تتعرض له &quot;يحمل كثيرا من المخاطر&quot;، لأ...</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d9%83%d9%8a%d9%81-%d9%8a%d8%aa%d9%85-%d8%a7%d8%b3%d8%aa%d8%ae%d8%af%d8%a7%d9%85-%d8%a7%d9%84%d8%b5%d9%88%d8%b1%d8%a9-%d9%83%d8%b3%d9%84%d8%a7%d8%ad-%d9%81%d9%8a-%d8%a7%d9%84%d8%ad%d8%b1%d8%a8?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">ضمن اتفاقية الدفاع المشترك.. السعودية وباكستان تبحثان اعتداءات إيران</h3>
+                    <p class="news-desc">التقى وزير الدفاع السعودي خالد بن سلمان قائد الجيش الباكستاني عاصم منير، وبحث معه &quot;الاعتداءات الإيرانية على المملكة...</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d8%a7%d9%84%d8%b3%d8%b9%d9%88%d8%af%d9%8a%d8%a9-%d9%88%d8%a8%d8%a7%d9%83%d8%b3%d8%aa%d8%a7%d9%86-%d9%8a%d8%a8%d8%ad%d8%ab%d8%a7%d9%86-%d8%a7%d9%84%d8%a7%d8%b9%d8%aa%d8%af%d8%a7%d8%a1%d8%a7%d8%aa?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">ترمب: شركات الدفاع الأمريكية ستزيد إنتاج الذخائر الموجَّهة 4 أضعاف</h3>
+                    <p class="news-desc">في إطار تعزيز المخزونات العسكرية بعد استنزافها خلال العمليات الأخيرة والحرب مع إيران، أعلن الرئيس الأمريكي أن كبريات شرك...</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d8%aa%d8%b1%d9%85%d8%a8-%d8%b4%d8%b1%d9%83%d8%a7%d8%aa-%d8%a7%d9%84%d8%af%d9%81%d8%a7%d8%b9-%d8%a7%d9%84%d8%a3%d9%85%d8%b1%d9%8a%d9%83%d9%8a%d8%a9-%d8%b3%d8%aa%d8%b2%d9%8a%d8%af?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">وهْم شرق أوسط جديد.. الحرب لن تعيد تشكيل المنطقة كما تريد واشنطن</h3>
+                    <p class="news-desc">ذهب الرئيس الأمريكي دونالد ترمب إلى الحرب بدلا من الدبلوماسية بناء على تصور متفائل بأن إضعاف القيادة الإيرانية سوف يؤمّن...</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d9%88%d9%87%d9%85-%d8%b4%d8%b1%d9%82-%d8%a3%d9%88%d8%b3%d8%b7-%d8%ac%d8%af%d9%8a%d8%af-%d8%a7%d9%84%d8%ad%d8%b1%d8%a8-%d9%84%d9%86-%d8%aa%d8%b9%d9%8a%d8%af-%d8%aa%d8%b4%d9%83%d9%8a%d9%84?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">اشتباكات بين حزب الله وقوة إسرائيلية جرى إنزالها في البقاع</h3>
+                    <p class="news-desc">ذكر مصدر عسكري لبناني للجزيرة أن مضادات أرضية استهدفت مروحيات إسرائيلية رُصدت في أجواء البقاع الشمالي قرب حدود سوريا، في...</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d8%a7%d9%84%d8%ac%d9%8a%d8%b4-%d8%a7%d9%84%d9%84%d8%a8%d9%86%d8%a7%d9%86%d9%8a-%d8%a7%d9%84%d8%a8%d9%82%d8%a7%d8%b9-%d8%a5%d8%b3%d8%b1%d8%a7%d8%a6%d9%8a%d9%84-%d8%ad%d8%b2%d8%a8?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img" style="background-image: url('https://via.placeholder.com/600x400?text=Alnidal+News')"></div>
+                <div class="news-body">
+                    <h3 class="news-title">واشنطن بوست: اندلاع حرب أهلية بإيران ليس في مصلحة الولايات المتحدة</h3>
+                    <p class="news-desc">انتقد الكاتب فريد زكريا الطريقة التي تدار بها الإستراتيجية الأميركية تجاه إيران، وحذر من أن انهيار الدولة الإيرانية وظهو...</p>
+                    <a href="https://www.aljazeera.net/news/2026/3/7/%d9%88%d8%a7%d8%b4%d9%86%d8%b7%d9%86-%d8%a8%d9%88%d8%b3%d8%aa-%d8%a7%d9%86%d8%af%d9%84%d8%a7%d8%b9-%d8%ad%d8%b1%d8%a8-%d8%a3%d9%87%d9%84%d9%8a%d8%a9-%d9%81%d9%8a-%d8%a5%d9%8a%d8%b1%d8%a7%d9%86?traffic_source=rss" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
+                </div>
+            </div>
+    </div>
+
+    <footer>
+        <p>النضال نيوز &copy; 2026</p>
+        <p style="font-size: 12px; color: #94a3b8;">جميع الحقوق محفوظة - مصدر الأخبار: الجزيرة نت</p>
+    </footer>
+</body>
+</html>
