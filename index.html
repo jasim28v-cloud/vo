@@ -3,485 +3,479 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الحدث 24 - Alhadath 24</title>
+    <title>الحدث 24 - أخبار الساعة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #003366; --accent: #d32f2f; --bg: #f4f4f4; }
         body { background: var(--bg); font-family: 'Cairo', sans-serif; margin: 0; padding-top: 110px; }
         
-        /* تصميم الهيدر (فخامة كووورة) */
         header { background: #fff; padding: 12px 6%; position: fixed; top: 0; width: 100%; z-index: 2000; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--primary); box-sizing: border-box; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
+        
+        .logo-area { display: flex; align-items: center; gap: 10px; }
         .logo { font-size: 26px; font-weight: 900; color: var(--primary); text-decoration: none; }
         .logo span { color: var(--accent); }
         
-        /* شريط عاجل السفلي (ستايل القنوات العالمية) */
+        /* الجرس المتحرك */
+        .bell-icon { font-size: 24px; cursor: pointer; animation: ring 2s infinite; position: relative; }
+        @keyframes ring {
+            0% { transform: rotate(0); }
+            10% { transform: rotate(15deg); }
+            20% { transform: rotate(-15deg); }
+            30% { transform: rotate(10deg); }
+            40% { transform: rotate(-10deg); }
+            50% { transform: rotate(0); }
+            100% { transform: rotate(0); }
+        }
+        .bell-dot { position: absolute; top: 0; right: 0; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; border: 2px solid #fff; }
+
         .ticker-bar { background: #fff; border-bottom: 1px solid #ddd; position: fixed; top: 65px; width: 100%; height: 40px; display: flex; align-items: center; z-index: 1500; overflow: hidden; }
-        .ticker-label { background: var(--accent); color: #fff; padding: 0 25px; height: 100%; display: flex; align-items: center; font-weight: 900; font-size: 14px; z-index: 10; box-shadow: 5px 0 10px rgba(0,0,0,0.1); }
+        .ticker-label { background: var(--accent); color: #fff; padding: 0 20px; height: 100%; display: flex; align-items: center; font-weight: 900; font-size: 14px; z-index: 10; }
         .ticker-text-move { white-space: nowrap; animation: scroll 60s linear infinite; color: #444; font-size: 14px; font-weight: 700; }
         @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
 
-        /* حاوية الأخبار (Grid) */
         .main-grid { max-width: 1200px; margin: 20px auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 15px; padding: 0 15px; }
-        
         .news-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 4px; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; }
         .news-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        
         .img-wrapper { position: relative; height: 190px; overflow: hidden; }
         .img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .news-card:hover .img-wrapper img { transform: scale(1.08); }
         .label { position: absolute; top: 10px; right: 10px; background: var(--accent); color: #fff; padding: 3px 12px; font-size: 11px; font-weight: bold; border-radius: 2px; }
-        
         .card-body { padding: 15px; flex-grow: 1; }
-        .title { font-size: 17px; font-weight: 700; color: #222; margin: 0; line-height: 1.6; height: 55px; overflow: hidden; }
+        .title { font-size: 17px; font-weight: 700; color: #222; margin: 0; line-height: 1.6; }
         .card-meta { font-size: 11px; color: #888; margin-top: 15px; border-top: 1px solid #f9f9f9; padding-top: 10px; }
-        
         .card-footer { background: #fcfcfc; padding: 10px 15px; border-top: 1px solid #eee; }
         .details-btn { text-decoration: none; color: var(--primary); font-size: 12px; font-weight: bold; }
-
-        /* ستايل الإعلان الفخم */
         .ad-special { background: #fffdf2; border: 1px solid #ffe082; }
-        .ad-container { padding: 30px 20px; text-align: center; }
-        .ad-tag { color: #f57c00; font-weight: 900; font-size: 12px; margin-bottom: 10px; }
-        .ad-button-f { background: var(--primary); color: #fff; padding: 10px 30px; border-radius: 4px; display: inline-block; margin-top: 15px; font-weight: 900; }
-        
+        .ad-container { padding: 25px; text-align: center; }
+        .ad-tag { color: #f57c00; font-weight: 900; font-size: 12px; margin-bottom: 5px; }
+        .ad-button-f { background: var(--primary); color: #fff; padding: 8px 25px; border-radius: 4px; display: inline-block; margin-top: 10px; font-weight: 900; }
         .main-link { text-decoration: none; color: inherit; }
-
-        @media (max-width: 600px) { 
-            .main-grid { grid-template-columns: 1fr; } 
-            header { padding: 10px 20px; }
-            body { padding-top: 100px; }
-        }
+        @media (max-width: 600px) { .main-grid { grid-template-columns: 1fr; } header { padding: 10px 15px; } }
     </style>
 </head>
 <body>
     <header>
-        <a href="#" class="logo">الحدث <span>24</span> 📡</a>
-        <div style="font-size: 11px; background: #f0f0f0; padding: 5px 10px; border-radius: 4px; color: #555;">2026-03-07 | 11:42 AM</div>
+        <div class="logo-area">
+            <a href="#" class="logo">الحدث <span>24</span></a>
+            <div class="bell-icon">🔔<div class="bell-dot"></div></div>
+        </div>
+        <div style="font-size: 11px; color: #555;">11:50 AM</div>
     </header>
-
     <div class="ticker-bar">
         <div class="ticker-label">عاجل</div>
-        <div class="ticker-text-move">لحظة بلحظة.. الحرب الأمريكية-الإسرائيلية على إيران بيومها الثامن: تصعيد متواصل يهز الشرق الأوسط • لحظة بلحظة.. غارات إسرائيلية متواصلة على لبنان وحزب الله يلتحم ناريا مع قوات متسللة في البقاع • الولايات المتحدة تعلن نيتها السيطرة الكاملة على احتياطيات النفط الإيرانية • كاتس يهدد لبنان ورئيسه: تحركوا قبل أن نرتكب المزيد.. وما علاقة نصرالله؟ • الجيش الإسرائيلي يصدر بيانا بشأن عملية البحث عن الطيار رون أراد في لبنان • طهران: احترامنا لسيادة الجيران لا يعني التخلي عن الرد على المعتدي • أذربيجان: إحباط عدة مؤامرات إيرانية منها خطة لاستهداف خط أنابيب رئيسي • رد فعل الوليد بن طلال بعد اكتساح الهلال للنجمة (فيديو) • تحليل: ترامب "أخطأ في حساباته" ويواجه المزيد من المخاطر والتحديات بعد أسبوع من الحرب على إيران • أهالي الجنوب السوري لـ"RT": منطقتنا باتت ساحة مواجهة مفتوحة • الهند تسمح لسفينة حربية إيرانية بالرسو في ميناء كوتشي "كبادرة إنسانية" • الحرس الثوري الإيراني يعلن شن هجوم على قاعدة الظفرة الجوية في الإمارات</div>
+        <div class="ticker-text-move">لحظة بلحظة.. الحرب الأمريكية-الإسرائيلية على إيران بيومها الثامن: تصعيد متواصل يهز الشرق الأوسط • لحظة بلحظة.. غارات إسرائيلية متواصلة على لبنان وحزب الله يلتحم ناريا مع قوات متسللة في البقاع • ترامب: إيران استسلمت لجيرانها في الشرق الأوسط • ترتيب الدوري الإسباني بعد فوز ريال مدريد على سيلتا فيغو • الجيش اللبناني يعلن مقتل 3 عسكريين ويصدر بيانا حول الإنزال الإسرائيلي في النبي شيت • الولايات المتحدة تعلن نيتها السيطرة الكاملة على احتياطيات النفط الإيرانية • كاتس يهدد لبنان ورئيسه: تحركوا قبل أن نرتكب المزيد.. وما علاقة نصرالله؟ • الجيش الإسرائيلي يصدر بيانا بشأن عملية البحث عن الطيار رون أراد في لبنان • طهران: احترامنا لسيادة الجيران لا يعني التخلي عن الرد على المعتدي • أذربيجان: إحباط عدة مؤامرات إيرانية منها خطة لاستهداف خط أنابيب رئيسي • رد فعل الوليد بن طلال بعد اكتساح الهلال للنجمة (فيديو) • تحليل: ترامب "أخطأ في حساباته" ويواجه المزيد من المخاطر والتحديات بعد أسبوع من الحرب على إيران</div>
     </div>
-
     <div class="main-grid">
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">لحظة بلحظة.. الحرب الأمريكية-الإسرائيلية على إيران بيومها الثامن: تصعيد متواصل يهز الشرق الأوسط</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764773-%D9%84%D8%AD%D8%B8%D8%A9-%D8%A8%D9%84%D8%AD%D8%B8%D8%A9-%D8%A7%D9%84%D8%AD%D8%B1%D8%A8-%D8%A7%D9%84%D8%A3%D9%85%D8%B1%D9%8A%D9%83%D9%8A%D8%A9-%D8%A7%D9%84%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86-%D8%A8%D9%8A%D9%88%D9%85%D9%87%D8%A7-%D8%A7%D9%84%D8%AB%D8%A7%D9%85%D9%86-%D8%AA%D8%B5%D8%B9%D9%8A%D8%AF-%D9%85%D8%AA%D9%88%D8%A7%D8%B5%D9%84-%D9%8A%D9%87%D8%B2-%D8%A7%D9%84%D8%B4%D8%B1%D9%82-%D8%A7%D9%84%D8%A3%D9%88%D8%B3%D8%B7/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/world/1764773-%D9%84%D8%AD%D8%B8%D8%A9-%D8%A8%D9%84%D8%AD%D8%B8%D8%A9-%D8%A7%D9%84%D8%AD%D8%B1%D8%A8-%D8%A7%D9%84%D8%A3%D9%85%D8%B1%D9%8A%D9%83%D9%8A%D8%A9-%D8%A7%D9%84%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86-%D8%A8%D9%8A%D9%88%D9%85%D9%87%D8%A7-%D8%A7%D9%84%D8%AB%D8%A7%D9%85%D9%86-%D8%AA%D8%B5%D8%B9%D9%8A%D8%AF-%D9%85%D8%AA%D9%88%D8%A7%D8%B5%D9%84-%D9%8A%D9%87%D8%B2-%D8%A7%D9%84%D8%B4%D8%B1%D9%82-%D8%A7%D9%84%D8%A3%D9%88%D8%B3%D8%B7/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">لحظة بلحظة.. غارات إسرائيلية متواصلة على لبنان وحزب الله يلتحم ناريا مع قوات متسللة في البقاع</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/middle_east/1764776-%D9%84%D8%AD%D8%B8%D8%A9-%D8%A8%D9%84%D8%AD%D8%B8%D8%A9-%D8%BA%D8%A7%D8%B1%D8%A7%D8%AA-%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A%D8%A9-%D9%85%D8%AA%D9%88%D8%A7%D8%B5%D9%84%D8%A9-%D8%B9%D9%84%D9%89-%D9%84%D8%A8%D9%86%D8%A7%D9%86-%D9%88%D8%AD%D8%B2%D8%A8-%D8%A7%D9%84%D9%84%D9%87-%D9%8A%D9%84%D8%AA%D8%AD%D9%85-%D9%86%D8%A7%D8%B1%D9%8A%D8%A7-%D9%85%D8%B9-%D9%82%D9%88%D8%A7%D8%AA-%D9%85%D8%AA%D8%B3%D9%84%D9%84%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D9%82%D8%A7%D8%B9/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/middle_east/1764776-%D9%84%D8%AD%D8%B8%D8%A9-%D8%A8%D9%84%D8%AD%D8%B8%D8%A9-%D8%BA%D8%A7%D8%B1%D8%A7%D8%AA-%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A%D8%A9-%D9%85%D8%AA%D9%88%D8%A7%D8%B5%D9%84%D8%A9-%D8%B9%D9%84%D9%89-%D9%84%D8%A8%D9%86%D8%A7%D9%86-%D9%88%D8%AD%D8%B2%D8%A8-%D8%A7%D9%84%D9%84%D9%87-%D9%8A%D9%84%D8%AA%D8%AD%D9%85-%D9%86%D8%A7%D8%B1%D9%8A%D8%A7-%D9%85%D8%B9-%D9%82%D9%88%D8%A7%D8%AA-%D9%85%D8%AA%D8%B3%D9%84%D9%84%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D9%82%D8%A7%D8%B9/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0aa8423604267c7bbd58.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0bac4c59b70c7f045559.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="title">ترامب: إيران استسلمت لجيرانها في الشرق الأوسط</h2>
+                        <div class="card-meta">📅 07/03/2026</div>
+                    </div>
+                </a>
+                <div class="card-footer">
+                    <a href="https://arabic.rt.com/world/1764860-%D8%AA%D8%B1%D8%A7%D9%85%D8%A8-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86-%D8%A7%D8%B3%D8%AA%D8%B3%D9%84%D9%85%D8%AA-%D9%84%D8%AC%D9%8A%D8%B1%D8%A7%D9%86%D9%87%D8%A7-%D9%81%D9%8A-%D8%A7%D9%84%D8%B4%D8%B1%D9%82-%D8%A7%D9%84%D8%A3%D9%88%D8%B3%D8%B7/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
+                    <div class="img-wrapper">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0eec423604267c7bbd5e.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="title">ترتيب الدوري الإسباني بعد فوز ريال مدريد على سيلتا فيغو</h2>
+                        <div class="card-meta">📅 07/03/2026</div>
+                    </div>
+                </a>
+                <div class="card-footer">
+                    <a href="https://arabic.rt.com/sport/1764855-%D8%AA%D8%B1%D8%AA%D9%8A%D8%A8-%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%A5%D8%B3%D8%A8%D8%A7%D9%86%D9%8A-%D8%A8%D8%B9%D8%AF-%D9%81%D9%88%D8%B2-%D8%B1%D9%8A%D8%A7%D9%84-%D9%85%D8%AF%D8%B1%D9%8A%D8%AF-%D8%B9%D9%84%D9%89-%D8%B3%D9%8A%D9%84%D8%AA%D8%A7-%D9%81%D9%8A%D8%BA%D9%88/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
+                </div>
+            </div>
+                <div class="news-card ad-special">
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
+                        <div class="ad-container">
+                            <div class="ad-tag">تنبيه عاجل 🔔</div>
+                            <h3>حدث هام قيد المتابعة الآن.. اضغط للمشاهدة</h3>
+                            <div class="ad-button-f">شاهد الآن</div>
+                        </div>
+                    </a>
+                </div>
+            <div class="news-card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
+                    <div class="img-wrapper">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0de9423604289b6a3295.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="title">الجيش اللبناني يعلن مقتل 3 عسكريين ويصدر بيانا حول الإنزال الإسرائيلي في النبي شيت</h2>
+                        <div class="card-meta">📅 07/03/2026</div>
+                    </div>
+                </a>
+                <div class="card-footer">
+                    <a href="https://arabic.rt.com/middle_east/1764863-%D8%A7%D9%84%D8%AC%D9%8A%D8%B4-%D8%A7%D9%84%D9%84%D8%A8%D9%86%D8%A7%D9%86%D9%8A-%D9%8A%D8%B9%D9%84%D9%86-%D9%85%D9%82%D8%AA%D9%84-3-%D8%B9%D8%B3%D9%83%D8%B1%D9%8A%D9%8A%D9%86-%D9%88%D9%8A%D8%B5%D8%AF%D8%B1-%D8%A8%D9%8A%D8%A7%D9%86%D8%A7-%D8%AD%D9%88%D9%84-%D8%A7%D9%84%D8%A5%D9%86%D8%B2%D8%A7%D9%84-%D8%A7%D9%84%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A-%D9%81%D9%8A-%D8%A7%D9%84%D9%86%D8%A8%D9%8A-%D8%B4%D9%8A%D8%AA/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
+                    <div class="img-wrapper">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0aa8423604267c7bbd58.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">الولايات المتحدة تعلن نيتها السيطرة الكاملة على احتياطيات النفط الإيرانية</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764857-%D8%A7%D9%84%D9%88%D9%84%D8%A7%D9%8A%D8%A7%D8%AA-%D8%A7%D9%84%D9%85%D8%AA%D8%AD%D8%AF%D8%A9-%D8%AA%D8%B9%D9%84%D9%86-%D9%86%D9%8A%D8%AA%D9%87%D8%A7-%D8%A7%D9%84%D8%B3%D9%8A%D8%B7%D8%B1%D8%A9-%D8%A7%D9%84%D9%83%D8%A7%D9%85%D9%84%D8%A9-%D8%B9%D9%84%D9%89-%D8%A7%D8%AD%D8%AA%D9%8A%D8%A7%D8%B7%D9%8A%D8%A7%D8%AA-%D8%A7%D9%84%D9%86%D9%81%D8%B7-%D8%A7%D9%84%D8%A5%D9%8A%D8%B1%D8%A7%D9%86%D9%8A%D8%A9/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/world/1764857-%D8%A7%D9%84%D9%88%D9%84%D8%A7%D9%8A%D8%A7%D8%AA-%D8%A7%D9%84%D9%85%D8%AA%D8%AD%D8%AF%D8%A9-%D8%AA%D8%B9%D9%84%D9%86-%D9%86%D9%8A%D8%AA%D9%87%D8%A7-%D8%A7%D9%84%D8%B3%D9%8A%D8%B7%D8%B1%D8%A9-%D8%A7%D9%84%D9%83%D8%A7%D9%85%D9%84%D8%A9-%D8%B9%D9%84%D9%89-%D8%A7%D8%AD%D8%AA%D9%8A%D8%A7%D8%B7%D9%8A%D8%A7%D8%AA-%D8%A7%D9%84%D9%86%D9%81%D8%B7-%D8%A7%D9%84%D8%A5%D9%8A%D8%B1%D8%A7%D9%86%D9%8A%D8%A9/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0955423604284a71692d.png" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0955423604284a71692d.png" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">كاتس يهدد لبنان ورئيسه: تحركوا قبل أن نرتكب المزيد.. وما علاقة نصرالله؟</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/middle_east/1764858-%D9%83%D8%A7%D8%AA%D8%B3-%D9%8A%D9%87%D8%AF%D8%AF-%D9%84%D8%A8%D9%86%D8%A7%D9%86-%D9%88%D8%B1%D8%A6%D9%8A%D8%B3%D9%87-%D8%AA%D8%AD%D8%B1%D9%83%D9%88%D8%A7-%D9%82%D8%A8%D9%84-%D8%A3%D9%86-%D9%86%D8%B1%D8%AA%D9%83%D8%A8-%D8%A7%D9%84%D9%85%D8%B2%D9%8A%D8%AF-%D9%88%D9%85%D8%A7-%D8%B9%D9%84%D8%A7%D9%82%D8%A9-%D9%86%D8%B5%D8%B1%D8%A7%D9%84%D9%84%D9%87/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/middle_east/1764858-%D9%83%D8%A7%D8%AA%D8%B3-%D9%8A%D9%87%D8%AF%D8%AF-%D9%84%D8%A8%D9%86%D8%A7%D9%86-%D9%88%D8%B1%D8%A6%D9%8A%D8%B3%D9%87-%D8%AA%D8%AD%D8%B1%D9%83%D9%88%D8%A7-%D9%82%D8%A8%D9%84-%D8%A3%D9%86-%D9%86%D8%B1%D8%AA%D9%83%D8%A8-%D8%A7%D9%84%D9%85%D8%B2%D9%8A%D8%AF-%D9%88%D9%85%D8%A7-%D8%B9%D9%84%D8%A7%D9%82%D8%A9-%D9%86%D8%B5%D8%B1%D8%A7%D9%84%D9%84%D9%87/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
-                <div class="news-card ad-special">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
-                        <div class="ad-container">
-                            <div class="ad-tag">موصى به ⭐</div>
-                            <h3>بث مباشر وتغطية شاملة لأهم أحداث الساعة</h3>
-                            <p>اضغط هنا للمشاهدة والمتابعة اللحظية</p>
-                            <div class="ad-button-f">دخول الآن</div>
-                        </div>
-                    </a>
-                </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0553423604264b04723e.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0553423604264b04723e.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">الجيش الإسرائيلي يصدر بيانا بشأن عملية البحث عن الطيار رون أراد في لبنان</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/middle_east/1764849-%D8%A7%D9%84%D8%AC%D9%8A%D8%B4-%D8%A7%D9%84%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A-%D9%8A%D9%86%D9%81%D8%B0-%D8%B9%D9%85%D9%84%D9%8A%D8%A9-%D8%A8%D8%AD%D8%AB-%D8%B9%D9%86-%D8%A7%D9%84%D9%85%D9%84%D8%A7%D8%AD%D9%8A-%D8%A7%D9%84%D9%85%D9%81%D9%82%D9%88%D8%AF-%D8%B1%D9%88%D9%86-%D8%A3%D8%B1%D8%A7%D8%AF-%D9%81%D9%8A-%D9%84%D8%A8%D9%86%D8%A7%D9%86/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/middle_east/1764849-%D8%A7%D9%84%D8%AC%D9%8A%D8%B4-%D8%A7%D9%84%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A-%D9%8A%D9%86%D9%81%D8%B0-%D8%B9%D9%85%D9%84%D9%8A%D8%A9-%D8%A8%D8%AD%D8%AB-%D8%B9%D9%86-%D8%A7%D9%84%D9%85%D9%84%D8%A7%D8%AD%D9%8A-%D8%A7%D9%84%D9%85%D9%81%D9%82%D9%88%D8%AF-%D8%B1%D9%88%D9%86-%D8%A3%D8%B1%D8%A7%D8%AF-%D9%81%D9%8A-%D9%84%D8%A8%D9%86%D8%A7%D9%86/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
+                <div class="news-card ad-special">
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
+                        <div class="ad-container">
+                            <div class="ad-tag">تنبيه عاجل 🔔</div>
+                            <h3>حدث هام قيد المتابعة الآن.. اضغط للمشاهدة</h3>
+                            <div class="ad-button-f">شاهد الآن</div>
+                        </div>
+                    </a>
+                </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac07f542360429533d0348.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac07f542360429533d0348.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">طهران: احترامنا لسيادة الجيران لا يعني التخلي عن الرد على المعتدي</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764854-%D8%B7%D9%87%D8%B1%D8%A7%D9%86-%D8%A7%D8%AD%D8%AA%D8%B1%D8%A7%D9%85%D9%86%D8%A7-%D9%84%D8%B3%D9%8A%D8%A7%D8%AF%D8%A9-%D8%A7%D9%84%D8%AC%D9%8A%D8%B1%D8%A7%D9%86-%D9%84%D8%A7-%D9%8A%D8%B9%D9%86%D9%8A-%D8%A7%D9%84%D8%AA%D8%AE%D9%84%D9%8A-%D8%B9%D9%86-%D8%A7%D9%84%D8%B1%D8%AF-%D8%B9%D9%84%D9%89-%D8%A7%D9%84%D9%85%D8%B9%D8%AA%D8%AF%D9%8A/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/world/1764854-%D8%B7%D9%87%D8%B1%D8%A7%D9%86-%D8%A7%D8%AD%D8%AA%D8%B1%D8%A7%D9%85%D9%86%D8%A7-%D9%84%D8%B3%D9%8A%D8%A7%D8%AF%D8%A9-%D8%A7%D9%84%D8%AC%D9%8A%D8%B1%D8%A7%D9%86-%D9%84%D8%A7-%D9%8A%D8%B9%D9%86%D9%8A-%D8%A7%D9%84%D8%AA%D8%AE%D9%84%D9%8A-%D8%B9%D9%86-%D8%A7%D9%84%D8%B1%D8%AF-%D8%B9%D9%84%D9%89-%D8%A7%D9%84%D9%85%D8%B9%D8%AA%D8%AF%D9%8A/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac042e4c59b70ca729a3d1.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac042e4c59b70ca729a3d1.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">أذربيجان: إحباط عدة مؤامرات إيرانية منها خطة لاستهداف خط أنابيب رئيسي</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764850-%D8%A3%D8%B0%D8%B1%D8%A8%D9%8A%D8%AC%D8%A7%D9%86-%D8%A5%D8%AD%D8%A8%D8%A7%D8%B7-%D8%B9%D8%AF%D8%A9-%D9%85%D8%A4%D8%A7%D9%85%D8%B1%D8%A7%D8%AA-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86%D9%8A%D8%A9-%D9%85%D9%86%D9%87%D8%A7-%D8%AE%D8%B7%D8%A9-%D9%84%D8%A7%D8%B3%D8%AA%D9%87%D8%AF%D8%A7%D9%81-%D8%AE%D8%B7-%D8%A3%D9%86%D8%A7%D8%A8%D9%8A%D8%A8-%D8%B1%D8%A6%D9%8A%D8%B3%D9%8A/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/world/1764850-%D8%A3%D8%B0%D8%B1%D8%A8%D9%8A%D8%AC%D8%A7%D9%86-%D8%A5%D8%AD%D8%A8%D8%A7%D8%B7-%D8%B9%D8%AF%D8%A9-%D9%85%D8%A4%D8%A7%D9%85%D8%B1%D8%A7%D8%AA-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86%D9%8A%D8%A9-%D9%85%D9%86%D9%87%D8%A7-%D8%AE%D8%B7%D8%A9-%D9%84%D8%A7%D8%B3%D8%AA%D9%87%D8%AF%D8%A7%D9%81-%D8%AE%D8%B7-%D8%A3%D9%86%D8%A7%D8%A8%D9%8A%D8%A8-%D8%B1%D8%A6%D9%8A%D8%B3%D9%8A/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac05dd4c59b7092f5d397d.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac05dd4c59b7092f5d397d.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">رد فعل الوليد بن طلال بعد اكتساح الهلال للنجمة (فيديو)</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/sport/1764852-%D8%B1%D8%AF-%D9%81%D8%B9%D9%84-%D8%A7%D9%84%D9%88%D9%84%D9%8A%D8%AF-%D8%A8%D9%86-%D8%B7%D9%84%D8%A7%D9%84-%D8%A8%D8%B9%D8%AF-%D8%A7%D9%83%D8%AA%D8%B3%D8%A7%D8%AD-%D8%A7%D9%84%D9%87%D9%84%D8%A7%D9%84-%D9%84%D9%84%D9%86%D8%AC%D9%85%D8%A9-%D9%81%D9%8A%D8%AF%D9%8A%D9%88/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/sport/1764852-%D8%B1%D8%AF-%D9%81%D8%B9%D9%84-%D8%A7%D9%84%D9%88%D9%84%D9%8A%D8%AF-%D8%A8%D9%86-%D8%B7%D9%84%D8%A7%D9%84-%D8%A8%D8%B9%D8%AF-%D8%A7%D9%83%D8%AA%D8%B3%D8%A7%D8%AD-%D8%A7%D9%84%D9%87%D9%84%D8%A7%D9%84-%D9%84%D9%84%D9%86%D8%AC%D9%85%D8%A9-%D9%81%D9%8A%D8%AF%D9%8A%D9%88/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
-                <div class="news-card ad-special">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
-                        <div class="ad-container">
-                            <div class="ad-tag">موصى به ⭐</div>
-                            <h3>بث مباشر وتغطية شاملة لأهم أحداث الساعة</h3>
-                            <p>اضغط هنا للمشاهدة والمتابعة اللحظية</p>
-                            <div class="ad-button-f">دخول الآن</div>
-                        </div>
-                    </a>
-                </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0321423604267c7bbd50.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0321423604267c7bbd50.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">تحليل: ترامب "أخطأ في حساباته" ويواجه المزيد من المخاطر والتحديات بعد أسبوع من الحرب على إيران</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764847-%D8%AA%D8%AD%D9%84%D9%8A%D9%84-%D8%AA%D8%B1%D8%A7%D9%85%D8%A8-%D8%A3%D8%AE%D8%B7%D8%A3-%D9%81%D9%8A-%D8%AD%D8%B3%D8%A7%D8%A8%D8%A7%D8%AA%D9%87-%D9%88%D9%8A%D9%88%D8%A7%D8%AC%D9%87-%D8%A7%D9%84%D9%85%D8%B2%D9%8A%D8%AF-%D9%85%D9%86-%D8%A7%D9%84%D9%85%D8%AE%D8%A7%D8%B7%D8%B1-%D9%88%D8%A7%D9%84%D8%AA%D8%AD%D8%AF%D9%8A%D8%A7%D8%AA-%D8%A8%D8%B9%D8%AF-%D8%A3%D8%B3%D8%A8%D9%88%D8%B9-%D9%85%D9%86-%D8%A7%D9%84%D8%AD%D8%B1%D8%A8-%D8%B9%D9%84%D9%89-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/world/1764847-%D8%AA%D8%AD%D9%84%D9%8A%D9%84-%D8%AA%D8%B1%D8%A7%D9%85%D8%A8-%D8%A3%D8%AE%D8%B7%D8%A3-%D9%81%D9%8A-%D8%AD%D8%B3%D8%A7%D8%A8%D8%A7%D8%AA%D9%87-%D9%88%D9%8A%D9%88%D8%A7%D8%AC%D9%87-%D8%A7%D9%84%D9%85%D8%B2%D9%8A%D8%AF-%D9%85%D9%86-%D8%A7%D9%84%D9%85%D8%AE%D8%A7%D8%B7%D8%B1-%D9%88%D8%A7%D9%84%D8%AA%D8%AD%D8%AF%D9%8A%D8%A7%D8%AA-%D8%A8%D8%B9%D8%AF-%D8%A3%D8%B3%D8%A8%D9%88%D8%B9-%D9%85%D9%86-%D8%A7%D9%84%D8%AD%D8%B1%D8%A8-%D8%B9%D9%84%D9%89-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
+                <div class="news-card ad-special">
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
+                        <div class="ad-container">
+                            <div class="ad-tag">تنبيه عاجل 🔔</div>
+                            <h3>حدث هام قيد المتابعة الآن.. اضغط للمشاهدة</h3>
+                            <div class="ad-button-f">شاهد الآن</div>
+                        </div>
+                    </a>
+                </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac01cc423604264b047234.png" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac01cc423604264b047234.png" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">أهالي الجنوب السوري لـ"RT": منطقتنا باتت ساحة مواجهة مفتوحة</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/middle_east/1764846-%D8%A3%D9%87%D8%A7%D9%84%D9%8A-%D8%A7%D9%84%D8%AC%D9%86%D9%88%D8%A8-%D8%A7%D9%84%D8%B3%D9%88%D8%B1%D9%8A-%D9%84%D9%80rt-%D9%85%D9%86%D8%B7%D9%82%D8%AA%D9%86%D8%A7-%D8%A8%D8%A7%D8%AA%D8%AA-%D8%B3%D8%A7%D8%AD%D8%A9-%D9%85%D9%88%D8%A7%D8%AC%D9%87%D8%A9-%D9%85%D9%81%D8%AA%D9%88%D8%AD%D8%A9/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/middle_east/1764846-%D8%A3%D9%87%D8%A7%D9%84%D9%8A-%D8%A7%D9%84%D8%AC%D9%86%D9%88%D8%A8-%D8%A7%D9%84%D8%B3%D9%88%D8%B1%D9%8A-%D9%84%D9%80rt-%D9%85%D9%86%D8%B7%D9%82%D8%AA%D9%86%D8%A7-%D8%A8%D8%A7%D8%AA%D8%AA-%D8%B3%D8%A7%D8%AD%D8%A9-%D9%85%D9%88%D8%A7%D8%AC%D9%87%D8%A9-%D9%85%D9%81%D8%AA%D9%88%D8%AD%D8%A9/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abff214c59b70c7f045553.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abff214c59b70c7f045553.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">الهند تسمح لسفينة حربية إيرانية بالرسو في ميناء كوتشي "كبادرة إنسانية"</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764843-%D8%A7%D9%84%D9%87%D9%86%D8%AF-%D8%AA%D8%B3%D9%85%D8%AD-%D9%84%D8%B3%D9%81%D9%8A%D9%86%D8%A9-%D8%AD%D8%B1%D8%A8%D9%8A%D8%A9-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86%D9%8A%D8%A9-%D8%A8%D8%A7%D9%84%D8%B1%D8%B3%D9%88-%D9%81%D9%8A-%D9%85%D9%8A%D9%86%D8%A7%D8%A1-%D9%83%D9%88%D8%AA%D8%B4%D9%8A-%D9%83%D8%A8%D8%A7%D8%AF%D8%B1%D8%A9-%D8%A5%D9%86%D8%B3%D8%A7%D9%86%D9%8A%D8%A9/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/world/1764843-%D8%A7%D9%84%D9%87%D9%86%D8%AF-%D8%AA%D8%B3%D9%85%D8%AD-%D9%84%D8%B3%D9%81%D9%8A%D9%86%D8%A9-%D8%AD%D8%B1%D8%A8%D9%8A%D8%A9-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86%D9%8A%D8%A9-%D8%A8%D8%A7%D9%84%D8%B1%D8%B3%D9%88-%D9%81%D9%8A-%D9%85%D9%8A%D9%86%D8%A7%D8%A1-%D9%83%D9%88%D8%AA%D8%B4%D9%8A-%D9%83%D8%A8%D8%A7%D8%AF%D8%B1%D8%A9-%D8%A5%D9%86%D8%B3%D8%A7%D9%86%D9%8A%D8%A9/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abfe174c59b70ca729a3cc.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abfe174c59b70ca729a3cc.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">الحرس الثوري الإيراني يعلن شن هجوم على قاعدة الظفرة الجوية في الإمارات</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764841-%D8%A7%D9%84%D8%AD%D8%B1%D8%B3-%D8%A7%D9%84%D8%AB%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%A5%D9%8A%D8%B1%D8%A7%D9%86%D9%8A-%D9%8A%D8%B9%D9%84%D9%86-%D8%B4%D9%86-%D9%87%D8%AC%D9%88%D9%85-%D8%B9%D9%84%D9%89-%D9%82%D8%A7%D8%B9%D8%AF%D8%A9-%D8%A7%D9%84%D8%B8%D9%81%D8%B1%D8%A9-%D8%A7%D9%84%D8%AC%D9%88%D9%8A%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%A5%D9%85%D8%A7%D8%B1%D8%A7%D8%AA/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/world/1764841-%D8%A7%D9%84%D8%AD%D8%B1%D8%B3-%D8%A7%D9%84%D8%AB%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%A5%D9%8A%D8%B1%D8%A7%D9%86%D9%8A-%D9%8A%D8%B9%D9%84%D9%86-%D8%B4%D9%86-%D9%87%D8%AC%D9%88%D9%85-%D8%B9%D9%84%D9%89-%D9%82%D8%A7%D8%B9%D8%AF%D8%A9-%D8%A7%D9%84%D8%B8%D9%81%D8%B1%D8%A9-%D8%A7%D9%84%D8%AC%D9%88%D9%8A%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%A5%D9%85%D8%A7%D8%B1%D8%A7%D8%AA/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
-                <div class="news-card ad-special">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
-                        <div class="ad-container">
-                            <div class="ad-tag">موصى به ⭐</div>
-                            <h3>بث مباشر وتغطية شاملة لأهم أحداث الساعة</h3>
-                            <p>اضغط هنا للمشاهدة والمتابعة اللحظية</p>
-                            <div class="ad-button-f">دخول الآن</div>
-                        </div>
-                    </a>
-                </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf819423604264b04722a.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf819423604264b04722a.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">بعد جدل ارتفاع أسعار تذاكر رحلات العودة من الخليج.. مصر للطيران  ترد على الشائعات</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/middle_east/1764837-%D8%A8%D8%B9%D8%AF-%D8%AC%D8%AF%D9%84-%D8%A7%D8%B1%D8%AA%D9%81%D8%A7%D8%B9-%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%B0%D8%A7%D9%83%D8%B1-%D8%B1%D8%AD%D9%84%D8%A7%D8%AA-%D8%A7%D9%84%D8%B9%D9%88%D8%AF%D8%A9-%D9%85%D9%86-%D8%A7%D9%84%D8%AE%D9%84%D9%8A%D8%AC-%D9%85%D8%B5%D8%B1-%D9%84%D9%84%D8%B7%D9%8A%D8%B1%D8%A7%D9%86-%D8%AA%D8%B1%D8%AF-%D8%B9%D9%84%D9%89-%D8%A7%D9%84%D8%B4%D8%A7%D8%A6%D8%B9%D8%A7%D8%AA/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/middle_east/1764837-%D8%A8%D8%B9%D8%AF-%D8%AC%D8%AF%D9%84-%D8%A7%D8%B1%D8%AA%D9%81%D8%A7%D8%B9-%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%B0%D8%A7%D9%83%D8%B1-%D8%B1%D8%AD%D9%84%D8%A7%D8%AA-%D8%A7%D9%84%D8%B9%D9%88%D8%AF%D8%A9-%D9%85%D9%86-%D8%A7%D9%84%D8%AE%D9%84%D9%8A%D8%AC-%D9%85%D8%B5%D8%B1-%D9%84%D9%84%D8%B7%D9%8A%D8%B1%D8%A7%D9%86-%D8%AA%D8%B1%D8%AF-%D8%B9%D9%84%D9%89-%D8%A7%D9%84%D8%B4%D8%A7%D8%A6%D8%B9%D8%A7%D8%AA/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
+                <div class="news-card ad-special">
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
+                        <div class="ad-container">
+                            <div class="ad-tag">تنبيه عاجل 🔔</div>
+                            <h3>حدث هام قيد المتابعة الآن.. اضغط للمشاهدة</h3>
+                            <div class="ad-button-f">شاهد الآن</div>
+                        </div>
+                    </a>
+                </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf9ff4236042874308802.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf9ff4236042874308802.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">الجيش الروسي يشن ضربة مكثفة على منشآت للصناعة العسكرية والطاقة في أوكرانيا</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764838-%D8%A7%D9%84%D8%AC%D9%8A%D8%B4-%D8%A7%D9%84%D8%B1%D9%88%D8%B3%D9%8A%D8%A9-%D9%8A%D8%B4%D9%86-%D8%B6%D8%B1%D8%A8%D8%A9-%D9%85%D9%83%D8%AB%D9%81%D8%A9-%D8%B9%D9%84%D9%89-%D9%85%D9%86%D8%B4%D8%A2%D8%AA-%D9%84%D9%84%D8%B5%D9%86%D8%A7%D8%B9%D8%A9-%D8%A7%D9%84%D8%B9%D8%B3%D9%83%D8%B1%D9%8A%D8%A9-%D9%88%D8%A7%D9%84%D9%83%D8%A7%D9%82%D8%A9-%D9%81%D9%8A-%D8%A3%D9%88%D9%83%D8%B1%D8%A7%D9%86%D9%8A%D8%A7/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/world/1764838-%D8%A7%D9%84%D8%AC%D9%8A%D8%B4-%D8%A7%D9%84%D8%B1%D9%88%D8%B3%D9%8A%D8%A9-%D9%8A%D8%B4%D9%86-%D8%B6%D8%B1%D8%A8%D8%A9-%D9%85%D9%83%D8%AB%D9%81%D8%A9-%D8%B9%D9%84%D9%89-%D9%85%D9%86%D8%B4%D8%A2%D8%AA-%D9%84%D9%84%D8%B5%D9%86%D8%A7%D8%B9%D8%A9-%D8%A7%D9%84%D8%B9%D8%B3%D9%83%D8%B1%D9%8A%D8%A9-%D9%88%D8%A7%D9%84%D9%83%D8%A7%D9%82%D8%A9-%D9%81%D9%8A-%D8%A3%D9%88%D9%83%D8%B1%D8%A7%D9%86%D9%8A%D8%A7/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abfc8e423604287430880a.png" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abfc8e423604287430880a.png" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">العراق يمدد إغلاق أجوائه لمدة 72 ساعة إضافية</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/middle_east/1764835-%D8%A7%D9%84%D8%B9%D8%B1%D8%A7%D9%82-%D9%8A%D9%85%D8%AF%D8%AF-%D8%A5%D8%BA%D9%84%D8%A7%D9%82-%D8%A7%D9%84%D8%A3%D8%AC%D9%88%D8%A7%D8%A1-%D8%A7%D9%84%D8%B9%D8%B1%D8%A7%D9%82%D9%8A%D8%A9-%D9%84%D9%85%D8%AF%D8%A9-72-%D8%B3%D8%A7%D8%B9%D8%A9-%D8%A5%D8%B6%D8%A7%D9%81%D9%8A%D8%A9/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/middle_east/1764835-%D8%A7%D9%84%D8%B9%D8%B1%D8%A7%D9%82-%D9%8A%D9%85%D8%AF%D8%AF-%D8%A5%D8%BA%D9%84%D8%A7%D9%82-%D8%A7%D9%84%D8%A3%D8%AC%D9%88%D8%A7%D8%A1-%D8%A7%D9%84%D8%B9%D8%B1%D8%A7%D9%82%D9%8A%D8%A9-%D9%84%D9%85%D8%AF%D8%A9-72-%D8%B3%D8%A7%D8%B9%D8%A9-%D8%A5%D8%B6%D8%A7%D9%81%D9%8A%D8%A9/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf2904c59b7056900a98b.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf2904c59b7056900a98b.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">تقرير عبري: مصر تهدد باريس بصفقة "غواصات الباركودا".. سيادة تكنولوجية كاملة أو التحول إلى بكين</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/middle_east/1764833-%D8%AA%D9%82%D8%B1%D9%8A%D8%B1-%D8%B9%D8%A8%D8%B1%D9%8A-%D9%85%D8%B5%D8%B1-%D8%AA%D9%87%D8%AF%D8%AF-%D8%A8%D8%A7%D8%B1%D9%8A%D8%B3-%D8%A8%D8%B5%D9%81%D9%82%D8%A9-%D8%BA%D9%88%D8%A7%D8%B5%D8%A7%D8%AA-%D8%A7%D9%84%D8%A8%D8%A7%D8%B1%D9%83%D9%88%D8%AF%D8%A7-%D8%B3%D9%8A%D8%A7%D8%AF%D8%A9-%D8%AA%D9%83%D9%86%D9%88%D9%84%D9%88%D8%AC%D9%8A%D8%A9-%D9%83%D8%A7%D9%85%D9%84%D8%A9-%D8%A3%D9%88-%D8%A7%D9%84%D8%AA%D8%AD%D9%88%D9%84-%D8%A5%D9%84%D9%89-%D8%A8%D9%83%D9%8A%D9%86/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/middle_east/1764833-%D8%AA%D9%82%D8%B1%D9%8A%D8%B1-%D8%B9%D8%A8%D8%B1%D9%8A-%D9%85%D8%B5%D8%B1-%D8%AA%D9%87%D8%AF%D8%AF-%D8%A8%D8%A7%D8%B1%D9%8A%D8%B3-%D8%A8%D8%B5%D9%81%D9%82%D8%A9-%D8%BA%D9%88%D8%A7%D8%B5%D8%A7%D8%AA-%D8%A7%D9%84%D8%A8%D8%A7%D8%B1%D9%83%D9%88%D8%AF%D8%A7-%D8%B3%D9%8A%D8%A7%D8%AF%D8%A9-%D8%AA%D9%83%D9%86%D9%88%D9%84%D9%88%D8%AC%D9%8A%D8%A9-%D9%83%D8%A7%D9%85%D9%84%D8%A9-%D8%A3%D9%88-%D8%A7%D9%84%D8%AA%D8%AD%D9%88%D9%84-%D8%A5%D9%84%D9%89-%D8%A8%D9%83%D9%8A%D9%86/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
-                <div class="news-card ad-special">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
-                        <div class="ad-container">
-                            <div class="ad-tag">موصى به ⭐</div>
-                            <h3>بث مباشر وتغطية شاملة لأهم أحداث الساعة</h3>
-                            <p>اضغط هنا للمشاهدة والمتابعة اللحظية</p>
-                            <div class="ad-button-f">دخول الآن</div>
-                        </div>
-                    </a>
-                </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf20e4c59b70b54448852.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf20e4c59b70b54448852.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">قيادة الجبهة الداخلية الإسرائيلية تصدر توضيحا بعد تأخر إرسال الإنذارات في بعض الحالات</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764832-%D9%82%D9%8A%D8%A7%D8%AF%D8%A9-%D8%A7%D9%84%D8%AC%D8%A8%D9%87%D8%A9-%D8%A7%D9%84%D8%AF%D8%A7%D8%AE%D9%84%D9%8A%D8%A9-%D8%A7%D9%84%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A%D8%A9-%D8%AA%D8%B5%D8%AF%D8%B1-%D8%AA%D9%88%D8%B6%D9%8A%D8%AD%D8%A7-%D8%A8%D8%B9%D8%AF-%D8%AA%D8%A3%D8%AE%D8%B1-%D8%A5%D8%B1%D8%B3%D8%A7%D9%84-%D8%A7%D9%84%D8%A5%D9%86%D8%B0%D8%A7%D8%B1%D8%A7%D8%AA-%D9%81%D9%8A-%D8%A8%D8%B9%D8%B6-%D8%A7%D9%84%D8%AD%D8%A7%D9%84%D8%A7%D8%AA/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
-                </div>
-            </div>
-            <div class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf0254236042746012c48.jpg" loading="lazy">
-                        <div class="label">حصري</div>
-                    </div>
-                    <div class="card-body">
-                        <h2 class="title">الجيش الإسرائيلي يعلن توسيع رقعة هجماته.. غارات على منصات صواريخ وقيادات حزب الله (فيديو)</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
-                    </div>
-                </a>
-                <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764831-%D8%A7%D9%84%D8%AC%D9%8A%D8%B4-%D8%A7%D9%84%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A-%D9%8A%D8%B9%D9%84%D9%86-%D8%AA%D9%88%D8%B3%D9%8A%D8%B9-%D8%B1%D9%82%D8%B9%D8%A9-%D9%87%D8%AC%D9%85%D8%A7%D8%AA%D9%87-%D8%BA%D8%A7%D8%B1%D8%A7%D8%AA-%D8%B9%D9%84%D9%89-%D9%85%D9%86%D8%B5%D8%A7%D8%AA-%D8%B5%D9%88%D8%A7%D8%B1%D9%8A%D8%AE-%D9%88%D9%82%D9%8A%D8%A7%D8%AF%D8%A7%D8%AA-%D8%AD%D8%B2%D8%A8-%D8%A7%D9%84%D9%84%D9%87/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
-                </div>
-            </div>
-            <div class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abea3d4c59b70c7f045539.jpg" loading="lazy">
-                        <div class="label">حصري</div>
-                    </div>
-                    <div class="card-body">
-                        <h2 class="title">البيت الأبيض: كبرى شركات الأسلحة الأمريكية تقرر مضاعفة الإنتاج 4 مرات بعد اجتماع مع ترامب</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
-                    </div>
-                </a>
-                <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764820-%D8%A7%D9%84%D8%A8%D9%8A%D8%AA-%D8%A7%D9%84%D8%A3%D8%A8%D9%8A%D8%B6-%D9%83%D8%A8%D8%B1%D9%89-%D8%B4%D8%B1%D9%83%D8%A7%D8%AA-%D8%A7%D9%84%D8%A3%D8%B3%D9%84%D8%AD%D8%A9-%D8%A7%D9%84%D8%A3%D9%85%D8%B1%D9%8A%D9%83%D9%8A%D8%A9-%D8%AA%D9%82%D8%B1%D8%B1-%D9%85%D8%B6%D8%A7%D8%B9%D9%81%D8%A9-%D8%A7%D9%84%D8%A5%D9%86%D8%AA%D8%A7%D8%AC-4-%D9%85%D8%B1%D8%A7%D8%AA-%D8%A8%D8%B9%D8%AF-%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9-%D9%85%D8%B9-%D8%AA%D8%B1%D8%A7%D9%85%D8%A8/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
-                </div>
-            </div>
-            <div class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abe9744c59b70e424d7899.jpg" loading="lazy">
-                        <div class="label">حصري</div>
-                    </div>
-                    <div class="card-body">
-                        <h2 class="title">الاستخبارات الإيرانية توجه تحذيرا إلى "جنود وعيون إسرائيل" داخل البلاد</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
-                    </div>
-                </a>
-                <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764826-%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D8%AE%D8%A8%D8%A7%D8%B1%D8%A7%D8%AA-%D8%A7%D9%84%D8%A5%D9%8A%D8%B1%D8%A7%D9%86%D9%8A%D8%A9-%D8%AA%D9%88%D8%AC%D9%87-%D8%AA%D8%AD%D8%B0%D9%8A%D8%B1%D8%A7-%D8%A5%D9%84%D9%89-%D8%AC%D9%86%D9%88%D8%AF-%D9%88%D8%B9%D9%8A%D9%88%D9%86-%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84-%D8%AF%D8%A7%D8%AE%D9%84-%D8%A7%D9%84%D8%A8%D9%84%D8%A7%D8%AF/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/world/1764832-%D9%82%D9%8A%D8%A7%D8%AF%D8%A9-%D8%A7%D9%84%D8%AC%D8%A8%D9%87%D8%A9-%D8%A7%D9%84%D8%AF%D8%A7%D8%AE%D9%84%D9%8A%D8%A9-%D8%A7%D9%84%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A%D8%A9-%D8%AA%D8%B5%D8%AF%D8%B1-%D8%AA%D9%88%D8%B6%D9%8A%D8%AD%D8%A7-%D8%A8%D8%B9%D8%AF-%D8%AA%D8%A3%D8%AE%D8%B1-%D8%A5%D8%B1%D8%B3%D8%A7%D9%84-%D8%A7%D9%84%D8%A5%D9%86%D8%B0%D8%A7%D8%B1%D8%A7%D8%AA-%D9%81%D9%8A-%D8%A8%D8%B9%D8%B6-%D8%A7%D9%84%D8%AD%D8%A7%D9%84%D8%A7%D8%AA/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
                 <div class="news-card ad-special">
                     <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                         <div class="ad-container">
-                            <div class="ad-tag">موصى به ⭐</div>
-                            <h3>بث مباشر وتغطية شاملة لأهم أحداث الساعة</h3>
-                            <p>اضغط هنا للمشاهدة والمتابعة اللحظية</p>
-                            <div class="ad-button-f">دخول الآن</div>
+                            <div class="ad-tag">تنبيه عاجل 🔔</div>
+                            <h3>حدث هام قيد المتابعة الآن.. اضغط للمشاهدة</h3>
+                            <div class="ad-button-f">شاهد الآن</div>
                         </div>
                     </a>
                 </div>
             <div class="news-card">
                 <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                     <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abea034c59b70c1953ce2a.jpg" loading="lazy">
-                        <div class="label">حصري</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf0254236042746012c48.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="title">الجيش الإسرائيلي يعلن توسيع رقعة هجماته.. غارات على منصات صواريخ وقيادات حزب الله (فيديو)</h2>
+                        <div class="card-meta">📅 07/03/2026</div>
+                    </div>
+                </a>
+                <div class="card-footer">
+                    <a href="https://arabic.rt.com/world/1764831-%D8%A7%D9%84%D8%AC%D9%8A%D8%B4-%D8%A7%D9%84%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A-%D9%8A%D8%B9%D9%84%D9%86-%D8%AA%D9%88%D8%B3%D9%8A%D8%B9-%D8%B1%D9%82%D8%B9%D8%A9-%D9%87%D8%AC%D9%85%D8%A7%D8%AA%D9%87-%D8%BA%D8%A7%D8%B1%D8%A7%D8%AA-%D8%B9%D9%84%D9%89-%D9%85%D9%86%D8%B5%D8%A7%D8%AA-%D8%B5%D9%88%D8%A7%D8%B1%D9%8A%D8%AE-%D9%88%D9%82%D9%8A%D8%A7%D8%AF%D8%A7%D8%AA-%D8%AD%D8%B2%D8%A8-%D8%A7%D9%84%D9%84%D9%87/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
+                    <div class="img-wrapper">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abea3d4c59b70c7f045539.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="title">البيت الأبيض: كبرى شركات الأسلحة الأمريكية تقرر مضاعفة الإنتاج 4 مرات بعد اجتماع مع ترامب</h2>
+                        <div class="card-meta">📅 07/03/2026</div>
+                    </div>
+                </a>
+                <div class="card-footer">
+                    <a href="https://arabic.rt.com/world/1764820-%D8%A7%D9%84%D8%A8%D9%8A%D8%AA-%D8%A7%D9%84%D8%A3%D8%A8%D9%8A%D8%B6-%D9%83%D8%A8%D8%B1%D9%89-%D8%B4%D8%B1%D9%83%D8%A7%D8%AA-%D8%A7%D9%84%D8%A3%D8%B3%D9%84%D8%AD%D8%A9-%D8%A7%D9%84%D8%A3%D9%85%D8%B1%D9%8A%D9%83%D9%8A%D8%A9-%D8%AA%D9%82%D8%B1%D8%B1-%D9%85%D8%B6%D8%A7%D8%B9%D9%81%D8%A9-%D8%A7%D9%84%D8%A5%D9%86%D8%AA%D8%A7%D8%AC-4-%D9%85%D8%B1%D8%A7%D8%AA-%D8%A8%D8%B9%D8%AF-%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9-%D9%85%D8%B9-%D8%AA%D8%B1%D8%A7%D9%85%D8%A8/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
+                    <div class="img-wrapper">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abe9744c59b70e424d7899.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="title">الاستخبارات الإيرانية توجه تحذيرا إلى "جنود وعيون إسرائيل" داخل البلاد</h2>
+                        <div class="card-meta">📅 07/03/2026</div>
+                    </div>
+                </a>
+                <div class="card-footer">
+                    <a href="https://arabic.rt.com/world/1764826-%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D8%AE%D8%A8%D8%A7%D8%B1%D8%A7%D8%AA-%D8%A7%D9%84%D8%A5%D9%8A%D8%B1%D8%A7%D9%86%D9%8A%D8%A9-%D8%AA%D9%88%D8%AC%D9%87-%D8%AA%D8%AD%D8%B0%D9%8A%D8%B1%D8%A7-%D8%A5%D9%84%D9%89-%D8%AC%D9%86%D9%88%D8%AF-%D9%88%D8%B9%D9%8A%D9%88%D9%86-%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84-%D8%AF%D8%A7%D8%AE%D9%84-%D8%A7%D9%84%D8%A8%D9%84%D8%A7%D8%AF/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
+                    <div class="img-wrapper">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abea034c59b70c1953ce2a.jpg" loading="lazy" alt="news">
+                        <div class="label">مباشر 📡</div>
                     </div>
                     <div class="card-body">
                         <h2 class="title">"اختفى الكارهون فجأة".. ردود أفعال جماهير ليفربول على أداء محمد صلاح أمام ولفرهامبتون (صور)</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
+                        <div class="card-meta">📅 07/03/2026</div>
                     </div>
                 </a>
                 <div class="card-footer">
-                    <a href="https://arabic.rt.com/sport/1764819-%D8%A7%D8%AE%D8%AA%D9%81%D9%89-%D8%A7%D9%84%D9%83%D8%A7%D8%B1%D9%87%D9%88%D9%86-%D9%81%D8%AC%D8%A3%D8%A9-%D8%B1%D8%AF%D9%88%D8%AF-%D8%A3%D9%81%D8%B9%D8%A7%D9%84-%D8%AC%D9%85%D8%A7%D9%87%D9%8A%D8%B1-%D9%84%D9%8A%D9%81%D8%B1%D8%A8%D9%88%D9%84-%D8%B9%D9%84%D9%89-%D8%A3%D8%AF%D8%A7%D8%A1-%D9%85%D8%AD%D9%85%D8%AF-%D8%B5%D9%84%D8%A7%D8%AD-%D8%A3%D9%85%D8%A7%D9%85-%D9%88%D9%84%D9%81%D8%B1%D9%87%D8%A7%D9%85%D8%A8%D8%AA%D9%88%D9%86-%D8%B5%D9%88%D8%B1/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
-                </div>
-            </div>
-            <div class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abe9c64c59b70ca729a3bd.png" loading="lazy">
-                        <div class="label">حصري</div>
-                    </div>
-                    <div class="card-body">
-                        <h2 class="title">الوكالة اللبنانية: 26 شهيدا بمواجهات بلدة النبي شيت</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
-                    </div>
-                </a>
-                <div class="card-footer">
-                    <a href="https://arabic.rt.com/middle_east/1764822-%D8%A7%D9%84%D9%88%D9%83%D8%A7%D9%84%D8%A9-%D8%A7%D9%84%D9%84%D8%A8%D9%86%D8%A7%D9%86%D9%8A%D8%A9-26-%D8%B4%D9%87%D9%8A%D8%AF%D8%A7-%D8%A8%D9%85%D9%88%D8%A7%D8%AC%D9%87%D8%A7%D8%AA-%D8%A8%D9%84%D8%AF%D8%A9-%D8%A7%D9%84%D9%86%D8%A8%D9%8A-%D8%B4%D9%8A%D8%AA/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
-                </div>
-            </div>
-            <div class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abecf24c59b70a3a28a02f.jpg" loading="lazy">
-                        <div class="label">حصري</div>
-                    </div>
-                    <div class="card-body">
-                        <h2 class="title">"رحلة العودة عبر مصر".. الإعلام العبري: 100 ألف إسرائيلي يخاطرون للعودة لتل أبيب</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
-                    </div>
-                </a>
-                <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764827-%D8%B1%D8%AD%D9%84%D8%A9-%D8%A7%D9%84%D8%B9%D9%88%D8%AF%D8%A9-%D8%B9%D8%A8%D8%B1-%D9%85%D8%B5%D8%B1-100-%D8%A3%D9%84%D9%81-%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A-%D9%8A%D8%AE%D8%A7%D8%B7%D8%B1%D9%88%D9%86-%D8%A8%D9%83%D9%84-%D8%B4%D9%8A%D8%A1-%D9%84%D9%84%D8%B9%D9%88%D8%AF%D8%A9-%D9%84%D8%AA%D9%84-%D8%A3%D8%A8%D9%8A%D8%A8/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
-                </div>
-            </div>
-            <div class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abea454c59b70b5444884b.jpg" loading="lazy">
-                        <div class="label">حصري</div>
-                    </div>
-                    <div class="card-body">
-                        <h2 class="title">السفارة الروسية في طهران تؤكد إجلاء أفراد العائلات وبقاء الموظفين الأساسيين</h2>
-                        <div class="card-meta">📅 اليوم | ⏱️ الآن</div>
-                    </div>
-                </a>
-                <div class="card-footer">
-                    <a href="https://arabic.rt.com/world/1764825-%D8%A7%D9%84%D8%B3%D9%81%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%B1%D9%88%D8%B3%D9%8A%D8%A9-%D9%81%D9%8A-%D8%B7%D9%87%D8%B1%D8%A7%D9%86-%D8%A5%D8%AC%D9%84%D8%A7%D8%A1-%D8%A3%D9%81%D8%B1%D8%A7%D8%AF-%D8%A7%D9%84%D8%B9%D8%A7%D8%A6%D9%84%D8%A7%D8%AA-%D9%88%D8%A7%D9%84%D9%85%D9%88%D8%B8%D9%81%D9%88%D9%86-%D8%A7%D9%84%D8%A3%D8%B3%D8%A7%D8%B3%D9%8A%D9%88%D9%86-%D8%A8%D8%A7%D9%82%D9%88%D9%86-%D9%81%D9%8A-%D8%A7%D9%84%D9%85%D9%88%D9%82%D8%B9/" target="_blank" class="details-btn">تفاصيل الخبر 🔗</a>
+                    <a href="https://arabic.rt.com/sport/1764819-%D8%A7%D8%AE%D8%AA%D9%81%D9%89-%D8%A7%D9%84%D9%83%D8%A7%D8%B1%D9%87%D9%88%D9%86-%D9%81%D8%AC%D8%A3%D8%A9-%D8%B1%D8%AF%D9%88%D8%AF-%D8%A3%D9%81%D8%B9%D8%A7%D9%84-%D8%AC%D9%85%D8%A7%D9%87%D9%8A%D8%B1-%D9%84%D9%8A%D9%81%D8%B1%D8%A8%D9%88%D9%84-%D8%B9%D9%84%D9%89-%D8%A3%D8%AF%D8%A7%D8%A1-%D9%85%D8%AD%D9%85%D8%AF-%D8%B5%D9%84%D8%A7%D8%AD-%D8%A3%D9%85%D8%A7%D9%85-%D9%88%D9%84%D9%81%D8%B1%D9%87%D8%A7%D9%85%D8%A8%D8%AA%D9%88%D9%86-%D8%B5%D9%88%D8%B1/" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
                 </div>
             </div>
                 <div class="news-card ad-special">
                     <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="main-link">
                         <div class="ad-container">
-                            <div class="ad-tag">موصى به ⭐</div>
-                            <h3>بث مباشر وتغطية شاملة لأهم أحداث الساعة</h3>
-                            <p>اضغط هنا للمشاهدة والمتابعة اللحظية</p>
-                            <div class="ad-button-f">دخول الآن</div>
+                            <div class="ad-tag">تنبيه عاجل 🔔</div>
+                            <h3>حدث هام قيد المتابعة الآن.. اضغط للمشاهدة</h3>
+                            <div class="ad-button-f">شاهد الآن</div>
                         </div>
                     </a>
                 </div></div>
