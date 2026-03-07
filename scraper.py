@@ -4,19 +4,22 @@ from datetime import datetime
 import re
 
 def run_news():
+    # المصدر الإخباري
     rss_url = "https://arabic.rt.com/rss/"
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
     
     try:
-        # رابطك الإعلاني المباشر
+        # رابط الإعلان المباشر الخاص بك (Direct Link)
         my_direct_link = "https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9"
         
-        response = requests.get(rss_url, headers=headers)
+        response = requests.get(rss_url, headers=headers, timeout=20)
         response.encoding = 'utf-8'
+        
+        # [span_2](start_span)استخدام lxml كما هو محدد في ملف العمليات الخاص بك لضمان السرعة[span_2](end_span)
         soup = BeautifulSoup(response.content, 'xml')
         items = soup.find_all('item')
         
-        ticker_items = " • ".join([item.title.text for item in items[:10]])
+        ticker_items = " • ".join([item.title.text for item in items[:12]])
         news_html = ""
         
         for i, item in enumerate(items[:20]):
@@ -25,16 +28,16 @@ def run_news():
             img_element = item.find('enclosure')
             img_url = img_element.get('url') if img_element else "https://via.placeholder.com/800x500/1a1a1a/ffffff?text=ALHADATH+24"
             
-            # استخراج وصف نظيف
             description = item.description.text if item.description else ""
-            clean_desc = re.sub('<[^<]+?>', '', description)[:100] + "..."
+            clean_desc = re.sub('<[^<]+?>', '', description)[:110] + "..."
 
             news_html += f'''
             <article class="premium-card">
-                <div class="badge">حصري</div>
+                <div class="badge">{"عاجل" if i < 3 else "حصري"}</div>
                 <div class="card-image">
-                    <img src="{img_url}" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="{my_direct_link}" target="_blank">
+                        <img src="{img_url}" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">{title}</h2>
@@ -50,88 +53,78 @@ def run_news():
                 </div>
             </article>'''
 
-            # حقن إعلان "تغطية خاصة" كل 4 أخبار بتصميم مغناطيسي
+            # إعلان مدمج بذكاء لزيادة النقر CTR
             if (i + 1) % 4 == 0:
                 news_html += f'''
                 <div class="special-ad-block">
                     <a href="{my_direct_link}" target="_blank" class="ad-link">
                         <div class="ad-inner">
                             <span class="live-pulse">LIVE</span>
-                            <h3>تغطية حية ومباشرة للأحداث المتسارعة</h3>
-                            <p>انقر هنا للدخول إلى غرفة البث المباشر</p>
-                            <div class="ad-cta">دخول سريع ⚡</div>
+                            <h3>تغطية شاملة وحصرية لآخر التطورات</h3>
+                            <p>انقر هنا للمتابعة الفورية عبر البث المباشر</p>
+                            <div class="ad-cta">دخول الآن ⚡</div>
                         </div>
                     </a>
                 </div>'''
 
-        now = datetime.now().strftime("%Y-%m-%d")
+        now_date = datetime.now().strftime("%Y-%m-%d")
         
         full_html = f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الحدث 24 | Alhadath Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <title>الحدث 24 | Alhadath News</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {{
-            --bg: #0f1215; --card-bg: #181d23; --text: #e0e0e0;
-            --primary: #e63946; --accent: #457b9d; --gold: #ffb703;
+            --bg: #0d1117; --card: #161b22; --text: #f0f6fc;
+            --primary: #f85149; --accent: #58a6ff; --gold: #f2cc60;
         }}
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-        body {{ background: var(--bg); font-family: 'Cairo', sans-serif; color: var(--text); line-height: 1.6; overflow-x: hidden; }}
+        body {{ background: var(--bg); font-family: 'Cairo', sans-serif; color: var(--text); padding-top: 130px; }}
         
-        /* Header & Ticker */
-        header {{ background: rgba(24, 29, 35, 0.95); backdrop-filter: blur(10px); padding: 15px 5%; position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 2px solid var(--primary); display: flex; justify-content: space-between; align-items: center; }}
-        .logo {{ font-size: 28px; font-weight: 900; color: #fff; text-decoration: none; letter-spacing: -1px; }}
+        header {{ background: rgba(13, 17, 23, 0.95); backdrop-filter: blur(12px); padding: 15px 5%; position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 2px solid var(--primary); display: flex; justify-content: space-between; align-items: center; }}
+        .logo {{ font-size: 26px; font-weight: 900; color: #fff; text-decoration: none; }}
         .logo span {{ color: var(--primary); }}
         
-        .ticker-wrap {{ position: fixed; top: 70px; width: 100%; background: var(--primary); color: #fff; overflow: hidden; height: 35px; display: flex; align-items: center; z-index: 999; }}
-        .ticker-title {{ background: #000; padding: 0 20px; font-weight: 800; font-size: 13px; z-index: 2; height: 100%; display: flex; align-items: center; }}
-        .ticker-scroll {{ white-space: nowrap; animation: scroll 40s linear infinite; font-weight: 600; font-size: 14px; }}
-        @keyframes scroll {{ 0% {{ transform: translateX(100%); }} 100% {{ transform: translateX(-150%); }} }}
+        .ticker-wrap {{ position: fixed; top: 75px; width: 100%; background: var(--primary); color: #fff; overflow: hidden; height: 35px; display: flex; align-items: center; z-index: 999; }}
+        .ticker-title {{ background: #000; padding: 0 15px; font-weight: 800; font-size: 13px; z-index: 2; height: 100%; display: flex; align-items: center; }}
+        .ticker-scroll {{ white-space: nowrap; animation: scroll 45s linear infinite; font-weight: 600; }}
+        @keyframes scroll {{ 0% {{ transform: translateX(100%); }} 100% {{ transform: translateX(-180%); }} }}
 
-        /* Grid System */
-        .container {{ max-width: 1300px; margin: 140px auto 50px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 30px; }}
+        .container {{ max-width: 1200px; margin: 0 auto 50px; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }}
 
-        /* Premium Card */
-        .premium-card {{ background: var(--card-bg); border-radius: 15px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; border: 1px solid #2a3139; }}
-        .premium-card:hover {{ transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 15px 35px rgba(230, 57, 70, 0.2); }}
-        .badge {{ position: absolute; top: 15px; left: 15px; background: var(--primary); color: #fff; padding: 4px 12px; font-size: 11px; font-weight: 800; border-radius: 50px; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }}
+        .premium-card {{ background: var(--card); border-radius: 12px; overflow: hidden; transition: 0.3s; border: 1px solid #30363d; position: relative; }}
+        .premium-card:hover {{ transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 8px 24px rgba(0,0,0,0.5); }}
+        .badge {{ position: absolute; top: 12px; left: 12px; background: var(--primary); color: #fff; padding: 3px 12px; font-size: 11px; font-weight: 800; border-radius: 4px; z-index: 5; }}
         
-        .card-image {{ position: relative; height: 220px; }}
-        .card-image img {{ width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }}
-        .premium-card:hover .card-image img {{ transform: scale(1.1); }}
-        .image-overlay {{ position: absolute; bottom: 0; width: 100%; height: 50%; background: linear-gradient(transparent, rgba(0,0,0,0.8)); }}
+        .card-image {{ height: 200px; overflow: hidden; border-bottom: 1px solid #30363d; }}
+        .card-image img {{ width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }}
+        .premium-card:hover .card-image img {{ transform: scale(1.05); }}
 
         .card-content {{ padding: 20px; }}
-        .card-title {{ font-size: 19px; font-weight: 800; color: #fff; margin-bottom: 12px; line-height: 1.4; }}
-        .card-snippet {{ font-size: 14px; color: #a0a0a0; margin-bottom: 20px; }}
-        
-        .meta-data {{ display: flex; justify-content: space-between; font-size: 12px; color: var(--gold); margin-bottom: 20px; font-weight: 600; }}
+        .card-title {{ font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 10px; line-height: 1.5; }}
+        .card-snippet {{ font-size: 14px; color: #8b949e; margin-bottom: 15px; }}
+        .meta-data {{ display: flex; justify-content: space-between; font-size: 11px; color: var(--gold); margin-bottom: 15px; font-weight: 600; }}
 
-        .action-area {{ display: flex; gap: 10px; }}
-        .btn-main {{ flex: 2; background: var(--primary); color: #fff; text-decoration: none; text-align: center; padding: 10px; border-radius: 8px; font-weight: 800; font-size: 14px; transition: 0.3s; }}
-        .btn-sub {{ flex: 1; background: #2a3139; color: #ccc; text-decoration: none; text-align: center; padding: 10px; border-radius: 8px; font-size: 12px; display: flex; align-items: center; justify-content: center; }}
-        .btn-main:hover {{ filter: brightness(1.2); }}
+        .action-area {{ display: flex; gap: 8px; }}
+        .btn-main {{ flex: 2; background: var(--primary); color: #fff; text-decoration: none; text-align: center; padding: 10px; border-radius: 6px; font-weight: 800; font-size: 14px; }}
+        .btn-sub {{ flex: 1; background: #21262d; color: #c9d1d9; text-decoration: none; text-align: center; padding: 10px; border-radius: 6px; font-size: 12px; border: 1px solid #30363d; }}
 
-        /* Special Ad Block */
-        .special-ad-block {{ grid-column: 1 / -1; background: linear-gradient(45deg, #1d242c, #2c3e50); border-radius: 15px; padding: 40px; text-align: center; border: 2px dashed var(--gold); position: relative; }}
+        .special-ad-block {{ grid-column: 1 / -1; background: #161b22; border-radius: 12px; padding: 30px; text-align: center; border: 2px dashed #30363d; }}
         .ad-link {{ text-decoration: none; color: inherit; }}
-        .live-pulse {{ position: absolute; top: 20px; right: 20px; background: #ff0000; color: #fff; padding: 5px 15px; border-radius: 5px; font-weight: 900; animation: pulse 1.5s infinite; }}
-        @keyframes pulse {{ 0% {{ opacity: 1; }} 50% {{ opacity: 0.5; }} 100% {{ opacity: 1; }} }}
-        .ad-cta {{ margin-top: 20px; background: var(--gold); color: #000; display: inline-block; padding: 12px 40px; border-radius: 50px; font-weight: 900; }}
+        .live-pulse {{ background: #ff3e3e; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 11px; font-weight: 900; animation: blink 1.2s infinite; }}
+        @keyframes blink {{ 0% {{ opacity: 1; }} 50% {{ opacity: 0.5; }} 100% {{ opacity: 1; }} }}
+        .ad-cta {{ margin-top: 15px; background: var(--gold); color: #000; display: inline-block; padding: 8px 30px; border-radius: 4px; font-weight: 900; }}
 
-        @media (max-width: 768px) {{
-            .container {{ grid-template-columns: 1fr; margin-top: 130px; }}
-            .logo {{ font-size: 22px; }}
-        }}
+        @media (max-width: 600px) {{ .container {{ grid-template-columns: 1fr; }} }}
     </style>
 </head>
 <body>
     <header>
         <a href="#" class="logo">الحدث <span>24</span></a>
-        <div style="font-size: 12px; color: #888; font-weight: 600;">{now}</div>
+        <div style="font-size: 11px; color: #8b949e;">📅 {now_date}</div>
     </header>
     <div class="ticker-wrap">
         <div class="ticker-title">عاجل الآن</div>
@@ -140,18 +133,17 @@ def run_news():
     <main class="container">
         {news_html}
     </main>
-    <footer style="text-align:center; padding: 50px; color: #555; border-top: 1px solid #222;">
-        <p>جميع الحقوق محفوظة لشبكة الحدث 24 &copy; 2026</p>
+    <footer style="text-align:center; padding: 30px; color: #484f58; font-size: 12px;">
+        <p>Alhadath 24 &copy; 2026 | Automated by Shadow Core</p>
     </footer>
 </body>
 </html>'''
 
         with open("index.html", "w", encoding="utf-8") as f:
             f.write(full_html)
-        print("Done: Shadow Core optimized index.html has been generated.")
             
     except Exception as e:
-        print(f"Error encountered: {e}")
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     run_news()
