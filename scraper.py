@@ -4,14 +4,15 @@ from datetime import datetime
 import re
 
 def run_news():
-    # رابط RSS سكاي نيوز عربية - أخبار العالم
-    rss_url = "https://www.skynewsarabia.com/rss/v1/world.xml"
+    # مصدر جديد ومستقر جداً (RT Arabic)
+    rss_url = "https://arabic.rt.com/rss/"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
     }
     
     try:
         response = requests.get(rss_url, headers=headers)
+        response.encoding = 'utf-8'
         soup = BeautifulSoup(response.content, 'xml')
         items = soup.find_all('item')
         
@@ -20,32 +21,31 @@ def run_news():
             title = item.title.text
             link = item.link.text
             
-            # سحب الصورة من سكاي نيوز (تستخدم تاغ enclosure عادةً)
+            # جلب الصورة - RT تستخدم enclosure
             img_url = ""
             enclosure = item.find('enclosure')
-            if enclosure and enclosure.get('url'):
-                img_url = enclosure['url']
+            if enclosure:
+                img_url = enclosure.get('url')
             
-            # إذا لم تكن هناك صورة، نستخدم صورة من قلب الحدث
             if not img_url:
-                img_url = "https://www.skynewsarabia.com/images/v1/2022/07/04/1536761/800/450/1-1536761.JPG"
+                img_url = "https://arabic.rt.com/static/img/logo_placeholder.png"
 
-            # تنظيف الوصف (Text)
+            # تنظيف الكلام
             description = item.description.text if item.description else ""
             clean_desc = re.sub('<[^<]+?>', '', description)[:130] + "..."
             
             news_cards += f'''
             <article class="news-card">
-                <a href="{link}" target="_blank" class="card-link">
-                    <div class="img-container">
-                        <img src="{img_url}" alt="{title}" loading="lazy">
+                <a href="{link}" target="_blank">
+                    <div class="img-wrapper">
+                        <img src="{img_url}" alt="{title}" onerror="this.src='https://via.placeholder.com/600x400?text=RT+News'">
                     </div>
                     <div class="card-content">
                         <h2 class="card-title">{title}</h2>
                         <p class="card-text">{clean_desc}</p>
                         <div class="card-footer">
-                            <span>🕒 {datetime.now().strftime("%d/%m/%Y")}</span>
-                            <span class="source-tag">سكاي نيوز</span>
+                            <span>🕒 {datetime.now().strftime("%I:%M %p")}</span>
+                            <span class="badge">عاجل</span>
                         </div>
                     </div>
                 </a>
@@ -53,7 +53,6 @@ def run_news():
 
         now = datetime.now().strftime("%Y-%m-%d | %I:%M %p")
         
-        # تصميم "النضال نيوز" العصري والجديد
         html = f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -62,48 +61,31 @@ def run_news():
     <title>النضال نيوز | Alnidal News</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {{ --primary: #c00; --dark: #1a1a1a; --gray: #666; }}
-        body {{ background: #f4f4f4; color: var(--dark); font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }}
-        
-        header {{ background: #fff; border-bottom: 3px solid var(--primary); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }}
-        .logo {{ font-size: 28px; font-weight: 800; color: var(--dark); text-decoration: none; }}
-        .logo span {{ color: var(--primary); }}
-        .update-time {{ font-size: 11px; color: var(--gray); }}
-
-        .container {{ max-width: 1200px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }}
-        
-        .news-card {{ background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s; }}
-        .news-card:hover {{ transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }}
-        .card-link {{ text-decoration: none; color: inherit; }}
-        
-        .img-container {{ width: 100%; height: 210px; overflow: hidden; }}
-        .img-container img {{ width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }}
-        .news-card:hover img {{ transform: scale(1.08); }}
-        
-        .card-content {{ padding: 20px; }}
-        .card-title {{ font-size: 19px; line-height: 1.5; margin: 0 0 12px 0; font-weight: 700; color: #000; }}
-        .card-text {{ font-size: 14px; color: var(--gray); line-height: 1.6; margin-bottom: 15px; }}
-        
-        .card-footer {{ display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 15px; font-size: 12px; color: #999; }}
-        .source-tag {{ background: #f0f0f0; padding: 2px 8px; border-radius: 4px; color: var(--primary); font-weight: bold; }}
-
-        footer {{ background: var(--dark); color: #fff; text-align: center; padding: 40px; margin-top: 60px; }}
-        
-        @media (max-width: 600px) {{ .container {{ grid-template-columns: 1fr; }} }}
+        body {{ background: #f0f2f5; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }}
+        header {{ background: #fff; border-bottom: 4px solid #c00; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }}
+        .logo {{ font-size: 28px; font-weight: 800; color: #1a1a1a; text-decoration: none; }}
+        .logo span {{ color: #c00; }}
+        .container {{ max-width: 1100px; margin: 30px auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 25px; }}
+        .news-card {{ background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: 0.3s; }}
+        .news-card:hover {{ transform: translateY(-5px); }}
+        .news-card a {{ text-decoration: none; color: inherit; }}
+        .img-wrapper {{ width: 100%; height: 200px; }}
+        .img-wrapper img {{ width: 100%; height: 100%; object-fit: cover; }}
+        .card-content {{ padding: 15px; }}
+        .card-title {{ font-size: 18px; line-height: 1.5; margin: 0 0 10px 0; color: #000; }}
+        .card-text {{ font-size: 13px; color: #555; line-height: 1.6; height: 65px; overflow: hidden; }}
+        .card-footer {{ display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee; font-size: 12px; color: #888; }}
+        .badge {{ background: #ffeeee; color: #c00; padding: 2px 8px; border-radius: 4px; font-weight: bold; }}
+        footer {{ background: #1a1a1a; color: #fff; text-align: center; padding: 30px; margin-top: 50px; }}
     </style>
 </head>
 <body>
     <header>
         <a href="#" class="logo">النضال <span>نيوز</span></a>
-        <div class="update-time">تحديث تلقائي: {now}</div>
+        <div style="font-size: 11px; color: #666;">آخر تحديث: {now}</div>
     </header>
-
     <main class="container">{news_cards}</main>
-
-    <footer>
-        <p>النضال نيوز &copy; 2026</p>
-        <p style="font-size: 12px; opacity: 0.6;">جميع الحقوق محفوظة - مصدر الأخبار: سكاي نيوز عربية</p>
-    </footer>
+    <footer><p>النضال نيوز &copy; 2026</p></footer>
 </body>
 </html>'''
 
