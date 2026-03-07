@@ -9,7 +9,7 @@ def run_news():
     headers = {'User-Agent': 'Mozilla/5.0'}
     
     try:
-        # رابطك المباشر من Adsterra
+        # رابطك الربحي
         my_direct_link = "https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9"
 
         response = requests.get(rss_url, headers=headers)
@@ -17,78 +17,112 @@ def run_news():
         soup = BeautifulSoup(response.content, 'xml')
         items = soup.find_all('item')
         
-        # مصفوفة الإعلانات المربعة (نصممها لتشبه الأخبار الجذابة)
+        # إعلانات جذابة
         ads_pool = [
-            {"t": "احصل على أحدث الهواتف بخصم 90% لفترة محدودة", "i": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=500&auto=format&fit=crop"},
-            {"t": "طريقة سحرية لربح 100 دولار يومياً من المنزل", "i": "https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?q=80&w=500&auto=format&fit=crop"},
-            {"t": "أفضل التطبيقات المجانية لعام 2026 - حملها الآن", "i": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=500&auto=format&fit=crop"}
+            {"t": "شاهد كيف تغيرت حياة هؤلاء بعد هذا التطبيق", "i": "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=500"},
+            {"t": "فرصة ذهبية للعمل عن بعد براتب مميز", "i": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500"}
         ]
 
         news_html = ""
-        for i, item in enumerate(items[:12]):
+        for i, item in enumerate(items[:16]):
             title = item.title.text
             news_url = item.link.text
             img_url = item.find('enclosure').get('url') if item.find('enclosure') else "https://via.placeholder.com/600x400"
-            desc = re.sub('<[^<]+?>', '', item.description.text)[:100] + "..." if item.description else ""
             
-            # إضافة خبر طبيعي
+            # تصميم الخبر بستايل RT (عريض وبدون حواف دائرية مبالغ فيها)
             news_html += f'''
-            <div class="card">
-                <a href="{my_direct_link}" target="_blank">
-                    <img src="{img_url}" loading="lazy">
-                    <div class="p-3">
-                        <h3 class="title">{title}</h3>
-                        <p class="text">{desc}</p>
+            <div class="news-item">
+                <a href="{my_direct_link}" target="_blank" class="news-link">
+                    <div class="image-container">
+                        <img src="{img_url}" loading="lazy">
+                        <span class="category-tag">أخبار</span>
+                    </div>
+                    <div class="content">
+                        <h2 class="news-title">{title}</h2>
                     </div>
                 </a>
-                <div class="footer"><a href="{news_url}" target="_blank" class="btn">التفاصيل</a></div>
+                <div class="news-footer">
+                    <a href="{news_url}" target="_blank" class="source-link">المصدر 🔗</a>
+                </div>
             </div>'''
             
-            # حقن "مربع إعلاني" جذاب بعد كل 3 أخبار
-            if (i + 1) % 3 == 0:
+            # إضافة مربع إعلاني بعد كل 4 أخبار
+            if (i + 1) % 4 == 0:
                 ad = random.choice(ads_pool)
                 news_html += f'''
-                <div class="card ad-card">
-                    <a href="{my_direct_link}" target="_blank">
-                        <div class="ad-badge">مُقترح لك</div>
-                        <img src="{ad['i']}">
-                        <div class="p-3">
-                            <h3 class="title" style="color:#2980b9;">{ad['t']}</h3>
-                            <p class="text">إعلان ممول - اضغط للمزيد من المعلومات والتفاصيل الحصرية.</p>
+                <div class="news-item ad-item">
+                    <a href="{my_direct_link}" target="_blank" class="news-link">
+                        <div class="image-container">
+                            <img src="{ad['i']}">
+                            <span class="ad-tag">موصى به</span>
+                        </div>
+                        <div class="content">
+                            <h2 class="news-title" style="color: #0056b3;">{ad['t']}</h2>
                         </div>
                     </a>
                 </div>'''
 
-        now = datetime.now().strftime("%I:%M %p")
+        now = datetime.now().strftime("%d/%m/%Y | %I:%M %p")
         
         html = f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>النضال نيوز</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>النضال نيوز | RT Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body {{ background: #f0f2f5; font-family: 'Cairo', sans-serif; margin: 0; }}
-        header {{ background: #fff; border-bottom: 3px solid #c00; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 99; }}
-        .container {{ max-width: 1200px; margin: 20px auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }}
-        .card {{ background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; flex-direction: column; }}
-        .ad-card {{ border: 2px solid #3498db; position: relative; }}
-        .ad-badge {{ position: absolute; top: 10px; right: 10px; background: #3498db; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 10px; font-weight: bold; }}
-        .card a {{ text-decoration: none; color: inherit; }}
-        .card img {{ width: 100%; height: 180px; object-fit: cover; }}
-        .p-3 {{ padding: 15px; flex-grow: 1; }}
-        .title {{ font-size: 16px; margin: 0 0 10px 0; line-height: 1.4; }}
-        .text {{ font-size: 12px; color: #666; height: 50px; overflow: hidden; }}
-        .footer {{ padding: 10px; border-top: 1px solid #eee; display: flex; justify-content: space-between; }}
-        .btn {{ background: #c00; color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 12px; text-decoration: none; }}
-        footer {{ background: #1a1a1a; color: #fff; text-align: center; padding: 20px; margin-top: 40px; }}
+        :root {{ --rt-red: #da251d; --rt-dark: #1a1a1a; --rt-gray: #f4f4f4; }}
+        body {{ background: var(--rt-gray); font-family: 'Cairo', sans-serif; margin: 0; padding: 0; color: #333; }}
+        
+        /* الهيدر بستايل RT */
+        header {{ background: var(--rt-dark); color: white; padding: 10px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--rt-red); position: sticky; top: 0; z-index: 1000; }}
+        .logo {{ font-size: 24px; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; }}
+        .logo span {{ background: var(--rt-red); padding: 0 5px; margin-right: 2px; }}
+        .live-dot {{ height: 10px; width: 10px; background-color: var(--rt-red); border-radius: 50%; display: inline-block; margin-left: 5px; animation: blink 1s infinite; }}
+        @keyframes blink {{ 0% {{opacity: 1;}} 50% {{opacity: 0.3;}} 100% {{opacity: 1;}} }}
+
+        /* الشبكة الإخبارية */
+        .main-container {{ max-width: 1200px; margin: 20px auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: #ddd; border: 1px solid #ddd; }}
+        
+        .news-item {{ background: white; transition: 0.3s; position: relative; display: flex; flex-direction: column; }}
+        .news-item:hover {{ background: #f9f9f9; }}
+        
+        .image-container {{ position: relative; width: 100%; height: 180px; overflow: hidden; }}
+        .image-container img {{ width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }}
+        .news-item:hover img {{ transform: scale(1.05); }}
+        
+        .category-tag {{ position: absolute; bottom: 0; right: 0; background: var(--rt-red); color: white; padding: 2px 10px; font-size: 12px; font-weight: bold; }}
+        .ad-tag {{ position: absolute; top: 0; left: 0; background: #2ecc71; color: white; padding: 2px 10px; font-size: 10px; }}
+
+        .content {{ padding: 15px; flex-grow: 1; }}
+        .news-title {{ font-size: 17px; font-weight: 700; line-height: 1.4; margin: 0; color: #1a1a1a; }}
+        
+        .news-footer {{ padding: 10px 15px; border-top: 1px solid #eee; background: #fafafa; }}
+        .source-link {{ font-size: 12px; color: #777; text-decoration: none; font-weight: bold; }}
+        .source-link:hover {{ color: var(--rt-red); }}
+
+        .news-link {{ text-decoration: none; color: inherit; height: 100%; display: flex; flex-direction: column; }}
+
+        footer {{ background: var(--rt-dark); color: white; text-align: center; padding: 40px 0; margin-top: 40px; border-top: 5px solid var(--rt-red); }}
+        
+        @media (max-width: 600px) {{ .main-container {{ grid-template-columns: 1fr; }} }}
     </style>
 </head>
 <body>
-    <header><div style="font-size: 24px; font-weight: bold;">النضال <span style="color:#c00;">نيوز</span></div><div style="font-size:12px;">{now}</div></header>
-    <div class="container">{news_html}</div>
-    <footer>النضال نيوز &copy; 2026</footer>
+    <header>
+        <div class="logo"><span>RT</span> النضال نيوز</div>
+        <div style="font-size: 11px;"><span class="live-dot"></span> مباشر | {now}</div>
+    </header>
+
+    <div class="main-container">
+        {news_html}
+    </div>
+
+    <footer>
+        <div class="logo" style="margin-bottom:10px;"><span>RT</span> النضال نيوز</div>
+        <p style="font-size: 12px; opacity: 0.7;">جميع الحقوق محفوظة © 2026</p>
+    </footer>
 </body>
 </html>'''
 
