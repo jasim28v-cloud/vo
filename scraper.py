@@ -8,13 +8,13 @@ def run_news():
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
     
     try:
-        # الرابط الجديد الذي زودتني به لضمان عمل الإعلانات
-        my_direct_link = "https://www.effectivegatecpm.com/ywn2a0wz7?key=7433561eca4a0920fafc9d653809bab2"
+        # الرابط الجديد الخاص بك
+        my_direct_link = "Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
         
         response = requests.get(rss_url, headers=headers, timeout=20)
         response.encoding = 'utf-8'
         
-        # استخدام lxml لمعالجة البيانات بسرعة كما هو محدد في ملف التشغيل الآلي
+        # استخدام lxml لمعالجة البيانات بسرعة كما هو محدد في ملف التشغيل الآلي الخاص بك
         soup = BeautifulSoup(response.content, 'xml')
         items = soup.find_all('item')
         
@@ -52,16 +52,15 @@ def run_news():
                 </div>
             </article>'''
 
-            # توزيع إعلاني ذكي لزيادة نسبة النقر CTR
             if (i + 1) % 4 == 0:
                 news_html += f'''
                 <div class="special-ad-block">
                     <a href="{my_direct_link}" target="_blank" class="ad-link">
                         <div class="ad-inner">
                             <span class="live-pulse">LIVE</span>
-                            <h3>تغطية مباشرة لأهم أحداث الساعة</h3>
-                            <p>انقر هنا للمتابعة اللحظية عبر البث المباشر</p>
-                            <div class="ad-cta">دخول سريع ⚡</div>
+                            <h3>تغطية حية ومباشرة من قلب الحدث</h3>
+                            <p>انقر هنا للمتابعة الفورية والحصرية</p>
+                            <div class="ad-cta">شاهد الآن ⚡</div>
                         </div>
                     </a>
                 </div>'''
@@ -121,7 +120,7 @@ def run_news():
     </div>
     <main class="container">{news_html}</main>
     <footer style="text-align:center; padding: 30px; color: #484f58; font-size: 12px;">
-        <p>Alhadath 24 &copy; 2026 | Automated by Alhadath24-Bot</p>
+        <p>Alhadath 24 &copy; 2026 | Automated Update System</p>
     </footer>
 </body>
 </html>'''
@@ -130,7 +129,7 @@ def run_news():
             f.write(full_html)
             
     except Exception as e:
-        print(f"Shadow Core Execution Error: {e}")
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     run_news()
