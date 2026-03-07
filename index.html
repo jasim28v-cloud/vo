@@ -3,86 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الحدث 24 | Alhadath Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <title>الحدث 24 | Alhadath News</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0f1215; --card-bg: #181d23; --text: #e0e0e0;
-            --primary: #e63946; --accent: #457b9d; --gold: #ffb703;
+            --bg: #0d1117; --card: #161b22; --text: #f0f6fc;
+            --primary: #f85149; --accent: #58a6ff; --gold: #f2cc60;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); font-family: 'Cairo', sans-serif; color: var(--text); line-height: 1.6; overflow-x: hidden; }
+        body { background: var(--bg); font-family: 'Cairo', sans-serif; color: var(--text); padding-top: 130px; }
         
-        /* Header & Ticker */
-        header { background: rgba(24, 29, 35, 0.95); backdrop-filter: blur(10px); padding: 15px 5%; position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 2px solid var(--primary); display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 28px; font-weight: 900; color: #fff; text-decoration: none; letter-spacing: -1px; }
+        header { background: rgba(13, 17, 23, 0.95); backdrop-filter: blur(12px); padding: 15px 5%; position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 2px solid var(--primary); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 26px; font-weight: 900; color: #fff; text-decoration: none; }
         .logo span { color: var(--primary); }
         
-        .ticker-wrap { position: fixed; top: 70px; width: 100%; background: var(--primary); color: #fff; overflow: hidden; height: 35px; display: flex; align-items: center; z-index: 999; }
-        .ticker-title { background: #000; padding: 0 20px; font-weight: 800; font-size: 13px; z-index: 2; height: 100%; display: flex; align-items: center; }
-        .ticker-scroll { white-space: nowrap; animation: scroll 40s linear infinite; font-weight: 600; font-size: 14px; }
-        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-150%); } }
+        .ticker-wrap { position: fixed; top: 75px; width: 100%; background: var(--primary); color: #fff; overflow: hidden; height: 35px; display: flex; align-items: center; z-index: 999; }
+        .ticker-title { background: #000; padding: 0 15px; font-weight: 800; font-size: 13px; z-index: 2; height: 100%; display: flex; align-items: center; }
+        .ticker-scroll { white-space: nowrap; animation: scroll 45s linear infinite; font-weight: 600; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-180%); } }
 
-        /* Grid System */
-        .container { max-width: 1300px; margin: 140px auto 50px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 30px; }
+        .container { max-width: 1200px; margin: 0 auto 50px; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
 
-        /* Premium Card */
-        .premium-card { background: var(--card-bg); border-radius: 15px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; border: 1px solid #2a3139; }
-        .premium-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 15px 35px rgba(230, 57, 70, 0.2); }
-        .badge { position: absolute; top: 15px; left: 15px; background: var(--primary); color: #fff; padding: 4px 12px; font-size: 11px; font-weight: 800; border-radius: 50px; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .premium-card { background: var(--card); border-radius: 12px; overflow: hidden; transition: 0.3s; border: 1px solid #30363d; position: relative; }
+        .premium-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+        .badge { position: absolute; top: 12px; left: 12px; background: var(--primary); color: #fff; padding: 3px 12px; font-size: 11px; font-weight: 800; border-radius: 4px; z-index: 5; }
         
-        .card-image { position: relative; height: 220px; }
-        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
-        .premium-card:hover .card-image img { transform: scale(1.1); }
-        .image-overlay { position: absolute; bottom: 0; width: 100%; height: 50%; background: linear-gradient(transparent, rgba(0,0,0,0.8)); }
+        .card-image { height: 200px; overflow: hidden; border-bottom: 1px solid #30363d; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .premium-card:hover .card-image img { transform: scale(1.05); }
 
         .card-content { padding: 20px; }
-        .card-title { font-size: 19px; font-weight: 800; color: #fff; margin-bottom: 12px; line-height: 1.4; }
-        .card-snippet { font-size: 14px; color: #a0a0a0; margin-bottom: 20px; }
-        
-        .meta-data { display: flex; justify-content: space-between; font-size: 12px; color: var(--gold); margin-bottom: 20px; font-weight: 600; }
+        .card-title { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 10px; line-height: 1.5; }
+        .card-snippet { font-size: 14px; color: #8b949e; margin-bottom: 15px; }
+        .meta-data { display: flex; justify-content: space-between; font-size: 11px; color: var(--gold); margin-bottom: 15px; font-weight: 600; }
 
-        .action-area { display: flex; gap: 10px; }
-        .btn-main { flex: 2; background: var(--primary); color: #fff; text-decoration: none; text-align: center; padding: 10px; border-radius: 8px; font-weight: 800; font-size: 14px; transition: 0.3s; }
-        .btn-sub { flex: 1; background: #2a3139; color: #ccc; text-decoration: none; text-align: center; padding: 10px; border-radius: 8px; font-size: 12px; display: flex; align-items: center; justify-content: center; }
-        .btn-main:hover { filter: brightness(1.2); }
+        .action-area { display: flex; gap: 8px; }
+        .btn-main { flex: 2; background: var(--primary); color: #fff; text-decoration: none; text-align: center; padding: 10px; border-radius: 6px; font-weight: 800; font-size: 14px; }
+        .btn-sub { flex: 1; background: #21262d; color: #c9d1d9; text-decoration: none; text-align: center; padding: 10px; border-radius: 6px; font-size: 12px; border: 1px solid #30363d; }
 
-        /* Special Ad Block */
-        .special-ad-block { grid-column: 1 / -1; background: linear-gradient(45deg, #1d242c, #2c3e50); border-radius: 15px; padding: 40px; text-align: center; border: 2px dashed var(--gold); position: relative; }
+        .special-ad-block { grid-column: 1 / -1; background: #161b22; border-radius: 12px; padding: 30px; text-align: center; border: 2px dashed #30363d; }
         .ad-link { text-decoration: none; color: inherit; }
-        .live-pulse { position: absolute; top: 20px; right: 20px; background: #ff0000; color: #fff; padding: 5px 15px; border-radius: 5px; font-weight: 900; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        .ad-cta { margin-top: 20px; background: var(--gold); color: #000; display: inline-block; padding: 12px 40px; border-radius: 50px; font-weight: 900; }
+        .live-pulse { background: #ff3e3e; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 11px; font-weight: 900; animation: blink 1.2s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .ad-cta { margin-top: 15px; background: var(--gold); color: #000; display: inline-block; padding: 8px 30px; border-radius: 4px; font-weight: 900; }
 
-        @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; margin-top: 130px; }
-            .logo { font-size: 22px; }
-        }
+        @media (max-width: 600px) { .container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <header>
         <a href="#" class="logo">الحدث <span>24</span></a>
-        <div style="font-size: 12px; color: #888; font-weight: 600;">2026-03-07</div>
+        <div style="font-size: 11px; color: #8b949e;">📅 2026-03-07</div>
     </header>
     <div class="ticker-wrap">
         <div class="ticker-title">عاجل الآن</div>
-        <div class="ticker-scroll">لحظة بلحظة.. الحرب الأمريكية-الإسرائيلية على إيران بيومها الثامن: تصعيد متواصل يهز الشرق الأوسط • لحظة بلحظة.. غارات إسرائيلية متواصلة على لبنان وحزب الله يلتحم ناريا مع قوات متسللة في البقاع • إيران تكشف حصيلة استهداف المنشآت المدنية لديها • الجيش الإسرائيلي وحزب الله يتبادلان التحذيرات • اعتقال شخص ادعى بأنه ابن ماردونا في قضية مخدرات • برسالة غامضة على "إنستغرام".. زيزو يثير الجدل (فيديو -صورة) • الأردن يعلن حصيلة الصواريخ والمسيرات التي تصدى لها ويكشف خسائره • بالتزامن مع أزمة غاز عالمية بسبب حرب إيران.. مصر تبحث الإنتاج من حقل بوسط الدلتا بعد كشف جديد • روسيا تحرز أول ميدالية لها في دورة الألعاب البارالمبية بإيطاليا • ترامب: إيران استسلمت لجيرانها في الشرق الأوسط</div>
+        <div class="ticker-scroll">لحظة بلحظة.. الحرب الأمريكية-الإسرائيلية على إيران بيومها الثامن: تصعيد متواصل يهز الشرق الأوسط • لحظة بلحظة.. غارات إسرائيلية متواصلة على لبنان وحزب الله يلتحم ناريا مع قوات متسللة في البقاع • محرز يواصل تألقه في "ديربي جدة" ويتمسك بوعده لجماهير الأهلي • إيران تكشف حصيلة استهداف المنشآت المدنية لديها • الجيش الإسرائيلي وحزب الله يتبادلان التحذيرات • اعتقال شخص ادعى بأنه ابن ماردونا في قضية مخدرات • برسالة غامضة على "إنستغرام".. زيزو يثير الجدل (فيديو -صورة) • الأردن يعلن حصيلة الصواريخ والمسيرات التي تصدى لها ويكشف خسائره • بالتزامن مع أزمة غاز عالمية بسبب حرب إيران.. مصر تبحث الإنتاج من حقل بوسط الدلتا بعد كشف جديد • روسيا تحرز أول ميدالية لها في دورة الألعاب البارالمبية بإيطاليا • ترامب: إيران استسلمت لجيرانها في الشرق الأوسط • ترتيب الدوري الإسباني بعد فوز ريال مدريد على سيلتا فيغو</div>
     </div>
     <main class="container">
         
             <article class="premium-card">
-                <div class="badge">حصري</div>
+                <div class="badge">عاجل</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">لحظة بلحظة.. الحرب الأمريكية-الإسرائيلية على إيران بيومها الثامن: تصعيد متواصل يهز الشرق الأوسط</h2>
                     <p class="card-snippet">
-         في يومها الثامن تشهد الحرب على إيران تصعيدا ينسحب على الشرق الأوسط حيث تواصل واشنطن وتل أب...</p>
+         في يومها الثامن تشهد الحرب على إيران تصعيدا ينسحب على الشرق الأوسط حيث تواصل واشنطن وتل أبيب ضرب أهد...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -92,17 +83,18 @@
                 </div>
             </article>
             <article class="premium-card">
-                <div class="badge">حصري</div>
+                <div class="badge">عاجل</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">لحظة بلحظة.. غارات إسرائيلية متواصلة على لبنان وحزب الله يلتحم ناريا مع قوات متسللة في البقاع</h2>
                     <p class="card-snippet">
-         يتواصل القصف الإسرائيلي على لبنان السبت، خصوصا في جنوب وشرق لبنان وفي ضاحية بيروت، فيما يؤ...</p>
+         يتواصل القصف الإسرائيلي على لبنان السبت، خصوصا في جنوب وشرق لبنان وفي ضاحية بيروت، فيما يؤكد حزب الل...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -112,17 +104,39 @@
                 </div>
             </article>
             <article class="premium-card">
+                <div class="badge">عاجل</div>
+                <div class="card-image">
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac174d4c59b7092f5d3997.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">محرز يواصل تألقه في "ديربي جدة" ويتمسك بوعده لجماهير الأهلي</h2>
+                    <p class="card-snippet">
+         أتم الأهلي الانتصار في "ديربي جدة" ذهابا وإيابا، وتغلب بنتيجة 3-1 على الاتحاد، في لقاء الدور الثاني،...</p>
+                    <div class="meta-data">
+                        <span>🕒 12:24 PM</span>
+                        <span>🔥 ترند الآن</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
+                        <a href="https://arabic.rt.com/sport/1764880-%D9%85%D8%AD%D8%B1%D8%B2-%D9%8A%D9%88%D8%A7%D8%B5%D9%84-%D8%AA%D8%A3%D9%84%D9%82%D9%87-%D9%81%D9%8A-%D8%AF%D9%8A%D8%B1%D8%A8%D9%8A-%D8%AC%D8%AF%D8%A9-%D9%88%D9%8A%D8%AA%D9%85%D8%B3%D9%83-%D8%A8%D9%88%D8%B9%D8%AF%D9%87-%D9%84%D8%AC%D9%85%D8%A7%D9%87%D9%8A%D8%B1-%D8%A7%D9%84%D8%A3%D9%87%D9%84%D9%8A/" target="_blank" class="btn-sub">المصدر الأصلي</a>
+                    </div>
+                </div>
+            </article>
+            <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac15ce4c59b7092f5d398b.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac15ce4c59b7092f5d398b.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">إيران تكشف حصيلة استهداف المنشآت المدنية لديها</h2>
                     <p class="card-snippet">
-         أعلن الهلال الأحمر الإيراني عن تعرض 6668 مرفقا مدنيا لأضرار خلال الهجمات التي شنتها أمريكا...</p>
+         أعلن الهلال الأحمر الإيراني عن تعرض 6668 مرفقا مدنيا لأضرار خلال الهجمات التي شنتها أمريكا وإسرائيل ...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -131,18 +145,29 @@
                     </div>
                 </div>
             </article>
+                <div class="special-ad-block">
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="ad-link">
+                        <div class="ad-inner">
+                            <span class="live-pulse">LIVE</span>
+                            <h3>تغطية شاملة وحصرية لآخر التطورات</h3>
+                            <p>انقر هنا للمتابعة الفورية عبر البث المباشر</p>
+                            <div class="ad-cta">دخول الآن ⚡</div>
+                        </div>
+                    </a>
+                </div>
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0fc4423604255c654f03.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0fc4423604255c654f03.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">الجيش الإسرائيلي وحزب الله يتبادلان التحذيرات</h2>
                     <p class="card-snippet">
-         تبادل الجيش الإسرائيلي وحزب الله اليوم السبت، التحذيرات لسكان المناطق الحدودية جنوب لبنان ...</p>
+         تبادل الجيش الإسرائيلي وحزب الله اليوم السبت، التحذيرات لسكان المناطق الحدودية جنوب لبنان وشمال إسرا...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -151,28 +176,19 @@
                     </div>
                 </div>
             </article>
-                <div class="special-ad-block">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="ad-link">
-                        <div class="ad-inner">
-                            <span class="live-pulse">LIVE</span>
-                            <h3>تغطية حية ومباشرة للأحداث المتسارعة</h3>
-                            <p>انقر هنا للدخول إلى غرفة البث المباشر</p>
-                            <div class="ad-cta">دخول سريع ⚡</div>
-                        </div>
-                    </a>
-                </div>
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac11964c59b70e3765e837.png" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac11964c59b70e3765e837.png" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">اعتقال شخص ادعى بأنه ابن ماردونا في قضية مخدرات</h2>
                     <p class="card-snippet">
-         ألقت السلطات الأرجنتينية القبض على رجل ادعى لسنوات أنه الابن السري لأسطورة كرة القدم الأرج...</p>
+         ألقت السلطات الأرجنتينية القبض على رجل ادعى لسنوات أنه الابن السري لأسطورة كرة القدم الأرجنتيني الرا...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -184,15 +200,16 @@
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac125a4c59b70c865886b1.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac125a4c59b70c865886b1.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">برسالة غامضة على "إنستغرام".. زيزو يثير الجدل (فيديو -صورة)</h2>
                     <p class="card-snippet">
-         لم يكن أحمد مصطفى زيزو لاعب الأهلي المصري راضيا عن قرار استبداله في مواجهة المقاولون العرب...</p>
+         لم يكن أحمد مصطفى زيزو لاعب الأهلي المصري راضيا عن قرار استبداله في مواجهة المقاولون العرب في الجولة...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -204,15 +221,16 @@
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac134d4236042746012c74.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac134d4236042746012c74.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">الأردن يعلن حصيلة الصواريخ والمسيرات التي تصدى لها ويكشف خسائره</h2>
                     <p class="card-snippet">
-         أعلنت القوات المسلحة ومديرية الأمن العام الأردنية أن الدفاعات الجوية الأردنية تعاملت مع 11...</p>
+         أعلنت القوات المسلحة ومديرية الأمن العام الأردنية أن الدفاعات الجوية الأردنية تعاملت مع 119 صاروخا و...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -221,18 +239,29 @@
                     </div>
                 </div>
             </article>
+                <div class="special-ad-block">
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="ad-link">
+                        <div class="ad-inner">
+                            <span class="live-pulse">LIVE</span>
+                            <h3>تغطية شاملة وحصرية لآخر التطورات</h3>
+                            <p>انقر هنا للمتابعة الفورية عبر البث المباشر</p>
+                            <div class="ad-cta">دخول الآن ⚡</div>
+                        </div>
+                    </a>
+                </div>
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac108b4236042746012c70.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac108b4236042746012c70.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">بالتزامن مع أزمة غاز عالمية بسبب حرب إيران.. مصر تبحث الإنتاج من حقل بوسط الدلتا بعد كشف جديد</h2>
                     <p class="card-snippet">
-         تواصل مصر جهودها لتعزيز إنتاج الغاز الطبيعي من حقل دسوق، الذي يشهد نشاطا متزايدا ضمن خطة ا...</p>
+         تواصل مصر جهودها لتعزيز إنتاج الغاز الطبيعي من حقل دسوق، الذي يشهد نشاطا متزايدا ضمن خطة الدولة لتطو...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -241,28 +270,19 @@
                     </div>
                 </div>
             </article>
-                <div class="special-ad-block">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="ad-link">
-                        <div class="ad-inner">
-                            <span class="live-pulse">LIVE</span>
-                            <h3>تغطية حية ومباشرة للأحداث المتسارعة</h3>
-                            <p>انقر هنا للدخول إلى غرفة البث المباشر</p>
-                            <div class="ad-cta">دخول سريع ⚡</div>
-                        </div>
-                    </a>
-                </div>
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac13184236042746012c72.png" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac13184236042746012c72.png" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">روسيا تحرز أول ميدالية لها في دورة الألعاب البارالمبية بإيطاليا</h2>
                     <p class="card-snippet">
-         حققت روسيا أولى ميدالياتها في دورة الألعاب البارالمبية الشتوية 2026 في إيطاليا، عبر المتزل...</p>
+         حققت روسيا أولى ميدالياتها في دورة الألعاب البارالمبية الشتوية 2026 في إيطاليا، عبر المتزلجة فارفارا...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -274,15 +294,16 @@
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0bac4c59b70c7f045559.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0bac4c59b70c7f045559.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">ترامب: إيران استسلمت لجيرانها في الشرق الأوسط</h2>
                     <p class="card-snippet">
-         صرح الرئيس الأمريكي دونالد ترامب، بأن إيران التي وصفها بأنها "تتعرض لهزيمة ساحقة"، قد قدمت...</p>
+         صرح الرئيس الأمريكي دونالد ترامب، بأن إيران التي وصفها بأنها "تتعرض لهزيمة ساحقة"، قد قدمت اعتذارا ر...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -294,15 +315,16 @@
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0eec423604267c7bbd5e.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0eec423604267c7bbd5e.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">ترتيب الدوري الإسباني بعد فوز ريال مدريد على سيلتا فيغو</h2>
                     <p class="card-snippet">
-         انطلقت منافسات الجولة السابعة والعشرين من بطولة الدوري الإسباني لكرة القدم موسم 2025-2026 ...</p>
+         انطلقت منافسات الجولة السابعة والعشرين من بطولة الدوري الإسباني لكرة القدم موسم 2025-2026 مساء أمس ا...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -311,18 +333,29 @@
                     </div>
                 </div>
             </article>
+                <div class="special-ad-block">
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="ad-link">
+                        <div class="ad-inner">
+                            <span class="live-pulse">LIVE</span>
+                            <h3>تغطية شاملة وحصرية لآخر التطورات</h3>
+                            <p>انقر هنا للمتابعة الفورية عبر البث المباشر</p>
+                            <div class="ad-cta">دخول الآن ⚡</div>
+                        </div>
+                    </a>
+                </div>
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0de9423604289b6a3295.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0de9423604289b6a3295.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">الجيش اللبناني يعلن مقتل 3 عسكريين ويصدر بيانا حول الإنزال الإسرائيلي في النبي شيت</h2>
                     <p class="card-snippet">
-         أعلن الجيش اللبناني اليوم السبت، مقتل 3 عسكريين، وأصدر بيانا تحدث فيه حول الإنزال الإسرائي...</p>
+         أعلن الجيش اللبناني اليوم السبت، مقتل 3 عسكريين، وأصدر بيانا تحدث فيه حول الإنزال الإسرائيلي الذي حص...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -331,28 +364,19 @@
                     </div>
                 </div>
             </article>
-                <div class="special-ad-block">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="ad-link">
-                        <div class="ad-inner">
-                            <span class="live-pulse">LIVE</span>
-                            <h3>تغطية حية ومباشرة للأحداث المتسارعة</h3>
-                            <p>انقر هنا للدخول إلى غرفة البث المباشر</p>
-                            <div class="ad-cta">دخول سريع ⚡</div>
-                        </div>
-                    </a>
-                </div>
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0aa8423604267c7bbd58.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0aa8423604267c7bbd58.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">الولايات المتحدة تعلن نيتها السيطرة الكاملة على احتياطيات النفط الإيرانية</h2>
                     <p class="card-snippet">
-         أعلن المدير التنفيذي لمجلس هيمنة الطاقة الأمريكي جارود أجين أن إدارة الرئيس الأمريكي دونال...</p>
+         أعلن المدير التنفيذي لمجلس هيمنة الطاقة الأمريكي جارود أجين أن إدارة الرئيس الأمريكي دونالد ترامب تع...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -364,15 +388,16 @@
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0955423604284a71692d.png" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0955423604284a71692d.png" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">كاتس يهدد لبنان ورئيسه: تحركوا قبل أن نرتكب المزيد.. وما علاقة نصرالله؟</h2>
                     <p class="card-snippet">
-         وجه وزير الدفاع الإسرائيلي يسرائيل كاتس تهديدا للبنان ورئيسه، معتبرا أنه لم يتم تنفيذ التع...</p>
+         وجه وزير الدفاع الإسرائيلي يسرائيل كاتس تهديدا للبنان ورئيسه، معتبرا أنه لم يتم تنفيذ التعهدات بنزع ...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -384,15 +409,16 @@
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0553423604264b04723e.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0553423604264b04723e.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">الجيش الإسرائيلي يصدر بيانا بشأن عملية البحث عن الطيار رون أراد في لبنان</h2>
                     <p class="card-snippet">
-         أفاد المتحدث باسم الجيش الإسرائيلي بالعربية، أفيخاي أدرعي، أن قوات خاصة من الجيش نفذت عملي...</p>
+         أفاد المتحدث باسم الجيش الإسرائيلي بالعربية، أفيخاي أدرعي، أن قوات خاصة من الجيش نفذت عملية بحث ميدا...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -401,18 +427,29 @@
                     </div>
                 </div>
             </article>
+                <div class="special-ad-block">
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="ad-link">
+                        <div class="ad-inner">
+                            <span class="live-pulse">LIVE</span>
+                            <h3>تغطية شاملة وحصرية لآخر التطورات</h3>
+                            <p>انقر هنا للمتابعة الفورية عبر البث المباشر</p>
+                            <div class="ad-cta">دخول الآن ⚡</div>
+                        </div>
+                    </a>
+                </div>
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac07f542360429533d0348.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac07f542360429533d0348.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">طهران: احترامنا لسيادة الجيران لا يعني التخلي عن الرد على المعتدي</h2>
                     <p class="card-snippet">
-         توعدت القوات المسلحة الإيرانية باستهداف جميع القواعد العسكرية والمصالح الأمريكية والإسرائي...</p>
+         توعدت القوات المسلحة الإيرانية باستهداف جميع القواعد العسكرية والمصالح الأمريكية والإسرائيلية في الب...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -421,28 +458,19 @@
                     </div>
                 </div>
             </article>
-                <div class="special-ad-block">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="ad-link">
-                        <div class="ad-inner">
-                            <span class="live-pulse">LIVE</span>
-                            <h3>تغطية حية ومباشرة للأحداث المتسارعة</h3>
-                            <p>انقر هنا للدخول إلى غرفة البث المباشر</p>
-                            <div class="ad-cta">دخول سريع ⚡</div>
-                        </div>
-                    </a>
-                </div>
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac042e4c59b70ca729a3d1.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac042e4c59b70ca729a3d1.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">أذربيجان: إحباط عدة مؤامرات إيرانية منها خطة لاستهداف خط أنابيب رئيسي</h2>
                     <p class="card-snippet">
-         أعلنت أذربيجان أنها أحبطت عدة أعمال تخريبية "إرهابية" خطط لها الحرس الثوري الإيراني في أرا...</p>
+         أعلنت أذربيجان أنها أحبطت عدة أعمال تخريبية "إرهابية" خطط لها الحرس الثوري الإيراني في أراضيها، بما ...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -454,15 +482,16 @@
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac05dd4c59b7092f5d397d.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac05dd4c59b7092f5d397d.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">رد فعل الوليد بن طلال بعد اكتساح الهلال للنجمة (فيديو)</h2>
                     <p class="card-snippet">
-         شهدت مباراة الهلال والنجمة احتفالا لافتا من الأمير الوليد بن طلال كبير الأعضاء الذهبيين في...</p>
+         شهدت مباراة الهلال والنجمة احتفالا لافتا من الأمير الوليد بن طلال كبير الأعضاء الذهبيين في نادي الهل...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -474,15 +503,16 @@
             <article class="premium-card">
                 <div class="badge">حصري</div>
                 <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0321423604267c7bbd50.jpg" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0321423604267c7bbd50.jpg" loading="lazy" alt="news">
+                    </a>
                 </div>
                 <div class="card-content">
                     <h2 class="card-title">تحليل: ترامب "أخطأ في حساباته" ويواجه المزيد من المخاطر والتحديات بعد أسبوع من الحرب على إيران</h2>
                     <p class="card-snippet">
-         بعد مضي أسبوع على اندلاع الحرب الأمريكية الإسرائيلية على إيران التي أغرقت الشرق الأوسط في ...</p>
+         بعد مضي أسبوع على اندلاع الحرب الأمريكية الإسرائيلية على إيران التي أغرقت الشرق الأوسط في اضطرابات، ...</p>
                     <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
+                        <span>🕒 12:24 PM</span>
                         <span>🔥 ترند الآن</span>
                     </div>
                     <div class="action-area">
@@ -491,39 +521,19 @@
                     </div>
                 </div>
             </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac01cc423604264b047234.png" loading="lazy" alt="news">
-                    <div class="image-overlay"></div>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">أهالي الجنوب السوري لـ"RT": منطقتنا باتت ساحة مواجهة مفتوحة</h2>
-                    <p class="card-snippet">
-         أفادت مصادر أهلية في درعا بحصول انفجار عنيف هز الريف الشرقي للمحافظة، اتضح لاحقا أنه ناتج ...</p>
-                    <div class="meta-data">
-                        <span>🕒 12:15 PM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/middle_east/1764846-%D8%A3%D9%87%D8%A7%D9%84%D9%8A-%D8%A7%D9%84%D8%AC%D9%86%D9%88%D8%A8-%D8%A7%D9%84%D8%B3%D9%88%D8%B1%D9%8A-%D9%84%D9%80rt-%D9%85%D9%86%D8%B7%D9%82%D8%AA%D9%86%D8%A7-%D8%A8%D8%A7%D8%AA%D8%AA-%D8%B3%D8%A7%D8%AD%D8%A9-%D9%85%D9%88%D8%A7%D8%AC%D9%87%D8%A9-%D9%85%D9%81%D8%AA%D9%88%D8%AD%D8%A9/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
                 <div class="special-ad-block">
                     <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="ad-link">
                         <div class="ad-inner">
                             <span class="live-pulse">LIVE</span>
-                            <h3>تغطية حية ومباشرة للأحداث المتسارعة</h3>
-                            <p>انقر هنا للدخول إلى غرفة البث المباشر</p>
-                            <div class="ad-cta">دخول سريع ⚡</div>
+                            <h3>تغطية شاملة وحصرية لآخر التطورات</h3>
+                            <p>انقر هنا للمتابعة الفورية عبر البث المباشر</p>
+                            <div class="ad-cta">دخول الآن ⚡</div>
                         </div>
                     </a>
                 </div>
     </main>
-    <footer style="text-align:center; padding: 50px; color: #555; border-top: 1px solid #222;">
-        <p>جميع الحقوق محفوظة لشبكة الحدث 24 &copy; 2026</p>
+    <footer style="text-align:center; padding: 30px; color: #484f58; font-size: 12px;">
+        <p>Alhadath 24 &copy; 2026 | Automated by Shadow Core</p>
     </footer>
 </body>
 </html>
