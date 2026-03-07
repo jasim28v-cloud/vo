@@ -4,7 +4,6 @@ from datetime import datetime
 import re
 
 def run_news():
-    # رابط RSS الخاص بالجزيرة (الأخبار العربية)
     rss_url = "https://www.aljazeera.net/aljazeerarss/a7c29549-5861-4fd5-9111-30ae11157f46/4f9136ff-6060-466d-ad02-e2b216972740"
     headers = {'User-Agent': 'Mozilla/5.0'}
     
@@ -14,26 +13,33 @@ def run_news():
         items = soup.find_all('item')
         
         news_cards = ""
-        for item in items[:15]: # جلب آخر 15 خبر
+        for item in items[:12]:
             title = item.title.text
             link = item.link.text
-            # استخراج الصورة من التاغ المخصص لها في RSS الجزيرة
-            media_content = item.find('media:content') or item.find('enclosure')
-            img_url = media_content['url'] if media_content else "https://via.placeholder.com/600x400?text=Alnidal+News"
             
-            # تنظيف الوصف
+            # سحب الصورة الأصلية
+            media_content = item.find('media:content') or item.find('enclosure')
+            img_url = media_content['url'] if media_content else ""
+            
+            # تنظيف الوصف وتحسينه
             description = item.description.text if item.description else ""
-            clean_desc = re.sub('<[^<]+?>', '', description)[:120] + "..."
+            clean_desc = re.sub('<[^<]+?>', '', description)[:150] + "..."
             
             news_cards += f'''
-            <div class="news-card">
-                <div class="news-img" style="background-image: url('{img_url}')"></div>
-                <div class="news-body">
-                    <h3 class="news-title">{title}</h3>
-                    <p class="news-desc">{clean_desc}</p>
-                    <a href="{link}" target="_blank" class="read-more">اقرأ الخبر كاملاً</a>
-                </div>
-            </div>'''
+            <article class="aj-card">
+                <a href="{link}" target="_blank" style="text-decoration:none; color:inherit;">
+                    <div class="aj-img-wrapper">
+                        <img src="{img_url}" alt="{title}" loading="lazy">
+                    </div>
+                    <div class="aj-content">
+                        <h2 class="aj-title">{title}</h2>
+                        <p class="aj-desc">{clean_desc}</p>
+                        <div class="aj-meta">
+                            <span class="aj-date">🕒 {datetime.now().strftime("%d/%m/%Y")}</span>
+                        </div>
+                    </div>
+                </a>
+            </article>'''
 
         now = datetime.now().strftime("%Y-%m-%d | %I:%M %p")
         
@@ -43,52 +49,52 @@ def run_news():
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>النضال نيوز | Alnidal News</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {{ --main: #e11d48; --bg: #f8fafc; --text: #1e293b; }}
-        body {{ background: var(--bg); color: var(--text); font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; }}
+        :root {{ --aj-blue: #041e42; --aj-gold: #ff9900; --bg: #ffffff; }}
+        body {{ background: var(--bg); color: #333; font-family: 'Noto Kufi Arabic', sans-serif; margin: 0; padding: 0; }}
         
-        .navbar {{ background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }}
-        .logo {{ font-size: 24px; font-weight: bold; color: var(--main); text-decoration: none; }}
-        .update-time {{ font-size: 12px; color: #64748b; }}
+        /* Header style like Al Jazeera */
+        header {{ border-bottom: 4px solid var(--aj-blue); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; background: #fff; position: sticky; top:0; z-index:100; }}
+        .logo {{ font-size: 28px; font-weight: bold; color: var(--aj-blue); text-decoration: none; display: flex; align-items: center; gap: 10px; }}
+        .logo span {{ color: var(--aj-gold); }}
 
-        .hero {{ background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&q=80&w=1000'); background-size: cover; background-position: center; color: white; padding: 60px 5%; text-align: center; margin-bottom: 40px; }}
-        .hero h1 {{ font-size: 36px; margin: 0; }}
+        .container {{ max-width: 1100px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 40px; }}
+        
+        /* Card style inspired by the screenshot */
+        .aj-card {{ background: #fff; transition: 0.3s; border-bottom: 1px solid #eee; padding-bottom: 20px; }}
+        .aj-card:hover .aj-title {{ color: var(--aj-gold); }}
+        
+        .aj-img-wrapper {{ width: 100%; height: 220px; overflow: hidden; border-radius: 4px; background: #f0f0f0; }}
+        .aj-img-wrapper img {{ width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }}
+        .aj-card:hover img {{ transform: scale(1.05); }}
+        
+        .aj-content {{ padding: 15px 0; }}
+        .aj-title {{ font-size: 20px; line-height: 1.4; margin: 10px 0; color: var(--aj-blue); font-weight: 700; }}
+        .aj-desc {{ font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 15px; }}
+        .aj-meta {{ font-size: 12px; color: #888; display: flex; align-items: center; gap: 10px; }}
 
-        .container {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; padding: 0 5% 50px 5%; max-width: 1200px; margin: 0 auto; }}
+        footer {{ background: var(--aj-blue); color: #fff; text-align: center; padding: 30px; margin-top: 60px; }}
         
-        .news-card {{ background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; display: flex; flex-direction: column; }}
-        .news-card:hover {{ transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }}
-        
-        .news-img {{ height: 200px; background-size: cover; background-position: center; }}
-        .news-body {{ padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }}
-        .news-title {{ font-size: 18px; margin: 0 0 12px 0; line-height: 1.5; color: #0f172a; }}
-        .news-desc {{ font-size: 14px; color: #475569; margin-bottom: 20px; line-height: 1.6; flex-grow: 1; }}
-        
-        .read-more {{ display: inline-block; background: var(--main); color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; font-size: 14px; text-align: center; transition: 0.2s; }}
-        .read-more:hover {{ opacity: 0.9; }}
-
-        footer {{ background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: 50px; }}
+        @media (max-width: 600px) {{
+            .container {{ grid-template-columns: 1fr; }}
+            .aj-title {{ font-size: 18px; }}
+        }}
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <a href="#" class="logo">النضال نيوز 📰</a>
-        <div class="update-time">آخر تحديث: {now}</div>
-    </div>
+    <header>
+        <a href="#" class="logo">النضال <span>نيوز</span></a>
+        <div style="font-size: 11px; color: #666;">آخر تحديث: {now}</div>
+    </header>
 
-    <div class="hero">
-        <h1>أخبار العالم بين يديك</h1>
-        <p>تغطية شاملة ومباشرة من قلب الحدث</p>
-    </div>
-
-    <div class="container">
+    <main class="container">
         {news_cards}
-    </div>
+    </main>
 
     <footer>
-        <p>النضال نيوز &copy; 2026</p>
-        <p style="font-size: 12px; color: #94a3b8;">جميع الحقوق محفوظة - مصدر الأخبار: الجزيرة نت</p>
+        <p>النضال نيوز - المصدر الأول للأخبار</p>
+        <p style="font-size: 11px; opacity: 0.7;">نقل مباشر من الجزيرة نت &copy; 2026</p>
     </footer>
 </body>
 </html>'''
