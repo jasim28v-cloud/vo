@@ -4,8 +4,8 @@ from datetime import datetime
 import re
 
 def run_news():
-    # رابط RSS الجزيرة
-    rss_url = "https://www.aljazeera.net/aljazeerarss/a7c29549-5861-4fd5-9111-30ae11157f46/4f9136ff-6060-466d-ad02-e2b216972740"
+    # رابط RSS سكاي نيوز عربية - أخبار العالم
+    rss_url = "https://www.skynewsarabia.com/rss/v1/world.xml"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
     }
@@ -20,43 +20,32 @@ def run_news():
             title = item.title.text
             link = item.link.text
             
-            # --- نظام متطور لجلب الصورة ---
+            # سحب الصورة من سكاي نيوز (تستخدم تاغ enclosure عادةً)
             img_url = ""
-            # البحث في media:content
-            media = item.find('media:content')
-            if media and media.get('url'):
-                img_url = media['url']
-            # البحث في enclosure
-            if not img_url:
-                enclosure = item.find('enclosure')
-                if enclosure and enclosure.get('url'):
-                    img_url = enclosure['url']
-            # البحث داخل الوصف (Description) كحل أخير
-            if not img_url:
-                desc_soup = BeautifulSoup(item.description.text if item.description else "", "html.parser")
-                img_tag = desc_soup.find('img')
-                if img_tag and img_tag.get('src'):
-                    img_url = img_tag['src']
+            enclosure = item.find('enclosure')
+            if enclosure and enclosure.get('url'):
+                img_url = enclosure['url']
             
-            # إذا لم توجد صورة نضع صورة افتراضية فخمة
+            # إذا لم تكن هناك صورة، نستخدم صورة من قلب الحدث
             if not img_url:
-                img_url = "https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg"
+                img_url = "https://www.skynewsarabia.com/images/v1/2022/07/04/1536761/800/450/1-1536761.JPG"
 
-            # تنظيف الوصف
+            # تنظيف الوصف (Text)
             description = item.description.text if item.description else ""
-            clean_desc = re.sub('<[^<]+?>', '', description)[:140] + "..."
+            clean_desc = re.sub('<[^<]+?>', '', description)[:130] + "..."
             
             news_cards += f'''
-            <article class="aj-card">
-                <a href="{link}" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="{img_url}" alt="{title}" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
+            <article class="news-card">
+                <a href="{link}" target="_blank" class="card-link">
+                    <div class="img-container">
+                        <img src="{img_url}" alt="{title}" loading="lazy">
                     </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">{title}</h2>
-                        <p class="aj-desc">{clean_desc}</p>
-                        <div class="aj-meta">
+                    <div class="card-content">
+                        <h2 class="card-title">{title}</h2>
+                        <p class="card-text">{clean_desc}</p>
+                        <div class="card-footer">
                             <span>🕒 {datetime.now().strftime("%d/%m/%Y")}</span>
+                            <span class="source-tag">سكاي نيوز</span>
                         </div>
                     </div>
                 </a>
@@ -64,38 +53,57 @@ def run_news():
 
         now = datetime.now().strftime("%Y-%m-%d | %I:%M %p")
         
-        # قالب الـ HTML (نفس التصميم الفخم)
+        # تصميم "النضال نيوز" العصري والجديد
         html = f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>النضال نيوز | أخبار العالم</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    <title>النضال نيوز | Alnidal News</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {{ --main: #041e42; --gold: #ff9900; }}
-        body {{ background: #fdfdfd; color: #333; font-family: 'Noto Kufi Arabic', sans-serif; margin: 0; }}
-        header {{ border-bottom: 4px solid var(--main); padding: 15px 5%; background: #fff; display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }}
-        .logo {{ font-size: 26px; font-weight: bold; color: var(--main); text-decoration: none; }}
-        .logo span {{ color: var(--gold); }}
-        .container {{ max-width: 1100px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 35px; }}
-        .aj-card {{ background: #fff; border-bottom: 2px solid #eee; padding-bottom: 15px; transition: 0.3s; }}
-        .aj-card:hover {{ transform: translateY(-5px); }}
-        .aj-img-wrapper {{ width: 100%; height: 210px; overflow: hidden; border-radius: 8px; }}
-        .aj-img-wrapper img {{ width: 100%; height: 100%; object-fit: cover; }}
-        .aj-title {{ font-size: 19px; line-height: 1.5; margin: 15px 0; color: var(--main); font-weight: 700; }}
-        .aj-desc {{ font-size: 14px; color: #666; line-height: 1.7; }}
-        .aj-meta {{ font-size: 12px; color: #999; margin-top: 10px; }}
-        footer {{ background: var(--main); color: #fff; text-align: center; padding: 30px; margin-top: 50px; }}
+        :root {{ --primary: #c00; --dark: #1a1a1a; --gray: #666; }}
+        body {{ background: #f4f4f4; color: var(--dark); font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }}
+        
+        header {{ background: #fff; border-bottom: 3px solid var(--primary); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }}
+        .logo {{ font-size: 28px; font-weight: 800; color: var(--dark); text-decoration: none; }}
+        .logo span {{ color: var(--primary); }}
+        .update-time {{ font-size: 11px; color: var(--gray); }}
+
+        .container {{ max-width: 1200px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }}
+        
+        .news-card {{ background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s; }}
+        .news-card:hover {{ transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }}
+        .card-link {{ text-decoration: none; color: inherit; }}
+        
+        .img-container {{ width: 100%; height: 210px; overflow: hidden; }}
+        .img-container img {{ width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }}
+        .news-card:hover img {{ transform: scale(1.08); }}
+        
+        .card-content {{ padding: 20px; }}
+        .card-title {{ font-size: 19px; line-height: 1.5; margin: 0 0 12px 0; font-weight: 700; color: #000; }}
+        .card-text {{ font-size: 14px; color: var(--gray); line-height: 1.6; margin-bottom: 15px; }}
+        
+        .card-footer {{ display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 15px; font-size: 12px; color: #999; }}
+        .source-tag {{ background: #f0f0f0; padding: 2px 8px; border-radius: 4px; color: var(--primary); font-weight: bold; }}
+
+        footer {{ background: var(--dark); color: #fff; text-align: center; padding: 40px; margin-top: 60px; }}
+        
+        @media (max-width: 600px) {{ .container {{ grid-template-columns: 1fr; }} }}
     </style>
 </head>
 <body>
     <header>
         <a href="#" class="logo">النضال <span>نيوز</span></a>
-        <div style="font-size: 11px; color: #888;">آخر تحديث: {now}</div>
+        <div class="update-time">تحديث تلقائي: {now}</div>
     </header>
+
     <main class="container">{news_cards}</main>
-    <footer><p>النضال نيوز &copy; 2026 | المصدر: الجزيرة نت</p></footer>
+
+    <footer>
+        <p>النضال نيوز &copy; 2026</p>
+        <p style="font-size: 12px; opacity: 0.6;">جميع الحقوق محفوظة - مصدر الأخبار: سكاي نيوز عربية</p>
+    </footer>
 </body>
 </html>'''
 
