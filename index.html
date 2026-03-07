@@ -3,277 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>النضال نيوز | Alnidal News</title>
+    <title>النضال نيوز</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { background: #f0f2f5; font-family: 'Cairo', sans-serif; margin: 0; }
-        header { background: #fff; border-bottom: 4px solid #c00; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .logo { font-size: 26px; font-weight: 800; color: #1a1a1a; text-decoration: none; }
-        .logo span { color: #c00; }
-        .container { max-width: 1100px; margin: 30px auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-        .news-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: 0.3s; display: flex; flex-direction: column; cursor: pointer; }
-        .news-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
-        .img-wrapper img { width: 100%; height: 200px; object-fit: cover; }
-        .card-content { padding: 15px; flex-grow: 1; }
-        .card-title { font-size: 17px; line-height: 1.5; margin: 0 0 10px 0; color: #000; font-weight: 700; }
-        .card-text { font-size: 13px; color: #555; line-height: 1.6; height: 60px; overflow: hidden; }
-        .card-footer { padding: 15px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: #fafafa; }
-        .source-btn { background: #c00; color: #fff; padding: 6px 15px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; transition: 0.3s; }
-        .source-btn:hover { background: #1a1a1a; }
-        footer { background: #1a1a1a; color: #fff; text-align: center; padding: 30px; margin-top: 50px; }
-        @media (max-width: 600px) { .container { grid-template-columns: 1fr; } }
+        header { background: #fff; border-bottom: 3px solid #c00; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 99; }
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .ad-card { border: 2px solid #3498db; position: relative; }
+        .ad-badge { position: absolute; top: 10px; right: 10px; background: #3498db; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 10px; font-weight: bold; }
+        .card a { text-decoration: none; color: inherit; }
+        .card img { width: 100%; height: 180px; object-fit: cover; }
+        .p-3 { padding: 15px; flex-grow: 1; }
+        .title { font-size: 16px; margin: 0 0 10px 0; line-height: 1.4; }
+        .text { font-size: 12px; color: #666; height: 50px; overflow: hidden; }
+        .footer { padding: 10px; border-top: 1px solid #eee; display: flex; justify-content: space-between; }
+        .btn { background: #c00; color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 12px; text-decoration: none; }
+        footer { background: #1a1a1a; color: #fff; text-align: center; padding: 20px; margin-top: 40px; }
     </style>
 </head>
 <body>
-    <header>
-        <a href="#" class="logo">النضال <span>نيوز</span></a>
-        <div style="font-size: 11px; color: #666;">تحديث: 2026-03-07 | 08:58 AM</div>
-    </header>
-    <main class="container">
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">لحظة بلحظة.. الحرب الأمريكية-الإسرائيلية على إيران بيومها الثامن: تصعيد متواصل يهز الشرق الأوسط</h2>
-                        <p class="card-text">
-         في يومها الثامن تشهد الحرب على إيران تصعيدا ينسحب على الشرق الأوسط حيث تواصل واشنطن وتل أبيب ضرب أهد...</p>
+    <header><div style="font-size: 24px; font-weight: bold;">النضال <span style="color:#c00;">نيوز</span></div><div style="font-size:12px;">09:03 AM</div></header>
+    <div class="container">
+            <div class="card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                    <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy">
+                    <div class="p-3">
+                        <h3 class="title">لحظة بلحظة.. الحرب الأمريكية-الإسرائيلية على إيران بيومها الثامن: تصعيد متواصل يهز الشرق الأوسط</h3>
+                        <p class="text">
+         في يومها الثامن تشهد الحرب على إيران تصعيدا ينسحب على الشرق الأوسط حيث تواصل واشنطن وتل أب...</p>
                     </div>
                 </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
-                </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">لحظة بلحظة.. غارات إسرائيلية متواصلة على لبنان وحزب الله يلتحم ناريا مع قوات متسللة في البقاع</h2>
-                        <p class="card-text">
-         يتواصل القصف الإسرائيلي على لبنان السبت، خصوصا في جنوب وشرق لبنان وفي ضاحية بيروت، فيما يؤكد حزب الل...</p>
+                <div class="footer"><a href="https://arabic.rt.com/world/1764773-%D9%84%D8%AD%D8%B8%D8%A9-%D8%A8%D9%84%D8%AD%D8%B8%D8%A9-%D8%A7%D9%84%D8%AD%D8%B1%D8%A8-%D8%A7%D9%84%D8%A3%D9%85%D8%B1%D9%8A%D9%83%D9%8A%D8%A9-%D8%A7%D9%84%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86-%D8%A8%D9%8A%D9%88%D9%85%D9%87%D8%A7-%D8%A7%D9%84%D8%AB%D8%A7%D9%85%D9%86-%D8%AA%D8%B5%D8%B9%D9%8A%D8%AF-%D9%85%D8%AA%D9%88%D8%A7%D8%B5%D9%84-%D9%8A%D9%87%D8%B2-%D8%A7%D9%84%D8%B4%D8%B1%D9%82-%D8%A7%D9%84%D8%A3%D9%88%D8%B3%D8%B7/" target="_blank" class="btn">التفاصيل</a></div>
+            </div>
+            <div class="card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                    <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy">
+                    <div class="p-3">
+                        <h3 class="title">لحظة بلحظة.. غارات إسرائيلية متواصلة على لبنان وحزب الله يلتحم ناريا مع قوات متسللة في البقاع</h3>
+                        <p class="text">
+         يتواصل القصف الإسرائيلي على لبنان السبت، خصوصا في جنوب وشرق لبنان وفي ضاحية بيروت، فيما يؤ...</p>
                     </div>
                 </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
-                </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abe1cc423604255c654ed7.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">أذربيجان تنهي إجلاء دبلوماسييها من إيران</h2>
-                        <p class="card-text">
-         أعلنت أذربيجان اكتمال عملية إجلاء موظفي بعثتها الدبلوماسية في مدينة تبريز الإيرانية، فيما لا يزال عد...</p>
+                <div class="footer"><a href="https://arabic.rt.com/middle_east/1764776-%D9%84%D8%AD%D8%B8%D8%A9-%D8%A8%D9%84%D8%AD%D8%B8%D8%A9-%D8%BA%D8%A7%D8%B1%D8%A7%D8%AA-%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A%D8%A9-%D9%85%D8%AA%D9%88%D8%A7%D8%B5%D9%84%D8%A9-%D8%B9%D9%84%D9%89-%D9%84%D8%A8%D9%86%D8%A7%D9%86-%D9%88%D8%AD%D8%B2%D8%A8-%D8%A7%D9%84%D9%84%D9%87-%D9%8A%D9%84%D8%AA%D8%AD%D9%85-%D9%86%D8%A7%D8%B1%D9%8A%D8%A7-%D9%85%D8%B9-%D9%82%D9%88%D8%A7%D8%AA-%D9%85%D8%AA%D8%B3%D9%84%D9%84%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D9%82%D8%A7%D8%B9/" target="_blank" class="btn">التفاصيل</a></div>
+            </div>
+            <div class="card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abe1cc423604255c654ed7.jpg" loading="lazy">
+                    <div class="p-3">
+                        <h3 class="title">أذربيجان تنهي إجلاء دبلوماسييها من إيران</h3>
+                        <p class="text">
+         أعلنت أذربيجان اكتمال عملية إجلاء موظفي بعثتها الدبلوماسية في مدينة تبريز الإيرانية، فيما ...</p>
                     </div>
                 </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
+                <div class="footer"><a href="https://arabic.rt.com/world/1764808-%D8%A3%D8%B0%D8%B1%D8%A8%D9%8A%D8%AC%D8%A7%D9%86-%D8%AA%D8%AC%D9%84%D9%8A-%D8%AF%D8%A8%D9%84%D9%88%D9%85%D8%A7%D8%B3%D9%8A%D9%8A%D9%87%D8%A7-%D9%85%D9%86-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86-%D9%88%D8%B3%D8%B7-%D8%AA%D8%B5%D8%A7%D8%B9%D8%AF-%D8%AD%D8%AF%D8%A9-%D8%A7%D9%84%D8%AA%D9%88%D8%AA%D8%B1%D8%A7%D8%AA-%D9%81%D9%8A-%D8%A7%D9%84%D9%85%D9%86%D8%B7%D9%82%D8%A9/" target="_blank" class="btn">التفاصيل</a></div>
+            </div>
+                <div class="card ad-card">
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <div class="ad-badge">مُقترح لك</div>
+                        <img src="https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?q=80&w=500&auto=format&fit=crop">
+                        <div class="p-3">
+                            <h3 class="title" style="color:#2980b9;">طريقة سحرية لربح 100 دولار يومياً من المنزل</h3>
+                            <p class="text">إعلان ممول - اضغط للمزيد من المعلومات والتفاصيل الحصرية.</p>
+                        </div>
+                    </a>
                 </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abde86423604264b047217.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">حصيلة للغارات الإسرائيلية السبت على لبنان</h2>
-                        <p class="card-text">
-         منذ الساعات الأولى من فجر السبت، توجهت الأنظار إلى شرق لبنان، حيث تصدى حزب الله لإنزال إسرائيلي في ا...</p>
+            <div class="card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abde86423604264b047217.jpg" loading="lazy">
+                    <div class="p-3">
+                        <h3 class="title">حصيلة للغارات الإسرائيلية السبت على لبنان</h3>
+                        <p class="text">
+         منذ الساعات الأولى من فجر السبت، توجهت الأنظار إلى شرق لبنان، حيث تصدى حزب الله لإنزال إسر...</p>
                     </div>
                 </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
-                </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abe14442360427e525f779.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">تعرض مدرسة ثانوية للبنات في مدينة سقز بمحافظة كردستان الإيرانية للقصف (فيديو)</h2>
-                        <p class="card-text">
-         أفاد التلفزيون الإيراني بأن قصفا أمريكيا إسرائيليا استهدف مدرسة ثانوية للبنات في مدينة سقز بمحافظة ك...</p>
+                <div class="footer"><a href="https://arabic.rt.com/middle_east/1764809-%D8%AD%D8%B5%D9%8A%D9%84%D8%A9-%D9%84%D9%84%D8%BA%D8%A7%D8%B1%D8%A7%D8%AA-%D8%A7%D9%84%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A%D8%A9-%D8%A7%D9%84%D8%B3%D8%A8%D8%AA-%D8%B9%D9%84%D9%89-%D9%84%D8%A8%D9%86%D8%A7%D9%86/" target="_blank" class="btn">التفاصيل</a></div>
+            </div>
+            <div class="card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abe14442360427e525f779.jpg" loading="lazy">
+                    <div class="p-3">
+                        <h3 class="title">تعرض مدرسة ثانوية للبنات في مدينة سقز بمحافظة كردستان الإيرانية للقصف (فيديو)</h3>
+                        <p class="text">
+         أفاد التلفزيون الإيراني بأن قصفا أمريكيا إسرائيليا استهدف مدرسة ثانوية للبنات في مدينة سقز...</p>
                     </div>
                 </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
-                </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abdef5423604255c654ed4.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">دعوى قضائية جديدة تلاحق نيمار.. طباخة برازيلية سابقة تجره إلى المحاكم</h2>
-                        <p class="card-text">
-         يواجه النجم البرازيلي نيمار جونيور مهاجم نادي سانتوس فصلا جديدا من المتاعب القانونية والقضايا الجدلي...</p>
+                <div class="footer"><a href="https://arabic.rt.com/world/1764815-%D8%AA%D8%B9%D8%B1%D8%B6-%D9%85%D8%AF%D8%B1%D8%B3%D8%A9-%D8%AB%D8%A7%D9%86%D9%88%D9%8A%D8%A9-%D9%84%D9%84%D8%A8%D9%86%D8%A7%D8%AA-%D9%81%D9%8A-%D9%85%D8%AF%D9%8A%D9%86%D8%A9-%D8%B3%D9%82%D8%B2-%D8%A8%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A9-%D9%83%D8%B1%D8%AF%D8%B3%D8%AA%D8%A7%D9%86-%D8%A7%D9%84%D8%A5%D9%8A%D8%B1%D8%A7%D9%86%D9%8A%D8%A9-%D9%84%D9%84%D9%82%D8%B5%D9%81-%D9%81%D9%8A%D8%AF%D9%8A%D9%88/" target="_blank" class="btn">التفاصيل</a></div>
+            </div>
+            <div class="card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abdef5423604255c654ed4.jpg" loading="lazy">
+                    <div class="p-3">
+                        <h3 class="title">دعوى قضائية جديدة تلاحق نيمار.. طباخة برازيلية سابقة تجره إلى المحاكم</h3>
+                        <p class="text">
+         يواجه النجم البرازيلي نيمار جونيور مهاجم نادي سانتوس فصلا جديدا من المتاعب القانونية والقض...</p>
                     </div>
                 </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
+                <div class="footer"><a href="https://arabic.rt.com/sport/1764814-%D8%AF%D8%B9%D9%88%D9%89-%D9%82%D8%B6%D8%A7%D8%A6%D9%8A%D8%A9-%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9-%D8%AA%D9%84%D8%A7%D8%AD%D9%82-%D9%86%D9%8A%D9%85%D8%A7%D8%B1-%D8%B7%D8%A8%D8%A7%D8%AE%D8%A9-%D8%A8%D8%B1%D8%A7%D8%B2%D9%8A%D9%84%D9%8A%D8%A9-%D8%B3%D8%A7%D8%A8%D9%82%D8%A9-%D8%AA%D8%AC%D8%B1%D9%87-%D8%A5%D9%84%D9%89-%D8%A7%D9%84%D9%85%D8%AD%D8%A7%D9%83%D9%85/" target="_blank" class="btn">التفاصيل</a></div>
+            </div>
+                <div class="card ad-card">
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <div class="ad-badge">مُقترح لك</div>
+                        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=500&auto=format&fit=crop">
+                        <div class="p-3">
+                            <h3 class="title" style="color:#2980b9;">احصل على أحدث الهواتف بخصم 90% لفترة محدودة</h3>
+                            <p class="text">إعلان ممول - اضغط للمزيد من المعلومات والتفاصيل الحصرية.</p>
+                        </div>
+                    </a>
                 </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abdbbe4236042746012c2a.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">من "أيرون مان" إلى قصف إيران.. البيت الأبيض يصنع فيلم أكشن من الحرب الحقيقية</h2>
-                        <p class="card-text">
-         نشر البيت الأبيض فيديو دعائيا تحت عنوان "العدالة على الطريقة الأمريكية" يصور الهجوم على إيران. 
-    ...</p>
+            <div class="card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abdbbe4236042746012c2a.jpg" loading="lazy">
+                    <div class="p-3">
+                        <h3 class="title">من "أيرون مان" إلى قصف إيران.. البيت الأبيض يصنع فيلم أكشن من الحرب الحقيقية</h3>
+                        <p class="text">
+         نشر البيت الأبيض فيديو دعائيا تحت عنوان "العدالة على الطريقة الأمريكية" يصور الهجوم على إي...</p>
                     </div>
                 </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
-                </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abda844c59b701e0259e1b.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">إيفان توني يكشف سر احتفاله المثير في ديربي جدة (فيديو - صور)</h2>
-                        <p class="card-text">
-         كشف الإنجليزي إيفان توني نجم الأهلي السعودي سر احتفاله المثير للجدل عقب فوز فريقه على الاتحاد مساء ا...</p>
+                <div class="footer"><a href="https://arabic.rt.com/world/1764813-%D9%85%D9%86-%D8%A3%D9%8A%D8%B1%D9%88%D9%86-%D9%85%D8%A7%D9%86-%D8%A5%D9%84%D9%89-%D9%82%D8%B5%D9%81-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86-%D8%A7%D9%84%D8%A8%D9%8A%D8%AA-%D8%A7%D9%84%D8%A3%D8%A8%D9%8A%D8%B6-%D9%8A%D8%B5%D9%86%D8%B9-%D9%81%D9%8A%D9%84%D9%85-%D8%A3%D9%83%D8%B4%D9%86-%D9%85%D9%86-%D8%A7%D9%84%D8%AD%D8%B1%D8%A8-%D8%A7%D9%84%D8%AD%D9%82%D9%8A%D9%82%D9%8A%D8%A9/" target="_blank" class="btn">التفاصيل</a></div>
+            </div>
+            <div class="card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abda844c59b701e0259e1b.jpg" loading="lazy">
+                    <div class="p-3">
+                        <h3 class="title">إيفان توني يكشف سر احتفاله المثير في ديربي جدة (فيديو - صور)</h3>
+                        <p class="text">
+         كشف الإنجليزي إيفان توني نجم الأهلي السعودي سر احتفاله المثير للجدل عقب فوز فريقه على الات...</p>
                     </div>
                 </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
-                </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abd77f423604267c7bbd27.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">محمد صلاح يتفوق على واين روني ويرد عليه في الملعب (فيديو)</h2>
-                        <p class="card-text">
-         واصل النجم المصري محمد صلاح الرد على كل منتقديه داخل أرض الملعب بعدما سجل هدفا في فوز ليفربول على ول...</p>
+                <div class="footer"><a href="https://arabic.rt.com/sport/1764810-%D8%A5%D9%8A%D9%81%D8%A7%D9%86-%D8%AA%D9%88%D9%86%D9%8A-%D9%8A%D9%83%D8%B4%D9%81-%D8%B3%D8%B1-%D8%A7%D8%AD%D8%AA%D9%81%D8%A7%D9%84%D9%87-%D8%A7%D9%84%D9%85%D8%AB%D9%8A%D8%B1-%D9%81%D9%8A-%D8%AF%D9%8A%D8%B1%D8%A8%D9%8A-%D8%AC%D8%AF%D8%A9-%D9%81%D9%8A%D8%AF%D9%8A%D9%88-%D8%B5%D9%88%D8%B1/" target="_blank" class="btn">التفاصيل</a></div>
+            </div>
+            <div class="card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abd77f423604267c7bbd27.jpg" loading="lazy">
+                    <div class="p-3">
+                        <h3 class="title">محمد صلاح يتفوق على واين روني ويرد عليه في الملعب (فيديو)</h3>
+                        <p class="text">
+         واصل النجم المصري محمد صلاح الرد على كل منتقديه داخل أرض الملعب بعدما سجل هدفا في فوز ليفر...</p>
                     </div>
                 </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
+                <div class="footer"><a href="https://arabic.rt.com/sport/1764807-%D9%85%D8%AD%D9%85%D8%AF-%D8%B5%D9%84%D8%A7%D8%AD-%D9%8A%D8%AA%D9%81%D9%88%D9%82-%D8%B9%D9%84%D9%89-%D9%88%D8%A7%D9%8A%D9%86-%D8%B1%D9%88%D9%86%D9%8A-%D9%88%D9%8A%D8%B1%D8%AF-%D8%B9%D9%84%D9%8A%D9%87-%D9%81%D9%8A-%D8%A7%D9%84%D9%85%D9%84%D8%B9%D8%A8-%D9%81%D9%8A%D8%AF%D9%8A%D9%88/" target="_blank" class="btn">التفاصيل</a></div>
+            </div>
+                <div class="card ad-card">
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <div class="ad-badge">مُقترح لك</div>
+                        <img src="https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?q=80&w=500&auto=format&fit=crop">
+                        <div class="p-3">
+                            <h3 class="title" style="color:#2980b9;">طريقة سحرية لربح 100 دولار يومياً من المنزل</h3>
+                            <p class="text">إعلان ممول - اضغط للمزيد من المعلومات والتفاصيل الحصرية.</p>
+                        </div>
+                    </a>
                 </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abd7bb4c59b7092f5d3953.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">بزشكيان: استسلام إيران دون شروط حلم سيأخذه العدو معه إلى القبر</h2>
-                        <p class="card-text">
-         أكد الرئيس الايراني مسعود بزشكيان اليوم السبت أن "العدو سيأخذ حلمه باستسلام إيران دون شروط معه إلى ا...</p>
+            <div class="card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abd7bb4c59b7092f5d3953.jpg" loading="lazy">
+                    <div class="p-3">
+                        <h3 class="title">بزشكيان: استسلام إيران دون شروط حلم سيأخذه العدو معه إلى القبر</h3>
+                        <p class="text">
+         أكد الرئيس الايراني مسعود بزشكيان اليوم السبت أن "العدو سيأخذ حلمه باستسلام إيران دون شروط...</p>
                     </div>
                 </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
-                </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abd5404236042746012c23.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">الحرس الثوري يعلن استهداف ناقلة نفط تحمل اسم Prima بمضيق هرمز</h2>
-                        <p class="card-text">
+                <div class="footer"><a href="https://arabic.rt.com/world/1764805-%D8%A8%D8%B2%D8%B4%D9%83%D9%8A%D8%A7%D9%86-%D8%A7%D8%B3%D8%AA%D8%B3%D9%84%D8%A7%D9%85-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86-%D8%AF%D9%88%D9%86-%D8%B4%D8%B1%D9%88%D8%B7-%D8%AD%D9%84%D9%85-%D8%B3%D9%8A%D8%A3%D8%AE%D8%B0%D9%87-%D8%A7%D9%84%D8%B9%D8%AF%D9%88-%D9%85%D8%B9%D9%87-%D8%A5%D9%84%D9%89-%D8%A7%D9%84%D9%82%D8%A8%D8%B1/" target="_blank" class="btn">التفاصيل</a></div>
+            </div>
+            <div class="card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abd5404236042746012c23.jpg" loading="lazy">
+                    <div class="p-3">
+                        <h3 class="title">الحرس الثوري يعلن استهداف ناقلة نفط تحمل اسم Prima بمضيق هرمز</h3>
+                        <p class="text">
          أعلن الحرس الثوري الإيراني اليوم السبت، استهداف ناقلة نفط تحمل اسم "Prima" بمضيق هرمز. 
-        ...</p>
+  ...</p>
                     </div>
                 </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
-                </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abcfb74c59b70135095d31.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">الجيش الإسرائيلي يعلن شن أكثر من 80 مقاتلة هجوما على طهران الليلة الماضية</h2>
-                        <p class="card-text">
-         أعلن المتحدث باسم الجيش الإسرائيلي أفيخاي أدرعي أن أكثر من 80 مقاتلة شنت هجوما على العاصمة الإيرانية...</p>
+                <div class="footer"><a href="https://arabic.rt.com/world/1764804-%D8%A7%D9%84%D8%AD%D8%B1%D8%B3-%D8%A7%D9%84%D8%AB%D9%88%D8%B1%D9%8A-%D9%8A%D8%B9%D9%84%D9%86-%D8%A7%D8%B3%D8%AA%D9%87%D8%AF%D8%A7%D9%81-%D9%86%D8%A7%D9%82%D9%84%D8%A9-%D9%86%D9%81%D8%B7-%D8%AA%D8%AD%D9%85%D9%84-%D8%A7%D8%B3%D9%85-prima-%D8%A8%D9%85%D8%B6%D9%8A%D9%82-%D9%87%D8%B1%D9%85%D8%B2/" target="_blank" class="btn">التفاصيل</a></div>
+            </div>
+            <div class="card">
+                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                    <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abcfb74c59b70135095d31.jpg" loading="lazy">
+                    <div class="p-3">
+                        <h3 class="title">الجيش الإسرائيلي يعلن شن أكثر من 80 مقاتلة هجوما على طهران الليلة الماضية</h3>
+                        <p class="text">
+         أعلن المتحدث باسم الجيش الإسرائيلي أفيخاي أدرعي أن أكثر من 80 مقاتلة شنت هجوما على العاصمة...</p>
                     </div>
                 </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
-                </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abcfeb42360427d25ceba6.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">الحرس الثوري يستهدف مواقع جماعات انفصالية شمال العراق ويتوعد بـ"سحقها"</h2>
-                        <p class="card-text">
-         أعلنت العلاقات العامة للحرس الثوري أن وحدة الصواريخ استهدفت السبت، 3 مواقع تابعة لما وصفتها بـ"الجما...</p>
-                    </div>
-                </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
-                </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abcc9a4c59b77d257cf148.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">ريابكوف: التقارير حول اتفاق بين روسيا والولايات المتحدة بشأن الأسلحة النووية "مجرد تكهنات"</h2>
-                        <p class="card-text">
-         قال نائب وزير خارجية روسيا سيرغي ريابكوف إن التقارير حول توصل روسيا والولايات المتحدة إلى اتفاق بشأن...</p>
-                    </div>
-                </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
-                </div>
-            </article>
-            <article class="news-card">
-                <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abcc9142360427e525f75f.jpg" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">رئيس الاتحاد الكردستاني يدعو للبحث عن مسارات أقل دموية</h2>
-                        <p class="card-text">
-         أكد بافل جلال طالباني، رئيس الاتحاد الوطني الكردستاني، أن التصعيد العسكري الجاري في إيران بات يطال ج...</p>
-                    </div>
-                </a>
-                <div class="card-footer">
-                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank" class="source-btn">تـفاصيل الخبر 📖</a>
-                    <span style="font-size:10px; color:#999;">🕒 08:58 AM</span>
-                </div>
-            </article></main>
-    <footer>
-        <p>النضال نيوز &copy; 2026</p>
-    </footer>
+                <div class="footer"><a href="https://arabic.rt.com/world/1764803-%D8%A7%D9%84%D8%AC%D9%8A%D8%B4-%D8%A7%D9%84%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A-%D9%8A%D8%B9%D9%84%D9%86-%D8%B4%D9%86-%D8%A3%D9%83%D8%AB%D8%B1-%D9%85%D9%86-80-%D9%85%D9%82%D8%A7%D8%AA%D9%84%D8%A9-%D9%87%D8%AC%D9%88%D9%85%D8%A7-%D8%B9%D9%84%D9%89-%D8%B7%D9%87%D8%B1%D8%A7%D9%86-%D8%A7%D9%84%D9%84%D9%8A%D9%84%D8%A9-%D8%A7%D9%84%D9%85%D8%A7%D8%B6%D9%8A%D8%A9/" target="_blank" class="btn">التفاصيل</a></div>
+            </div>
+                <div class="card ad-card">
+                    <a href="https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9" target="_blank">
+                        <div class="ad-badge">مُقترح لك</div>
+                        <img src="https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?q=80&w=500&auto=format&fit=crop">
+                        <div class="p-3">
+                            <h3 class="title" style="color:#2980b9;">طريقة سحرية لربح 100 دولار يومياً من المنزل</h3>
+                            <p class="text">إعلان ممول - اضغط للمزيد من المعلومات والتفاصيل الحصرية.</p>
+                        </div>
+                    </a>
+                </div></div>
+    <footer>النضال نيوز &copy; 2026</footer>
 </body>
 </html>
