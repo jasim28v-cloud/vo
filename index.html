@@ -3,241 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>النضال نيوز | أخبار العالم</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    <title>النضال نيوز | Alnidal News</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --main: #041e42; --gold: #ff9900; }
-        body { background: #fdfdfd; color: #333; font-family: 'Noto Kufi Arabic', sans-serif; margin: 0; }
-        header { border-bottom: 4px solid var(--main); padding: 15px 5%; background: #fff; display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .logo { font-size: 26px; font-weight: bold; color: var(--main); text-decoration: none; }
-        .logo span { color: var(--gold); }
-        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 35px; }
-        .aj-card { background: #fff; border-bottom: 2px solid #eee; padding-bottom: 15px; transition: 0.3s; }
-        .aj-card:hover { transform: translateY(-5px); }
-        .aj-img-wrapper { width: 100%; height: 210px; overflow: hidden; border-radius: 8px; }
-        .aj-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .aj-title { font-size: 19px; line-height: 1.5; margin: 15px 0; color: var(--main); font-weight: 700; }
-        .aj-desc { font-size: 14px; color: #666; line-height: 1.7; }
-        .aj-meta { font-size: 12px; color: #999; margin-top: 10px; }
-        footer { background: var(--main); color: #fff; text-align: center; padding: 30px; margin-top: 50px; }
+        :root { --primary: #c00; --dark: #1a1a1a; --gray: #666; }
+        body { background: #f4f4f4; color: var(--dark); font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
+        
+        header { background: #fff; border-bottom: 3px solid var(--primary); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo { font-size: 28px; font-weight: 800; color: var(--dark); text-decoration: none; }
+        .logo span { color: var(--primary); }
+        .update-time { font-size: 11px; color: var(--gray); }
+
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
+        
+        .news-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s; }
+        .news-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .card-link { text-decoration: none; color: inherit; }
+        
+        .img-container { width: 100%; height: 210px; overflow: hidden; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .news-card:hover img { transform: scale(1.08); }
+        
+        .card-content { padding: 20px; }
+        .card-title { font-size: 19px; line-height: 1.5; margin: 0 0 12px 0; font-weight: 700; color: #000; }
+        .card-text { font-size: 14px; color: var(--gray); line-height: 1.6; margin-bottom: 15px; }
+        
+        .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 15px; font-size: 12px; color: #999; }
+        .source-tag { background: #f0f0f0; padding: 2px 8px; border-radius: 4px; color: var(--primary); font-weight: bold; }
+
+        footer { background: var(--dark); color: #fff; text-align: center; padding: 40px; margin-top: 60px; }
+        
+        @media (max-width: 600px) { .container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <header>
         <a href="#" class="logo">النضال <span>نيوز</span></a>
-        <div style="font-size: 11px; color: #888;">آخر تحديث: 2026-03-07 | 07:55 AM</div>
+        <div class="update-time">تحديث تلقائي: 2026-03-07 | 08:00 AM</div>
     </header>
-    <main class="container">
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/sport/2026/3/7/%d8%a8%d8%b1%d8%b4%d9%84%d9%88%d9%86%d8%a9-%d8%a7%d9%84%d9%85%d9%88%d8%b9%d8%af-%d8%a7%d9%84%d9%82%d9%86%d9%88%d8%a7%d8%aa-%d8%a7%d9%84%d9%86%d8%a7%d9%82%d9%84%d8%a9?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="موعد مباراة مباراة برشلونة ضد أتليتيك بيلباو في الدوري الإسباني والقنوات الناقلة" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">موعد مباراة مباراة برشلونة ضد أتليتيك بيلباو في الدوري الإسباني والقنوات الناقلة</h2>
-                        <p class="aj-desc">يسعى نادي برشلونة لتحقيق فوز جديد يبعده عن ملاحقه المباشر ريال مدريد عندما يحل ضيفا على أتليتيك بيلباو....</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/news/2026/3/7/%d8%a7%d9%84%d8%ad%d8%b1%d8%b3-%d8%a7%d9%84%d8%ab%d9%88%d8%b1%d9%8a-%d8%a7%d9%84%d8%a5%d9%8a%d8%b1%d8%a7%d9%86%d9%8a-%d9%8a%d8%aa%d9%88%d8%b9%d8%af-%d8%a7%d9%84%d9%82%d9%88%d8%a7%d8%aa?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="الحرس الثوري الإيراني يتوعد القوات الأمريكية العابرة لمضيق هرمز" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">الحرس الثوري الإيراني يتوعد القوات الأمريكية العابرة لمضيق هرمز</h2>
-                        <p class="aj-desc">قال الحرس الثوري الإيراني إنه &quot;في انتظار&quot; القوات الأمريكية التي سترافق سفنا تجارية لعبور مضيق هرمز، وذلك في ظل تصاعد وتيرة الهجمات...</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/news/2026/3/7/%d8%b9%d8%a7%d8%ac%d9%84-%d8%b7%d9%8a%d8%b1%d8%a7%d9%86-%d8%a7%d9%84%d8%a5%d9%85%d8%a7%d8%b1%d8%a7%d8%aa-%d8%aa%d8%b9%d9%84%d9%8a%d9%82-%d8%ac%d9%85%d9%8a%d8%b9?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="عاجل | طيران الإمارات: تعليق جميع الرحلات الجوية من وإلى دبي حتى إشعار آخر" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">عاجل | طيران الإمارات: تعليق جميع الرحلات الجوية من وإلى دبي حتى إشعار آخر</h2>
-                        <p class="aj-desc">التفاصيل بعد قليل.....</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/news/2026/3/7/%d8%b9%d8%a7%d8%ac%d9%84-%d8%a7%d9%84%d8%b1%d8%a6%d9%8a%d8%b3-%d8%a7%d9%84%d8%a5%d9%8a%d8%b1%d8%a7%d9%86%d9%8a-%d8%a3%d8%b9%d8%aa%d8%b0%d8%b1-%d9%84%d9%84%d8%af%d9%88%d9%84?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="عاجل | الرئيس الإيراني: أعتذر للدول المجاورة وليست لدينا عداوة معها" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">عاجل | الرئيس الإيراني: أعتذر للدول المجاورة وليست لدينا عداوة معها</h2>
-                        <p class="aj-desc">التفاصيل بعد قليل.....</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/news/2026/3/7/%d9%88%d8%b3%d8%b7-%d8%a7%d9%84%d8%aa%d8%b5%d8%b9%d9%8a%d8%af-%d8%a7%d9%84%d8%a5%d9%82%d9%84%d9%8a%d9%85%d9%8a-%d9%81%d9%8a%d8%af%d9%8a%d9%88%d9%87%d8%a7%d8%aa-%d9%82%d8%af%d9%8a%d9%85%d8%a9?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="وسط التصعيد الإقليمي.. فيديوهات قديمة لتضليل المتابعين في الخليج" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">وسط التصعيد الإقليمي.. فيديوهات قديمة لتضليل المتابعين في الخليج</h2>
-                        <p class="aj-desc">مع تصاعد التوتر في المنطقة، انتشرت فيديوهات تزعم توثيق قصف جسر الملك فهد وأحداثا في أبو ظبي ودبي.. التحقق يُظهر أنها مقاطع قديمة أو من دول أ...</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/health/2026/3/7/%d9%87%d9%84-%d9%8a%d9%83%d9%85%d9%86-%d8%b3%d8%b1-%d8%b9%d9%84%d8%a7%d8%ac-%d8%a3%d9%84%d8%b2%d9%87%d8%a7%d9%8a%d9%85%d8%b1-%d9%81%d9%8a-%d8%a3%d9%88%d8%b1%d8%a7%d9%82?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="هل يكمن سر علاج ألزهايمر في أوراق الألوفيرا؟" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">هل يكمن سر علاج ألزهايمر في أوراق الألوفيرا؟</h2>
-                        <p class="aj-desc">تشير دراسة رقمية إلى أن مركبا في الألوفيرا قد يبطئ تطور مرض الزهايمرعبر تثبيط إنزيمات تفكك الأسيتيل كولين، ما يجعله مرشحا لأبحاث علاجية مستق...</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/lifestyle/2026/3/7/%d8%b1%d9%85%d8%b6%d8%a7%d9%86-%d9%81%d9%8a-%d8%aa%d8%b1%d9%83%d9%8a%d8%a7-%d8%aa%d9%82%d8%a7%d9%84%d9%8a%d8%af-%d8%ad%d9%8a%d8%a9-%d9%88%d9%85%d9%88%d8%a7%d8%a6%d8%af-%d8%b9%d8%a7%d9%85%d8%b1%d8%a9?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="رمضان في تركيا.. تقاليد حية وموائد عامرة بروح التكافل" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">رمضان في تركيا.. تقاليد حية وموائد عامرة بروح التكافل</h2>
-                        <p class="aj-desc">يأخذ شهر رمضان في تركيا طابعاً خاصاً يميزه عن باقي الشهور، وتتحول فيه الحياة اليومية إلى مشهد متكامل يمزج بين الروحانية والاحتفال الشعبي؛ حي...</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/culture/2026/3/7/18-%d8%b1%d9%85%d8%b6%d8%a7%d9%86-%d8%b1%d8%ad%d9%8a%d9%84-%d8%b3%d9%8a%d9%81-%d8%a7%d9%84%d9%84%d9%87-%d8%a7%d9%84%d9%85%d8%b3%d9%84%d9%88%d9%84-%d9%88%d9%86%d9%87%d8%a7%d9%8a%d8%a9?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="18 رمضان.. رحيل سيف الله المسلول ونهاية دولة المرابطين" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">18 رمضان.. رحيل سيف الله المسلول ونهاية دولة المرابطين</h2>
-                        <p class="aj-desc">شهد 18 رمضان أحداثا مفصلية؛ من رحيل خالد بن الوليد ومبايعة الحسن بن علي، وصولا إلى صراع الإمبراطوريات في المغرب والأندلس ومأساة تقسيم الهند....</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/ebusiness/2026/3/7/%d8%a7%d8%b1%d8%aa%d9%81%d8%a7%d8%b9-%d9%83%d8%a8%d9%8a%d8%b1-%d9%84%d8%a3%d8%b3%d8%b9%d8%a7%d8%b1-%d8%a7%d9%84%d9%88%d9%82%d9%88%d8%af-%d9%81%d9%8a-%d8%a3%d9%85%d8%b1%d9%8a%d9%83%d8%a7?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="ارتفاع كبير لأسعار الوقود في أمريكا جراء الحرب على إيران" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">ارتفاع كبير لأسعار الوقود في أمريكا جراء الحرب على إيران</h2>
-                        <p class="aj-desc">قال تقرير لوكالة رويترز إن أسعار البنزين والديزل في ‌الولايات المتحدة تشهد ارتفاعا كبيرا مع تقييد الحرب التي تشنها أمريكا وإسرائيل على إيران...</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/news/2026/3/7/%d9%87%d8%ac%d9%85%d8%a7%d8%aa-%d8%aa%d8%b3%d8%aa%d9%87%d8%af%d9%81-%d8%af%d9%88%d9%84%d8%a7-%d8%ae%d9%84%d9%8a%d8%ac%d9%8a%d8%a9-%d9%88%d9%88%d8%b2%d9%8a%d8%b1-%d8%a7%d9%84%d8%af%d9%81%d8%a7%d8%b9?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="هجمات تستهدف دولا خليجية ووزير الدفاع السعودي يحذر طهران" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">هجمات تستهدف دولا خليجية ووزير الدفاع السعودي يحذر طهران</h2>
-                        <p class="aj-desc">شهدت منطقة الخليج موجة واسعة من الهجمات بالصواريخ الباليستية والطائرات المسيرة، استهدفت منشآت حيوية وقواعد عسكرية في السعودية والإمارات والب...</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/news/2026/3/7/%d9%88%d8%a7%d8%b4%d9%86%d8%b7%d9%86-%d8%aa%d8%aa%d8%ae%d8%b7%d9%89-%d8%a7%d9%84%d9%83%d9%88%d9%86%d8%ba%d8%b1%d8%b3-%d9%88%d8%aa%d9%82%d8%b1-%d8%b5%d9%81%d9%82%d8%a9-%d8%b0%d8%ae%d8%a7%d8%a6%d8%b1?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="واشنطن تتخطى الكونغرس وتقر صفقة ذخائر لإسرائيل بـ151 مليون دولار" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">واشنطن تتخطى الكونغرس وتقر صفقة ذخائر لإسرائيل بـ151 مليون دولار</h2>
-                        <p class="aj-desc">وافقت واشنطن على بيع ذخائر عسكرية لإسرائيل بقيمة 151.8 مليون دولار عبر تفعيل صلاحيات الطوارئ لتجاوز مراجعة الكونغرس....</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/news/2026/3/7/%d8%a3%d9%83%d8%b3%d9%8a%d9%88%d8%b3-%d8%a7%d9%84%d8%a3%d9%83%d8%b1%d8%a7%d8%af-%d8%a7%d9%84%d8%b9%d8%b1%d8%a7%d9%82%d9%8a%d9%88%d9%86-%d9%82%d8%b1%d8%b1%d9%88%d8%a7?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="أكسيوس: الأكراد العراقيون قرروا البقاء على الحياد وهذه دوافعهم" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">أكسيوس: الأكراد العراقيون قرروا البقاء على الحياد وهذه دوافعهم</h2>
-                        <p class="aj-desc">يرى تقرير لموقع &quot;أكسيوس&quot; أن إقليم كردستان العراق يجد نفسه حاليا في مواجهة &quot;كماشة&quot; ثلاثية الأبعاد، في ظل التصعيد العسكري ...</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/ebusiness/2026/3/7/%d8%a7%d9%84%d8%a8%d9%8a%d8%aa-%d8%a7%d9%84%d8%a3%d8%a8%d9%8a%d8%b6-%d8%a7%d8%aa%d8%ae%d8%a7%d8%b0-%d8%a5%d8%ac%d8%b1%d8%a7%d8%a1%d8%a7%d8%aa-%d8%a3%d8%b3%d8%b9%d8%a7%d8%b1-%d8%b7%d8%a7%d9%82%d8%a9?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="البيت الأبيض يسعى لاتخاذ إجراءات أكثر جرأة بشأن أسعار الطاقة جراء الحرب" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">البيت الأبيض يسعى لاتخاذ إجراءات أكثر جرأة بشأن أسعار الطاقة جراء الحرب</h2>
-                        <p class="aj-desc">نقلت رويترز عن مصدرين مطلعين قولهما إن البيت الأبيض يطلب من الوكالات الاتحادية تكثيف الجهود لمعالجة ارتفاع أسعار الطاقة بسبب الحرب الإسرائيل...</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/news/2026/3/7/%d9%85%d8%ad%d8%a7%d8%af%d8%ab%d8%a7%d8%aa-%d8%a8%d9%8a%d9%86-%d9%85%d8%b3%d8%a4%d9%88%d9%84%d9%8a%d9%86-%d8%a8%d8%a7%d9%84%d8%a7%d8%aa%d8%ad%d8%a7%d8%af?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="مسؤولون أوروبيون وقادة من الشرق الأوسط يناقشون تطورات الحرب بالمنطقة" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">مسؤولون أوروبيون وقادة من الشرق الأوسط يناقشون تطورات الحرب بالمنطقة</h2>
-                        <p class="aj-desc">يعقد رئيس المجلس الأوروبي ورئيسة المفوضية الأوروبية اجتماعا عبر الفيديو مع قادة من الشرق الأوسط، الاثنين المقبل، لمناقشة الوضع في المنطقة في...</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <article class="aj-card">
-                <a href="https://www.aljazeera.net/news/2026/3/7/%d9%85%d8%ad%d9%84%d9%84-%d8%a3%d9%85%d8%b1%d9%8a%d9%83%d9%8a-%d9%87%d8%b0%d8%a7-%d9%85%d8%a7-%d9%8a%d8%b1%d9%8a%d8%af%d9%87-%d8%aa%d8%b1%d9%85%d8%a8-%d9%85%d9%86-%d8%a5%d8%b1%d8%b3%d8%a7%d9%84?traffic_source=rss" target="_blank" style="text-decoration:none; color:inherit;">
-                    <div class="aj-img-wrapper">
-                        <img src="https://www.aljazeera.net/wp-content/uploads/2023/12/Interactive-Map-1702555513.jpg" alt="محلل أمريكي: هذا ما يريده ترمب من إرسال قوات برية لإيران" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
-                    </div>
-                    <div class="aj-content">
-                        <h2 class="aj-title">محلل أمريكي: هذا ما يريده ترمب من إرسال قوات برية لإيران</h2>
-                        <p class="aj-desc">قناة &quot;إن بي سي نيوز&quot; نقلت عن مصادر أن الرئيس الأمريكي ناقش فكرة نشر قوات برية مع مساعدين ومسؤولين جمهوريين، وهو ما نفته المتحدثة ب...</p>
-                        <div class="aj-meta">
-                            <span>🕒 07/03/2026</span>
-                        </div>
-                    </div>
-                </a>
-            </article></main>
-    <footer><p>النضال نيوز &copy; 2026 | المصدر: الجزيرة نت</p></footer>
+
+    <main class="container"></main>
+
+    <footer>
+        <p>النضال نيوز &copy; 2026</p>
+        <p style="font-size: 12px; opacity: 0.6;">جميع الحقوق محفوظة - مصدر الأخبار: سكاي نيوز عربية</p>
+    </footer>
 </body>
 </html>
