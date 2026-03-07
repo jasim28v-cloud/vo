@@ -1,153 +1,145 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
-import random
+import os
+import shutil
 
 def run_news():
     rss_url = "https://arabic.rt.com/rss/"
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    ad_link = "https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9"
     
     try:
-        my_direct_link = "https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9"
-        
+        # إنشاء مجلد للأخبار إذا لم يكن موجوداً
+        if os.path.exists('news'): shutil.rmtree('news')
+        os.makedirs('news')
+
         response = requests.get(rss_url, headers=headers)
         response.encoding = 'utf-8'
         soup = BeautifulSoup(response.content, 'xml')
         items = soup.find_all('item')
         
         ticker_text = " • ".join([item.title.text for item in items[:12]])
+        now_time = datetime.now().strftime("%Y-%m-%d %I:%M %p")
 
-        news_html = ""
-        for i, item in enumerate(items[:24]):
+        news_cards = ""
+        for i, item in enumerate(items[:30]):
             title = item.title.text
-            news_url = item.link.text
-            
-            img_url = ""
-            enclosure = item.find('enclosure')
-            if enclosure:
-                img_url = enclosure.get('url')
-            
-            if not img_url:
-                img_url = "https://via.placeholder.com/600x400/003366/ffffff?text=Alhadath24"
-            
-            news_html += f'''
+            desc = item.description.text if item.description else "تابع التفاصيل الكاملة عبر موقعنا.."
+            img_url = item.find('enclosure').get('url') if item.find('enclosure') else "https://via.placeholder.com/800x500"
+            file_name = f"news/article-{i}.html"
+
+            # 1. إنشاء صفحة الخبر المنفصلة (التفاصيل الكاملة)
+            article_html = f'''<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>{title} - الحدث 24</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {{ font-family: 'Cairo', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }}
+        header {{ background: #003366; color: white; padding: 15px; text-align: center; font-weight: 900; font-size: 24px; position: sticky; top: 0; }}
+        .article-container {{ max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }}
+        .article-container img {{ width: 100%; border-radius: 8px; }}
+        .article-container h1 {{ color: #003366; font-size: 24px; margin: 20px 0; }}
+        .article-container p {{ line-height: 1.8; color: #444; font-size: 18px; }}
+        .ad-banner {{ background: #fff3cd; border: 1px dashed #ffeeba; padding: 20px; text-align: center; margin: 20px 0; cursor: pointer; }}
+        .ad-btn {{ background: #d32f2f; color: white; padding: 12px 30px; display: inline-block; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; animation: pulse 2s infinite; }}
+        @keyframes pulse {{ 0% {{transform: scale(1);}} 50% {{transform: scale(1.05);}} 100% {{transform: scale(1);}} }}
+        .back-home {{ display: block; text-align: center; margin-top: 30px; color: #003366; text-decoration: none; font-weight: bold; }}
+    </style>
+</head>
+<body>
+    <header onclick="location.href='../index.html'">الحدث <span>24</span> 📡</header>
+    <div class="article-container">
+        <img src="{img_url}">
+        <h1>{title}</h1>
+        
+        <div class="ad-banner" onclick="window.open('{ad_link}', '_blank')">
+            <p style="margin:0; color:#856404;">بث مباشر للأحداث الجارية وتحديثات لحظية</p>
+            <a href="{ad_link}" target="_blank" class="ad-btn">دخول البث الآن</a>
+        </div>
+
+        <p>{desc}</p>
+        
+        <div class="ad-banner" onclick="window.open('{ad_link}', '_blank')" style="background:#e8f4fd; border-color:#b8daff;">
+            <p style="margin:0; color:#004085;">قد يهمك أيضاً: توقعات الخبراء لما سيحدث خلال الساعات القادمة</p>
+            <a href="{ad_link}" target="_blank" class="ad-btn" style="background:#003366;">إضغط للتفاصيل</a>
+        </div>
+
+        <a href="../index.html" class="back-home">← العودة للرئيسية</a>
+    </div>
+</body>
+</html>'''
+            with open(file_name, 'w', encoding='utf-8') as f: f.write(article_html)
+
+            # 2. إنشاء كرت الخبر للصفحة الرئيسية
+            news_cards += f'''
             <div class="news-card">
-                <a href="{my_direct_link}" target="_blank" class="main-link">
-                    <div class="img-wrapper">
-                        <img src="{img_url}" loading="lazy" alt="news">
-                        <div class="label">عاجل 📡</div>
+                <a href="{file_name}">
+                    <div class="img-box">
+                        <img src="{img_url}">
+                        <div class="tag">عاجل</div>
                     </div>
-                    <div class="card-body">
-                        <h2 class="title">{title}</h2>
-                        <div class="card-meta">📅 {datetime.now().strftime("%d/%m/%Y")}</div>
+                    <div class="card-text">
+                        <h2>{title}</h2>
+                        <span class="date">⏱️ {now_time}</span>
                     </div>
                 </a>
-                <div class="card-footer">
-                    <a href="{news_url}" target="_blank" class="details-btn">المصدر الرسمي 🔗</a>
-                </div>
             </div>'''
-            
-            if (i + 1) % 4 == 0:
-                news_html += f'''
-                <div class="news-card ad-special">
-                    <a href="{my_direct_link}" target="_blank" class="main-link">
-                        <div class="ad-container">
-                            <div class="ad-tag">تنبيه هام 🔔</div>
-                            <h3>أخبار عاجلة تصلك الآن.. اضغط للمتابعة</h3>
-                            <div class="ad-button-f">فتح التنبيه</div>
-                        </div>
-                    </a>
-                </div>'''
 
-        now = datetime.now().strftime("%I:%M %p")
-        
-        html = f'''<!DOCTYPE html>
+        # 3. إنشاء الصفحة الرئيسية (index.html)
+        main_html = f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الحدث 24 - Alhadath 24</title>
+    <title>الحدث 24 - بوابة الأخبار العالمية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {{ --primary: #003366; --accent: #d32f2f; --bg: #f4f4f4; }}
-        body {{ background: var(--bg); font-family: 'Cairo', sans-serif; margin: 0; padding-top: 110px; }}
+        :root {{ --p: #003366; --a: #d32f2f; }}
+        body {{ background: #f5f5f5; font-family: 'Cairo', sans-serif; margin: 0; padding-top: 110px; }}
+        header {{ background: #fff; border-bottom: 4px solid var(--p); padding: 12px 5%; position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }}
+        .logo {{ font-size: 26px; font-weight: 900; color: var(--p); text-decoration: none; }}
+        .logo span {{ color: var(--a); }}
+        .bell {{ font-size: 22px; cursor: pointer; animation: r 2s infinite; }}
+        @keyframes r {{ 0%,100% {{transform:rotate(0)}} 10%,30% {{transform:rotate(15deg)}} 20%,40% {{transform:rotate(-15deg)}} }}
         
-        header {{ background: #fff; padding: 12px 6%; position: fixed; top: 0; width: 100%; z-index: 2000; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--primary); box-sizing: border-box; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }}
-        
-        .logo-area {{ display: flex; align-items: center; gap: 15px; }}
-        .logo {{ font-size: 26px; font-weight: 900; color: var(--primary); text-decoration: none; }}
-        .logo span {{ color: var(--accent); }}
-        
-        .bell-box {{ position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #f9f9f9; border-radius: 50%; }}
-        .bell-icon {{ font-size: 20px; animation: ring 2s infinite; }}
-        @keyframes ring {{
-            0% {{ transform: rotate(0); }}
-            10% {{ transform: rotate(20deg); }}
-            20% {{ transform: rotate(-20deg); }}
-            30% {{ transform: rotate(10deg); }}
-            40% {{ transform: rotate(-10deg); }}
-            50% {{ transform: rotate(0); }}
-            100% {{ transform: rotate(0); }}
-        }}
-        .bell-dot {{ position: absolute; top: 8px; right: 8px; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; border: 2px solid #fff; }}
+        .ticker {{ background: white; border-bottom: 1px solid #ddd; position: fixed; top: 65px; width: 100%; height: 40px; display: flex; align-items: center; z-index: 900; }}
+        .ticker-l {{ background: var(--a); color: white; padding: 0 15px; height: 100%; display: flex; align-items: center; font-weight: bold; font-size: 14px; }}
+        .ticker-t {{ white-space: nowrap; animation: s 60s linear infinite; font-size: 14px; font-weight: bold; color: #444; }}
+        @keyframes s {{ from {{transform:translateX(100%)}} to {{transform:translateX(-100%)}} }}
 
-        .ticker-bar {{ background: #fff; border-bottom: 1px solid #ddd; position: fixed; top: 65px; width: 100%; height: 40px; display: flex; align-items: center; z-index: 1500; overflow: hidden; }}
-        .ticker-label {{ background: var(--accent); color: #fff; padding: 0 20px; height: 100%; display: flex; align-items: center; font-weight: 900; font-size: 14px; z-index: 10; }}
-        .ticker-text-move {{ white-space: nowrap; animation: scroll 60s linear infinite; color: #444; font-size: 14px; font-weight: 700; }}
-        @keyframes scroll {{ from {{ transform: translateX(100%); }} to {{ transform: translateX(-100%); }} }}
-
-        .main-grid {{ max-width: 1200px; margin: 20px auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 15px; padding: 0 15px; }}
-        .news-card {{ background: #fff; border: 1px solid #e0e0e0; border-radius: 4px; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; }}
-        .news-card:hover {{ transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }}
-        .img-wrapper {{ position: relative; height: 190px; overflow: hidden; }}
-        .img-wrapper img {{ width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }}
-        .label {{ position: absolute; top: 10px; right: 10px; background: var(--accent); color: #fff; padding: 3px 12px; font-size: 11px; font-weight: bold; border-radius: 2px; }}
-        .card-body {{ padding: 15px; flex-grow: 1; }}
-        .title {{ font-size: 17px; font-weight: 700; color: #222; margin: 0; line-height: 1.6; }}
-        .card-meta {{ font-size: 11px; color: #888; margin-top: 15px; border-top: 1px solid #f9f9f9; padding-top: 10px; }}
-        .card-footer {{ background: #fcfcfc; padding: 10px 15px; border-top: 1px solid #eee; }}
-        .details-btn {{ text-decoration: none; color: var(--primary); font-size: 12px; font-weight: bold; }}
-        
-        .ad-special {{ background: #fffdf2; border: 1px solid #ffe082; }}
-        .ad-container {{ padding: 25px; text-align: center; }}
-        .ad-tag {{ color: #f57c00; font-weight: 900; font-size: 12px; margin-bottom: 5px; }}
-        .ad-button-f {{ background: var(--primary); color: #fff; padding: 8px 25px; border-radius: 4px; display: inline-block; margin-top: 10px; font-weight: 900; }}
-        
-        .main-link {{ text-decoration: none; color: inherit; }}
-        @media (max-width: 600px) {{ .main-grid {{ grid-template-columns: 1fr; }} header {{ padding: 10px 15px; }} }}
+        .grid {{ max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 15px; padding: 15px; }}
+        .news-card {{ background: white; border: 1px solid #ddd; border-radius: 5px; overflow: hidden; transition: 0.3s; }}
+        .news-card:hover {{ transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }}
+        .news-card a {{ text-decoration: none; color: inherit; }}
+        .img-box {{ height: 190px; position: relative; }}
+        .img-box img {{ width: 100%; height: 100%; object-fit: cover; }}
+        .tag {{ position: absolute; top: 10px; right: 10px; background: var(--a); color: white; padding: 2px 10px; font-size: 11px; font-weight: bold; }}
+        .card-text {{ padding: 15px; }}
+        .card-text h2 {{ font-size: 16px; margin: 0; line-height: 1.5; color: #222; }}
+        .date {{ font-size: 11px; color: #999; display: block; margin-top: 10px; }}
+        @media (max-width: 600px) {{ .grid {{ grid-template-columns: 1fr; }} }}
     </style>
 </head>
 <body>
     <header>
-        <div class="logo-area">
+        <div style="display:flex; align-items:center; gap:15px;">
             <a href="#" class="logo">الحدث <span>24</span></a>
-            <div class="bell-box" onclick="window.open('{my_direct_link}', '_blank')">
-                <div class="bell-icon">🔔</div>
-                <div class="bell-dot"></div>
-            </div>
+            <div class="bell" onclick="window.open('{ad_link}', '_blank')">🔔</div>
         </div>
-        <div style="font-size: 11px; color: #555;">{now}</div>
+        <div style="font-size:11px; color:#666;">{now_time}</div>
     </header>
-
-    <div class="ticker-bar">
-        <div class="ticker-label">عاجل</div>
-        <div class="ticker-move-wrap">
-            <div class="ticker-text-move">{ticker_text}</div>
-        </div>
+    <div class="ticker">
+        <div class="ticker-l">آخر الأخبار</div>
+        <div class="ticker-t">{ticker_text}</div>
     </div>
-
-    <div class="main-grid">{news_html}</div>
-
-    <script>
-        // كود تشغيل الجرس عند التحميل
-        document.addEventListener('DOMContentLoaded', function() {{
-            console.log('Alhadath 24 الجرس جاهز');
-        }});
-    </script>
+    <div class="grid">{news_cards}</div>
 </body>
 </html>'''
 
-        with open("index.html", "w", encoding="utf-8") as f: f.write(html)
+        with open("index.html", "w", encoding="utf-8") as f: f.write(main_html)
             
     except Exception as e: print(f"Error: {e}")
 
