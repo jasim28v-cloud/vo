@@ -3,57 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الحدث 24 - بوابة الأخبار العالمية</title>
+    <title>الحدث 24 - Alhadath 24</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --p: #003366; --a: #d32f2f; }
-        body { background: #f5f5f5; font-family: 'Cairo', sans-serif; margin: 0; padding-top: 110px; }
-        header { background: #fff; border-bottom: 4px solid var(--p); padding: 12px 5%; position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
-        .logo { font-size: 26px; font-weight: 900; color: var(--p); text-decoration: none; }
-        .logo span { color: var(--a); }
-        .bell { font-size: 22px; cursor: pointer; animation: r 2s infinite; }
-        @keyframes r { 0%,100% {transform:rotate(0)} 10%,30% {transform:rotate(15deg)} 20%,40% {transform:rotate(-15deg)} }
-        
-        .ticker { background: white; border-bottom: 1px solid #ddd; position: fixed; top: 65px; width: 100%; height: 40px; display: flex; align-items: center; z-index: 900; }
-        .ticker-l { background: var(--a); color: white; padding: 0 15px; height: 100%; display: flex; align-items: center; font-weight: bold; font-size: 14px; }
+        body { background: #f0f2f5; font-family: 'Cairo', sans-serif; margin: 0; padding-top: 110px; }
+        header { background: #fff; border-bottom: 4px solid #003366; padding: 10px 5%; position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
+        .logo { font-size: 26px; font-weight: 900; color: #003366; text-decoration: none; }
+        .logo span { color: #d32f2f; }
+        .ticker { background: #fff; border-bottom: 1px solid #ddd; position: fixed; top: 60px; width: 100%; height: 40px; display: flex; align-items: center; z-index: 900; }
+        .ticker-l { background: #d32f2f; color: white; padding: 0 15px; height: 100%; display: flex; align-items: center; font-weight: bold; font-size: 14px; }
         .ticker-t { white-space: nowrap; animation: s 60s linear infinite; font-size: 14px; font-weight: bold; color: #444; }
         @keyframes s { from {transform:translateX(100%)} to {transform:translateX(-100%)} }
-
         .grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 15px; padding: 15px; }
-        .news-card { background: white; border: 1px solid #ddd; border-radius: 5px; overflow: hidden; transition: 0.3s; }
+        .news-card { background: white; border-radius: 6px; overflow: hidden; border: 1px solid #ddd; transition: 0.3s; }
         .news-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .news-card a { text-decoration: none; color: inherit; }
         .img-box { height: 190px; position: relative; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .tag { position: absolute; top: 10px; right: 10px; background: var(--a); color: white; padding: 2px 10px; font-size: 11px; font-weight: bold; }
+        .tag { position: absolute; top: 10px; right: 10px; background: #d32f2f; color: white; padding: 2px 10px; font-size: 11px; font-weight: bold; border-radius: 3px; }
         .card-text { padding: 15px; }
         .card-text h2 { font-size: 16px; margin: 0; line-height: 1.5; color: #222; }
-        .date { font-size: 11px; color: #999; display: block; margin-top: 10px; }
         @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <header>
-        <div style="display:flex; align-items:center; gap:15px;">
-            <a href="#" class="logo">الحدث <span>24</span></a>
-            <div class="bell" onclick="window.open('https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9', '_blank')">🔔</div>
-        </div>
-        <div style="font-size:11px; color:#666;">2026-03-07 12:05 PM</div>
-    </header>
-    <div class="ticker">
-        <div class="ticker-l">آخر الأخبار</div>
-        <div class="ticker-t">لحظة بلحظة.. الحرب الأمريكية-الإسرائيلية على إيران بيومها الثامن: تصعيد متواصل يهز الشرق الأوسط • لحظة بلحظة.. غارات إسرائيلية متواصلة على لبنان وحزب الله يلتحم ناريا مع قوات متسللة في البقاع • روسيا تحرز أول ميدالية لها في دورة الألعاب البارالمبية بإيطاليا • ترامب: إيران استسلمت لجيرانها في الشرق الأوسط • ترتيب الدوري الإسباني بعد فوز ريال مدريد على سيلتا فيغو • الجيش اللبناني يعلن مقتل 3 عسكريين ويصدر بيانا حول الإنزال الإسرائيلي في النبي شيت • الولايات المتحدة تعلن نيتها السيطرة الكاملة على احتياطيات النفط الإيرانية • كاتس يهدد لبنان ورئيسه: تحركوا قبل أن نرتكب المزيد.. وما علاقة نصرالله؟ • الجيش الإسرائيلي يصدر بيانا بشأن عملية البحث عن الطيار رون أراد في لبنان • طهران: احترامنا لسيادة الجيران لا يعني التخلي عن الرد على المعتدي • أذربيجان: إحباط عدة مؤامرات إيرانية منها خطة لاستهداف خط أنابيب رئيسي • رد فعل الوليد بن طلال بعد اكتساح الهلال للنجمة (فيديو)</div>
-    </div>
+    <header><a href="#" class="logo">الحدث <span>24</span></a><div style="font-size:20px; cursor:pointer;" onclick="window.open('https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9','_blank')">🔔</div></header>
+    <div class="ticker"><div class="ticker-l">عاجل</div><div class="ticker-t">لحظة بلحظة.. الحرب الأمريكية-الإسرائيلية على إيران بيومها الثامن: تصعيد متواصل يهز الشرق الأوسط • لحظة بلحظة.. غارات إسرائيلية متواصلة على لبنان وحزب الله يلتحم ناريا مع قوات متسللة في البقاع • الأردن يعلن حصيلة الصواريخ والمسيرات التي تصدى لها ويكشف خسائره • بالتزامن مع أزمة غاز عالمية بسبب حرب إيران.. مصر تبحث الإنتاج من حقل بوسط الدلتا بعد كشف جديد • روسيا تحرز أول ميدالية لها في دورة الألعاب البارالمبية بإيطاليا • ترامب: إيران استسلمت لجيرانها في الشرق الأوسط • ترتيب الدوري الإسباني بعد فوز ريال مدريد على سيلتا فيغو • الجيش اللبناني يعلن مقتل 3 عسكريين ويصدر بيانا حول الإنزال الإسرائيلي في النبي شيت • الولايات المتحدة تعلن نيتها السيطرة الكاملة على احتياطيات النفط الإيرانية • كاتس يهدد لبنان ورئيسه: تحركوا قبل أن نرتكب المزيد.. وما علاقة نصرالله؟ • الجيش الإسرائيلي يصدر بيانا بشأن عملية البحث عن الطيار رون أراد في لبنان • طهران: احترامنا لسيادة الجيران لا يعني التخلي عن الرد على المعتدي</div></div>
     <div class="grid">
             <div class="news-card">
                 <a href="news/article-0.html">
                     <div class="img-box">
                         <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg">
-                        <div class="tag">عاجل</div>
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
                         <h2>لحظة بلحظة.. الحرب الأمريكية-الإسرائيلية على إيران بيومها الثامن: تصعيد متواصل يهز الشرق الأوسط</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
@@ -61,347 +46,287 @@
                 <a href="news/article-1.html">
                     <div class="img-box">
                         <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg">
-                        <div class="tag">عاجل</div>
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
                         <h2>لحظة بلحظة.. غارات إسرائيلية متواصلة على لبنان وحزب الله يلتحم ناريا مع قوات متسللة في البقاع</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-2.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac13184236042746012c72.png">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac134d4236042746012c74.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>روسيا تحرز أول ميدالية لها في دورة الألعاب البارالمبية بإيطاليا</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>الأردن يعلن حصيلة الصواريخ والمسيرات التي تصدى لها ويكشف خسائره</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-3.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0bac4c59b70c7f045559.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac108b4236042746012c70.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>ترامب: إيران استسلمت لجيرانها في الشرق الأوسط</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>بالتزامن مع أزمة غاز عالمية بسبب حرب إيران.. مصر تبحث الإنتاج من حقل بوسط الدلتا بعد كشف جديد</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-4.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0eec423604267c7bbd5e.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac13184236042746012c72.png">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>ترتيب الدوري الإسباني بعد فوز ريال مدريد على سيلتا فيغو</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>روسيا تحرز أول ميدالية لها في دورة الألعاب البارالمبية بإيطاليا</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-5.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0de9423604289b6a3295.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0bac4c59b70c7f045559.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>الجيش اللبناني يعلن مقتل 3 عسكريين ويصدر بيانا حول الإنزال الإسرائيلي في النبي شيت</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>ترامب: إيران استسلمت لجيرانها في الشرق الأوسط</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-6.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0aa8423604267c7bbd58.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0eec423604267c7bbd5e.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>الولايات المتحدة تعلن نيتها السيطرة الكاملة على احتياطيات النفط الإيرانية</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>ترتيب الدوري الإسباني بعد فوز ريال مدريد على سيلتا فيغو</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-7.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0955423604284a71692d.png">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0de9423604289b6a3295.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>كاتس يهدد لبنان ورئيسه: تحركوا قبل أن نرتكب المزيد.. وما علاقة نصرالله؟</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>الجيش اللبناني يعلن مقتل 3 عسكريين ويصدر بيانا حول الإنزال الإسرائيلي في النبي شيت</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-8.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0553423604264b04723e.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0aa8423604267c7bbd58.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>الجيش الإسرائيلي يصدر بيانا بشأن عملية البحث عن الطيار رون أراد في لبنان</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>الولايات المتحدة تعلن نيتها السيطرة الكاملة على احتياطيات النفط الإيرانية</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-9.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac07f542360429533d0348.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0955423604284a71692d.png">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>طهران: احترامنا لسيادة الجيران لا يعني التخلي عن الرد على المعتدي</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>كاتس يهدد لبنان ورئيسه: تحركوا قبل أن نرتكب المزيد.. وما علاقة نصرالله؟</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-10.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac042e4c59b70ca729a3d1.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0553423604264b04723e.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>أذربيجان: إحباط عدة مؤامرات إيرانية منها خطة لاستهداف خط أنابيب رئيسي</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>الجيش الإسرائيلي يصدر بيانا بشأن عملية البحث عن الطيار رون أراد في لبنان</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-11.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac05dd4c59b7092f5d397d.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac07f542360429533d0348.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>رد فعل الوليد بن طلال بعد اكتساح الهلال للنجمة (فيديو)</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>طهران: احترامنا لسيادة الجيران لا يعني التخلي عن الرد على المعتدي</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-12.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0321423604267c7bbd50.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac042e4c59b70ca729a3d1.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>تحليل: ترامب "أخطأ في حساباته" ويواجه المزيد من المخاطر والتحديات بعد أسبوع من الحرب على إيران</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>أذربيجان: إحباط عدة مؤامرات إيرانية منها خطة لاستهداف خط أنابيب رئيسي</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-13.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac01cc423604264b047234.png">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac05dd4c59b7092f5d397d.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>أهالي الجنوب السوري لـ"RT": منطقتنا باتت ساحة مواجهة مفتوحة</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>رد فعل الوليد بن طلال بعد اكتساح الهلال للنجمة (فيديو)</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-14.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abff214c59b70c7f045553.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac0321423604267c7bbd50.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>الهند تسمح لسفينة حربية إيرانية بالرسو في ميناء كوتشي "كبادرة إنسانية"</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>تحليل: ترامب "أخطأ في حساباته" ويواجه المزيد من المخاطر والتحديات بعد أسبوع من الحرب على إيران</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-15.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abfe174c59b70ca729a3cc.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ac01cc423604264b047234.png">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>الحرس الثوري الإيراني يعلن شن هجوم على قاعدة الظفرة الجوية في الإمارات</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>أهالي الجنوب السوري لـ"RT": منطقتنا باتت ساحة مواجهة مفتوحة</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-16.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf819423604264b04722a.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abff214c59b70c7f045553.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>بعد جدل ارتفاع أسعار تذاكر رحلات العودة من الخليج.. مصر للطيران  ترد على الشائعات</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>الهند تسمح لسفينة حربية إيرانية بالرسو في ميناء كوتشي "كبادرة إنسانية"</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-17.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf9ff4236042874308802.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abfe174c59b70ca729a3cc.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>الجيش الروسي يشن ضربة مكثفة على منشآت للصناعة العسكرية والطاقة في أوكرانيا</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>الحرس الثوري الإيراني يعلن شن هجوم على قاعدة الظفرة الجوية في الإمارات</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-18.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abfc8e423604287430880a.png">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf819423604264b04722a.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>العراق يمدد إغلاق أجوائه لمدة 72 ساعة إضافية</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>بعد جدل ارتفاع أسعار تذاكر رحلات العودة من الخليج.. مصر للطيران  ترد على الشائعات</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-19.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf2904c59b7056900a98b.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf9ff4236042874308802.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>تقرير عبري: مصر تهدد باريس بصفقة "غواصات الباركودا".. سيادة تكنولوجية كاملة أو التحول إلى بكين</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>الجيش الروسي يشن ضربة مكثفة على منشآت للصناعة العسكرية والطاقة في أوكرانيا</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-20.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf20e4c59b70b54448852.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abfc8e423604287430880a.png">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>قيادة الجبهة الداخلية الإسرائيلية تصدر توضيحا بعد تأخر إرسال الإنذارات في بعض الحالات</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>العراق يمدد إغلاق أجوائه لمدة 72 ساعة إضافية</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-21.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf0254236042746012c48.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf2904c59b7056900a98b.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>الجيش الإسرائيلي يعلن توسيع رقعة هجماته.. غارات على منصات صواريخ وقيادات حزب الله (فيديو)</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>تقرير عبري: مصر تهدد باريس بصفقة "غواصات الباركودا".. سيادة تكنولوجية كاملة أو التحول إلى بكين</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-22.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abea3d4c59b70c7f045539.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf20e4c59b70b54448852.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>البيت الأبيض: كبرى شركات الأسلحة الأمريكية تقرر مضاعفة الإنتاج 4 مرات بعد اجتماع مع ترامب</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>قيادة الجبهة الداخلية الإسرائيلية تصدر توضيحا بعد تأخر إرسال الإنذارات في بعض الحالات</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-23.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abe9744c59b70e424d7899.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abf0254236042746012c48.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>الاستخبارات الإيرانية توجه تحذيرا إلى "جنود وعيون إسرائيل" داخل البلاد</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>الجيش الإسرائيلي يعلن توسيع رقعة هجماته.. غارات على منصات صواريخ وقيادات حزب الله (فيديو)</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div>
             <div class="news-card">
                 <a href="news/article-24.html">
                     <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abea034c59b70c1953ce2a.jpg">
-                        <div class="tag">عاجل</div>
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abea3d4c59b70c7f045539.jpg">
+                        <div class="tag">تفاصيل الخبر</div>
                     </div>
                     <div class="card-text">
-                        <h2>"اختفى الكارهون فجأة".. ردود أفعال جماهير ليفربول على أداء محمد صلاح أمام ولفرهامبتون (صور)</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
-                    </div>
-                </a>
-            </div>
-            <div class="news-card">
-                <a href="news/article-25.html">
-                    <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abe9c64c59b70ca729a3bd.png">
-                        <div class="tag">عاجل</div>
-                    </div>
-                    <div class="card-text">
-                        <h2>الوكالة اللبنانية: 26 شهيدا بمواجهات بلدة النبي شيت</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
-                    </div>
-                </a>
-            </div>
-            <div class="news-card">
-                <a href="news/article-26.html">
-                    <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abecf24c59b70a3a28a02f.jpg">
-                        <div class="tag">عاجل</div>
-                    </div>
-                    <div class="card-text">
-                        <h2>"رحلة العودة عبر مصر".. الإعلام العبري: 100 ألف إسرائيلي يخاطرون للعودة لتل أبيب</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
-                    </div>
-                </a>
-            </div>
-            <div class="news-card">
-                <a href="news/article-27.html">
-                    <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abea454c59b70b5444884b.jpg">
-                        <div class="tag">عاجل</div>
-                    </div>
-                    <div class="card-text">
-                        <h2>السفارة الروسية في طهران تؤكد إجلاء أفراد العائلات وبقاء الموظفين الأساسيين</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
-                    </div>
-                </a>
-            </div>
-            <div class="news-card">
-                <a href="news/article-28.html">
-                    <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abe77c4c59b7092f5d3960.jpg">
-                        <div class="tag">عاجل</div>
-                    </div>
-                    <div class="card-text">
-                        <h2>"مصر تتجه نحو المواجهة مع إسرائيل".. تحذيرات بالإعلام العبري من تدهور خطير في العلاقات</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
-                    </div>
-                </a>
-            </div>
-            <div class="news-card">
-                <a href="news/article-29.html">
-                    <div class="img-box">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69abe1cc423604255c654ed7.jpg">
-                        <div class="tag">عاجل</div>
-                    </div>
-                    <div class="card-text">
-                        <h2>أذربيجان تنهي إجلاء دبلوماسييها من إيران</h2>
-                        <span class="date">⏱️ 2026-03-07 12:05 PM</span>
+                        <h2>البيت الأبيض: كبرى شركات الأسلحة الأمريكية تقرر مضاعفة الإنتاج 4 مرات بعد اجتماع مع ترامب</h2>
+                        <span class="date">⏱️ 2026-03-07 12:10 PM</span>
                     </div>
                 </a>
             </div></div>
