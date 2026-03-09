@@ -3,526 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الحدث 24 | Alhadath News</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <title>مشاهير ترند | عالم النجوم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0d1117; --card: #161b22; --text: #f0f6fc;
-            --primary: #f85149; --accent: #58a6ff; --gold: #f2cc60;
+            --glass-bg: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --primary-accent: #f093fb;
+            --danger-accent: #f5576c;
+            --text-main: #ffffff;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); font-family: 'Cairo', sans-serif; color: var(--text); padding-top: 130px; }
-        header { background: rgba(13, 17, 23, 0.95); backdrop-filter: blur(12px); padding: 15px 5%; position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 2px solid var(--primary); display: flex; justify-content: space-between; align-items: center; }
+        body { 
+            background: linear-gradient(135deg, #2d3436, #000000);
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: 'Cairo', sans-serif; 
+            color: var(--text-main); 
+            padding-top: 150px;
+        }
+        
+        header { 
+            background: rgba(0, 0, 0, 0.6); 
+            backdrop-filter: blur(25px); 
+            padding: 15px 5%; 
+            position: fixed; top: 0; width: 100%; z-index: 1000; 
+            border-bottom: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; align-items: center; 
+        }
         .logo { font-size: 26px; font-weight: 900; color: #fff; text-decoration: none; }
-        .logo span { color: var(--primary); }
-        .ticker-wrap { position: fixed; top: 75px; width: 100%; background: var(--primary); color: #fff; overflow: hidden; height: 35px; display: flex; align-items: center; z-index: 999; }
-        .ticker-title { background: #000; padding: 0 15px; font-weight: 800; font-size: 13px; z-index: 2; height: 100%; display: flex; align-items: center; }
-        .ticker-scroll { white-space: nowrap; animation: scroll 45s linear infinite; font-weight: 600; }
-        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-180%); } }
-        .container { max-width: 1200px; margin: 0 auto 50px; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
-        .premium-card { background: var(--card); border-radius: 12px; overflow: hidden; transition: 0.3s; border: 1px solid #30363d; position: relative; }
-        .premium-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
-        .badge { position: absolute; top: 12px; left: 12px; background: var(--primary); color: #fff; padding: 3px 12px; font-size: 11px; font-weight: 800; border-radius: 4px; z-index: 5; }
-        .card-image { height: 200px; overflow: hidden; border-bottom: 1px solid #30363d; }
-        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .card-content { padding: 20px; }
-        .card-title { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 10px; line-height: 1.5; }
-        .card-snippet { font-size: 14px; color: #8b949e; margin-bottom: 15px; }
-        .meta-data { display: flex; justify-content: space-between; font-size: 11px; color: var(--gold); margin-bottom: 15px; font-weight: 600; }
-        .action-area { display: flex; gap: 8px; }
-        .btn-main { flex: 2; background: var(--primary); color: #fff; text-decoration: none; text-align: center; padding: 10px; border-radius: 6px; font-weight: 800; font-size: 14px; }
-        .btn-sub { flex: 1; background: #21262d; color: #c9d1d9; text-decoration: none; text-align: center; padding: 10px; border-radius: 6px; font-size: 12px; border: 1px solid #30363d; }
-        .special-ad-block { grid-column: 1 / -1; background: #161b22; border-radius: 12px; padding: 30px; text-align: center; border: 2px dashed #30363d; }
-        .ad-link { text-decoration: none; color: inherit; }
-        .live-pulse { background: #ff3e3e; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 11px; font-weight: 900; animation: blink 1.2s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        .ad-cta { margin-top: 15px; background: var(--gold); color: #000; display: inline-block; padding: 8px 30px; border-radius: 4px; font-weight: 900; }
+        .logo span { color: var(--danger-accent); text-shadow: 0 0 10px var(--danger-accent); }
+        
+        .ticker-wrap { 
+            position: fixed; top: 85px; width: 100%; 
+            background: rgba(245, 87, 108, 0.85); 
+            backdrop-filter: blur(10px);
+            color: #fff; overflow: hidden; height: 40px; 
+            display: flex; align-items: center; z-index: 999;
+        }
+        .ticker-title { background: #000; padding: 0 20px; font-weight: 900; z-index: 2; height: 100%; display: flex; align-items: center; font-size: 13px; }
+        .ticker-scroll { white-space: nowrap; animation: scroll 60s linear infinite; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-250%); } }
+
+        .container { max-width: 1250px; margin: 0 auto 50px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        
+        .glass-card { 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(20px);
+            border-radius: 25px; overflow: hidden; 
+            transition: 0.4s; 
+            border: 1px solid var(--glass-border); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .glass-card:hover { transform: scale(1.03); border-color: var(--primary-accent); }
+        
+        .badge { position: absolute; top: 15px; left: 15px; background: var(--danger-accent); color: #fff; padding: 4px 15px; font-size: 11px; font-weight: 700; border-radius: 10px; z-index: 5; }
+        .card-image { height: 210px; overflow: hidden; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .card-content { padding: 25px; }
+        .card-title { font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 12px; line-height: 1.5; }
+        .card-snippet { font-size: 13px; color: #ccc; margin-bottom: 20px; }
+        
+        .meta-data { display: flex; justify-content: space-between; font-size: 11px; color: var(--primary-accent); margin-bottom: 20px; border-top: 1px solid var(--glass-border); padding-top: 15px; }
+        
+        .action-area { display: flex; gap: 10px; }
+        .btn-prime { flex: 2; background: linear-gradient(90deg, #f5576c, #f093fb); color: #fff; text-decoration: none; text-align: center; padding: 12px; border-radius: 12px; font-weight: 700; }
+        .btn-outline { flex: 1; background: rgba(255,255,255,0.05); color: #fff; text-decoration: none; text-align: center; padding: 12px; border-radius: 12px; font-size: 12px; border: 1px solid var(--glass-border); }
+        
+        .ad-slot-wrapper { grid-column: 1 / -1; display: flex; justify-content: center; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px dashed var(--glass-border); }
+        
+        footer { text-align: center; padding: 40px; color: rgba(255,255,255,0.4); font-size: 12px; border-top: 1px solid var(--glass-border); }
+        
         @media (max-width: 600px) { .container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <header>
-        <a href="#" class="logo">الحدث <span>24</span></a>
-        <div style="font-size: 11px; color: #8b949e;">📅 2026-03-09</div>
+    <script type="text/javascript" src="//data527.click/129ba2282fccd3392338/b1a648bd38/?placementName=default"></script> <header>
+        <a href="#" class="logo">مشاهير <span>ترند</span></a>
+        <div style="font-size: 12px; letter-spacing: 1px;">📅 2026-03-09</div>
     </header>
+
     <div class="ticker-wrap">
-        <div class="ticker-title">عاجل الآن</div>
-        <div class="ticker-scroll">لحظة بلحظة..الحرب الأمريكية-الإسرائيلية على إيران بيومها العاشر: مجتبى خامنئي مرشدا والتصعيد متواصل • لحظة بلحظة.. إسرائيل تواصل حربها على لبنان وحزب الله يواجه قوة متوغلة جنوبا • "نوفوستي": البرازيل ترفع وارداتها من المنتجات البترولية الروسية إلى مستوى قياسي • لابورتا منع ميسي من العودة إلى برشلونة.. تشافي يثير الجدل بتصريحات خطيرة (فيديو) • مديرة صندوق النقد: الصراع في الشرق الأوسط يختبر صلابة الاقتصاد العالمي • قطر: إلقاء القبض على أكثر من 300 شخص بسبب تداول معلومات مضللة وشائعات • تقارير تحسم موقف مبابي من مباراة ريال مدريد ومانشستر سيتي في دوري الأبطال • 10 هجمات على سفن بمضيق هرمز خلال أسبوع وحركة الناقلات تتراجع 90% • "الوقت يداهمه".. صحيفة تكشف لماذا قد تتحول الحرب على إيران إلى كارثة سياسية لترامب • "هيومن رايتس ووتش" تتهم إسرائيل باستخدام الفوسفور الأبيض في لبنان • زيلينسكي يرسل مسيرات وفريقا من الخبراء إلى الأردن • مفاجأة..  نجم من الاتحاد السعودي على رادار ليفربول لخلافة محمد صلاح</div>
+        <div class="ticker-title">آخر أخبار النجوم</div>
+        <div class="ticker-scroll"></div>
     </div>
+
     <main class="container">
-            <article class="premium-card">
-                <div class="badge">عاجل</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">لحظة بلحظة..الحرب الأمريكية-الإسرائيلية على إيران بيومها العاشر: مجتبى خامنئي مرشدا والتصعيد متواصل</h2>
-                    <p class="card-snippet">
-         يتواصل التصعيد بالشرق الأوسط في اليوم العاشر من الحرب الأمريكية الإسرائيلية على إيران، في وقت أعلنت ...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/world/1765446-%D9%84%D8%AD%D8%B8%D8%A9-%D8%A8%D9%84%D8%AD%D8%B8%D8%A9%D8%A7%D9%84%D8%AD%D8%B1%D8%A8-%D8%A7%D9%84%D8%A3%D9%85%D8%B1%D9%8A%D9%83%D9%8A%D8%A9-%D8%A7%D9%84%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86-%D8%A8%D9%8A%D9%88%D9%85%D9%87%D8%A7-%D8%A7%D9%84%D8%B9%D8%A7%D8%B4%D8%B1-%D9%85%D8%AC%D8%AA%D8%A8%D9%89-%D8%AE%D8%A7%D9%85%D9%86%D8%A6%D9%8A-%D9%85%D8%B1%D8%B4%D8%AF%D8%A7-%D9%88%D8%A7%D9%84%D8%AA%D8%B5%D8%B9%D9%8A%D8%AF-%D9%85%D8%AA%D9%88%D8%A7%D8%B5%D9%84/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">عاجل</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/static.ar/thumbnail/breaking_red.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">لحظة بلحظة.. إسرائيل تواصل حربها على لبنان وحزب الله يواجه قوة متوغلة جنوبا</h2>
-                    <p class="card-snippet">
-         تواصل إسرائيل حربها على لبنان الاثنين، مستهدفة بغارات جوية مكثفة جنوب وشرق لبنان وضاحية بيروت، في وق...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/middle_east/1765447-%D9%84%D8%AD%D8%B8%D8%A9-%D8%A8%D9%84%D8%AD%D8%B8%D8%A9-%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84-%D8%AA%D9%88%D8%A7%D8%B5%D9%84-%D8%AD%D8%B1%D8%A8%D9%87%D8%A7-%D8%B9%D9%84%D9%89-%D9%84%D8%A8%D9%86%D8%A7%D9%86-%D9%88%D8%AD%D8%B2%D8%A8-%D8%A7%D9%84%D9%84%D9%87-%D9%8A%D9%88%D8%A7%D8%AC%D9%87-%D9%82%D9%88%D8%A9-%D9%85%D8%AA%D9%88%D8%BA%D9%84%D8%A9-%D8%AC%D9%86%D9%88%D8%A8%D8%A7/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">عاجل</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae616a4c59b771581a809c.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">"نوفوستي": البرازيل ترفع وارداتها من المنتجات البترولية الروسية إلى مستوى قياسي</h2>
-                    <p class="card-snippet">
-         أظهرت حسابات أجرتها وكالة "نوفوستي" استنادا إلى بيانات من دائرة الإحصاء البرازيلية أن البرازيل زادت ...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/business/1765464-%D9%86%D9%88%D9%81%D9%88%D8%B3%D8%AA%D9%8A-%D8%A7%D9%84%D8%A8%D8%B1%D8%A7%D8%B2%D9%8A%D9%84-%D8%AA%D8%B1%D9%81%D8%B9-%D9%88%D8%A7%D8%B1%D8%AF%D8%A7%D8%AA%D9%87%D8%A7-%D9%85%D9%86-%D8%A7%D9%84%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA-%D8%A7%D9%84%D8%A8%D8%AA%D8%B1%D9%88%D9%84%D9%8A%D8%A9-%D8%A7%D9%84%D8%B1%D9%88%D8%B3%D9%8A%D8%A9-%D8%A5%D9%84%D9%89-%D9%85%D8%B3%D8%AA%D9%88%D9%89-%D9%82%D9%8A%D8%A7%D8%B3%D9%8A/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae5a3d4c59b771af5095f7.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">لابورتا منع ميسي من العودة إلى برشلونة.. تشافي يثير الجدل بتصريحات خطيرة (فيديو)</h2>
-                    <p class="card-snippet">
-         أشعل الأسطورة والمدرب السابق لبرشلونة تشافي هيرنانديز الأجواء بتصريحات مثيرة للجدل خلال مقابلة مع صح...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/sport/1765448-%D9%84%D8%A7%D8%A8%D9%88%D8%B1%D8%AA%D8%A7-%D9%85%D9%86%D8%B9-%D9%85%D9%8A%D8%B3%D9%8A-%D9%85%D9%86-%D8%A7%D9%84%D8%B9%D9%88%D8%AF%D8%A9-%D8%A5%D9%84%D9%89-%D8%A8%D8%B1%D8%B4%D9%84%D9%88%D9%86%D8%A9-%D8%AA%D8%B4%D8%A7%D9%81%D9%8A-%D9%8A%D8%AB%D9%8A%D8%B1-%D8%A7%D9%84%D8%AC%D8%AF%D9%84-%D8%A8%D8%AA%D8%B5%D8%B1%D9%8A%D8%AD%D8%A7%D8%AA-%D8%AE%D8%B7%D9%8A%D8%B1%D8%A9-%D9%81%D9%8A%D8%AF%D9%8A%D9%88/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-                <div class="special-ad-block">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="ad-link">
-                        <div class="ad-inner">
-                            <span class="live-pulse">LIVE</span>
-                            <h3>تغطية حية ومباشرة من قلب الحدث</h3>
-                            <p>انقر هنا للمتابعة الفورية والحصرية</p>
-                            <div class="ad-cta">شاهد الآن ⚡</div>
-                        </div>
-                    </a>
-                </div>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae59fd423604696b2d76dd.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">مديرة صندوق النقد: الصراع في الشرق الأوسط يختبر صلابة الاقتصاد العالمي</h2>
-                    <p class="card-snippet">
-         أعلنت كريستالينا جورجييفا، المديرة العامة لصندوق النقد الدولي، اليوم الاثنين، أن القدرة على الصمود ت...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/business/1765453-%D9%85%D8%AF%D9%8A%D8%B1%D8%A9-%D8%B5%D9%86%D8%AF%D9%88%D9%82-%D8%A7%D9%84%D9%86%D9%82%D8%AF-%D8%A7%D9%84%D8%B5%D8%B1%D8%A7%D8%B9-%D9%81%D9%8A-%D8%A7%D9%84%D8%B4%D8%B1%D9%82-%D8%A7%D9%84%D8%A3%D9%88%D8%B3%D8%B7-%D9%8A%D8%AE%D8%AA%D8%A8%D8%B1-%D8%B5%D9%84%D8%A7%D8%A8%D8%A9-%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF-%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%85%D9%8A/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae5d124236046a5f031899.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">قطر: إلقاء القبض على أكثر من 300 شخص بسبب تداول معلومات مضللة وشائعات</h2>
-                    <p class="card-snippet">
-         أعلنت السلطات القطرية اليوم الاثنين إلقاء القبض على 313 شخصا من جنسيات مختلفة في اتهامات تتعلق بإثار...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/middle_east/1765456-%D9%82%D8%B7%D8%B1-%D8%A5%D9%84%D9%82%D8%A7%D8%A1-%D8%A7%D9%84%D9%82%D8%A8%D8%B6-%D8%B9%D9%84%D9%89-%D8%A3%D9%83%D8%AB%D8%B1-%D9%85%D9%86-300-%D8%B4%D8%AE%D8%B5-%D8%A8%D8%B3%D8%A8%D8%A8-%D8%AA%D8%AF%D8%A7%D9%88%D9%84-%D9%85%D8%B9%D9%84%D9%88%D9%85%D8%A7%D8%AA-%D9%85%D8%B6%D9%84%D9%84%D8%A9-%D9%88%D8%B4%D8%A7%D8%A6%D8%B9%D8%A7%D8%AA/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae5c1c4c59b76fe4787e18.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">تقارير تحسم موقف مبابي من مباراة ريال مدريد ومانشستر سيتي في دوري الأبطال</h2>
-                    <p class="card-snippet">
-         كشفت تقارير صحفية فرنسية عن موقف كيليان مبابي من خوض مباراة ريال مدريد ومانشستر سيتي يوم الأربعاء ال...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/sport/1765457-%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1-%D8%AA%D8%AD%D8%B3%D9%85-%D9%85%D9%88%D9%82%D9%81-%D9%85%D8%A8%D8%A7%D8%A8%D9%8A-%D9%85%D9%86-%D9%85%D8%A8%D8%A7%D8%B1%D8%A7%D8%A9-%D8%B1%D9%8A%D8%A7%D9%84-%D9%85%D8%AF%D8%B1%D9%8A%D8%AF-%D9%88%D9%85%D8%A7%D9%86%D8%B4%D8%B3%D8%AA%D8%B1-%D8%B3%D9%8A%D8%AA%D9%8A-%D9%81%D9%8A-%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%A3%D8%A8%D8%B7%D8%A7%D9%84/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae5b814c59b771530a6bdc.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">10 هجمات على سفن بمضيق هرمز خلال أسبوع وحركة الناقلات تتراجع 90%</h2>
-                    <p class="card-snippet">
-         أفادت مجموعات تحليل البيانات أن حوالي 10 سفن في مضيق هرمز أو بالقرب منه تعرضت لهجوم منذ أن قامت إيرا...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/world/1765455-10-%D9%87%D8%AC%D9%85%D8%A7%D8%AA-%D8%B9%D9%84%D9%89-%D8%B3%D9%81%D9%86-%D8%A8%D9%85%D8%B6%D9%8A%D9%82-%D9%87%D8%B1%D9%85%D8%B2-%D8%AE%D9%84%D8%A7%D9%84-%D8%A3%D8%B3%D8%A8%D9%88%D8%B9-%D9%88%D8%AD%D8%B1%D9%83%D8%A9-%D8%A7%D9%84%D9%86%D8%A7%D9%82%D9%84%D8%A7%D8%AA-%D8%AA%D8%AA%D8%B1%D8%A7%D8%AC%D8%B9-90/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-                <div class="special-ad-block">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="ad-link">
-                        <div class="ad-inner">
-                            <span class="live-pulse">LIVE</span>
-                            <h3>تغطية حية ومباشرة من قلب الحدث</h3>
-                            <p>انقر هنا للمتابعة الفورية والحصرية</p>
-                            <div class="ad-cta">شاهد الآن ⚡</div>
-                        </div>
-                    </a>
-                </div>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae58224c59b771442354f0.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">"الوقت يداهمه".. صحيفة تكشف لماذا قد تتحول الحرب على إيران إلى كارثة سياسية لترامب</h2>
-                    <p class="card-snippet">
-         كتب موقع Focus أن الرئيس الأمريكي دونالد ترامب يواجه ضيقا في الوقت لتحقيق نتائج في الحرب ضد إيران قب...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/world/1765452-%D8%A7%D9%84%D9%88%D9%82%D8%AA-%D9%8A%D8%AF%D8%A7%D9%87%D9%85%D9%87-%D8%B5%D8%AD%D9%8A%D9%81%D8%A9-%D8%AA%D9%83%D8%B4%D9%81-%D9%84%D9%85%D8%A7%D8%B0%D8%A7-%D9%82%D8%AF-%D8%AA%D8%AA%D8%AD%D9%88%D9%84-%D8%A7%D9%84%D8%AD%D8%B1%D8%A8-%D8%B9%D9%84%D9%89-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86-%D8%A5%D9%84%D9%89-%D9%83%D8%A7%D8%B1%D8%AB%D8%A9-%D8%B3%D9%8A%D8%A7%D8%B3%D9%8A%D8%A9-%D9%84%D8%AA%D8%B1%D8%A7%D9%85%D8%A8/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae56834c59b76dcb758f16.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">"هيومن رايتس ووتش" تتهم إسرائيل باستخدام الفوسفور الأبيض في لبنان</h2>
-                    <p class="card-snippet">
-         اتهمت منظمة "هيومن رايتس ووتش"، إسرائيل باستخدام مادة الفوسفور الأبيض الحارقة في هجمات على بلدة يحمر...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/middle_east/1765451-%D9%87%D9%8A%D9%88%D9%85%D9%86-%D8%B1%D8%A7%D9%8A%D8%AA%D8%B3-%D9%88%D9%88%D8%AA%D8%B4-%D8%AA%D8%AA%D9%87%D9%85-%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84-%D8%A8%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%A7%D9%84%D9%81%D9%88%D8%B3%D9%81%D9%88%D8%B1-%D8%A7%D9%84%D8%A3%D8%A8%D9%8A%D8%B6-%D9%81%D9%8A-%D9%84%D8%A8%D9%86%D8%A7%D9%86/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae503d423604696b2d76d1.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">زيلينسكي يرسل مسيرات وفريقا من الخبراء إلى الأردن</h2>
-                    <p class="card-snippet">
-         أعلن فلاديمير زيلينسكي أن أوكرانيا أرسلت طائرات اعتراضية مسيرة وفريقا من الخبراء إلى الأردن بناء على...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/world/1765445-%D8%A3%D9%88%D9%83%D8%B1%D8%A7%D9%86%D9%8A%D8%A7-%D8%AA%D8%AD%D8%A7%D8%B1%D8%A8-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86-%D9%84%D8%A3%D8%AC%D9%84-%D8%A3%D9%85%D8%B1%D9%8A%D9%83%D8%A7-%D8%B2%D9%8A%D9%84%D9%8A%D9%86%D8%B3%D9%83%D9%8A-%D9%8A%D8%B1%D8%B3%D9%84-%D9%85%D8%B3%D9%8A%D8%B1%D8%A7%D8%AA-%D9%88%D9%81%D8%B1%D9%8A%D9%82%D8%A7-%D9%85%D9%86-%D8%A7%D9%84%D8%AE%D8%A8%D8%B1%D8%A7%D8%A1-%D8%A5%D9%84%D9%89-%D8%A7%D9%84%D8%A3%D8%B1%D8%AF%D9%86/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae4cbc4c59b76fe4787e0c.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">مفاجأة..  نجم من الاتحاد السعودي على رادار ليفربول لخلافة محمد صلاح</h2>
-                    <p class="card-snippet">
-         بدأت إدارة نادي ليفربول الإنجليزي منذ فترة الترتيب للتعاقد مع جناح هجومي جديد لخلافة النجم المصري مح...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/sport/1765443-%D9%85%D9%81%D8%A7%D8%AC%D8%A3%D8%A9-%D9%86%D8%AC%D9%85-%D9%85%D9%86-%D8%A7%D9%84%D8%A7%D8%AA%D8%AD%D8%A7%D8%AF-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A-%D8%B9%D9%84%D9%89-%D8%B1%D8%A7%D8%AF%D8%A7%D8%B1-%D9%84%D9%8A%D9%81%D8%B1%D8%A8%D9%88%D9%84-%D9%84%D8%AE%D9%84%D8%A7%D9%81%D8%A9-%D9%85%D8%AD%D9%85%D8%AF-%D8%B5%D9%84%D8%A7%D8%AD/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-                <div class="special-ad-block">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="ad-link">
-                        <div class="ad-inner">
-                            <span class="live-pulse">LIVE</span>
-                            <h3>تغطية حية ومباشرة من قلب الحدث</h3>
-                            <p>انقر هنا للمتابعة الفورية والحصرية</p>
-                            <div class="ad-cta">شاهد الآن ⚡</div>
-                        </div>
-                    </a>
-                </div>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae4da24c59b771530a6bd3.png" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">"القضية هي النفط فقط".. إيران تلتقط لحظة صراحة أمريكية نادرة!</h2>
-                    <p class="card-snippet">
-         كشف المتحدث باسم وزارة الخارجية الإيرانية إسماعيل بقائي عن "لحظة نادرة من الصراحة" في تعليق ساخر على...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/world/1765438-%D8%A7%D9%84%D9%82%D8%B6%D9%8A%D8%A9-%D9%87%D9%8A-%D8%A7%D9%84%D9%86%D9%81%D8%B7-%D9%81%D9%82%D8%B7-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86-%D8%AA%D9%84%D8%AA%D9%82%D8%B7-%D9%84%D8%AD%D8%B8%D8%A9-%D8%B5%D8%B1%D8%A7%D8%AD%D8%A9-%D8%A3%D9%85%D8%B1%D9%8A%D9%83%D9%8A%D8%A9-%D9%86%D8%A7%D8%AF%D8%B1%D8%A9/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae4d744c59b771442354ed.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">وانغ يي حول الصراع في الشرق الأوسط: قوة القبضة القوية لا تعني بالضرورة قوة الحجة</h2>
-                    <p class="card-snippet">
-         وصف وزير الخارجية الصيني وانغ يي الصراع في الشرق الأوسط مستخدما حكمة صينية قديمة. 
-        ...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/world/1765444-%D9%88%D8%A7%D9%86%D8%BA-%D9%8A%D9%8A-%D9%8A%D8%B5%D9%81-%D8%A7%D9%84%D8%B5%D8%B1%D8%A7%D8%B9-%D9%81%D9%8A-%D8%A7%D9%84%D8%B4%D8%B1%D9%82-%D8%A7%D9%84%D8%A3%D9%88%D8%B3%D8%B7-%D8%A8%D8%AD%D9%83%D9%85%D8%A9-%D8%B5%D9%8A%D9%86%D9%8A%D8%A9-%D9%82%D8%AF%D9%8A%D9%85%D8%A9/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae4a6c4236046a1e2e6e97.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">لحظة عائلية دافئة.. زعيم كوريا الشمالية مع زوجته وابنته في حفل تكريم النساء</h2>
-                    <p class="card-snippet">
-         حضر زعيم كوريا الشمالية كيم جونغ-أون حفلا موسيقيا بمناسبة اليوم العالمي للمرأة برفقة زوجته وابنته كي...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/world/1765442-%D9%84%D8%AD%D8%B8%D8%A9-%D8%B9%D8%A7%D8%A6%D9%84%D9%8A%D8%A9-%D8%AF%D8%A7%D9%81%D8%A6%D8%A9-%D8%B2%D8%B9%D9%8A%D9%85-%D9%83%D9%88%D8%B1%D9%8A%D8%A7-%D8%A7%D9%84%D8%B4%D9%85%D8%A7%D9%84%D9%8A%D8%A9-%D9%85%D8%B9-%D8%B2%D9%88%D8%AC%D8%AA%D9%87-%D9%88%D8%A7%D8%A8%D9%86%D8%AA%D9%87-%D9%81%D9%8A-%D8%AD%D9%81%D9%84-%D8%AA%D9%83%D8%B1%D9%8A%D9%85-%D8%A7%D9%84%D9%86%D8%B3%D8%A7%D8%A1/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae490f42360467eb150b05.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">برشلونة يتغنى بالظهور الأول لحمزة عبد الكريم</h2>
-                    <p class="card-snippet">
-         بعد 40 يوما على إعلان نادي برشلونة الإسباني التعاقد مع المهاجم المصري حمزة عبد الكريم أثبت اللاعب نف...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/sport/1765441-%D8%A8%D8%B1%D8%B4%D9%84%D9%88%D9%86%D8%A9-%D9%8A%D8%AA%D8%BA%D9%86%D9%89-%D8%A8%D8%A7%D9%84%D8%B8%D9%87%D9%88%D8%B1-%D8%A7%D9%84%D8%A3%D9%88%D9%84-%D9%84%D8%AD%D9%85%D8%B2%D8%A9-%D8%B9%D8%A8%D8%AF-%D8%A7%D9%84%D9%83%D8%B1%D9%8A%D9%85/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-                <div class="special-ad-block">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="ad-link">
-                        <div class="ad-inner">
-                            <span class="live-pulse">LIVE</span>
-                            <h3>تغطية حية ومباشرة من قلب الحدث</h3>
-                            <p>انقر هنا للمتابعة الفورية والحصرية</p>
-                            <div class="ad-cta">شاهد الآن ⚡</div>
-                        </div>
-                    </a>
-                </div>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae450f4c59b772e570e43c.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">أسعار النفط تقترب من حاجز 120 دولارا للبرميل</h2>
-                    <p class="card-snippet">
-         قفز سعر برميل خام برنت، المعيار العالمي، إلى أعلى ​مستوى له منذ يوليو⁠ 2022 وسط مخاوف من تقلص الإمدا...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/business/1765436-%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%A7%D9%84%D9%86%D9%81%D8%B7-%D8%AA%D9%82%D8%AA%D8%B1%D8%A8-%D9%85%D9%86-%D8%AD%D8%A7%D8%AC%D8%B2-120-%D8%AF%D9%88%D9%84%D8%A7%D8%B1%D8%A7-%D9%84%D9%84%D8%A8%D8%B1%D9%85%D9%8A%D9%84/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae45cb42360467e00805d8.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">ويتكوف وكوشنر يتوجهان إلى إسرائيل غدا لبحث الخلاف حول ضربات إيران</h2>
-                    <p class="card-snippet">
-         أفاد مسؤول أمريكي كبير بأن المبعوثين الرئاسيين ستيفن ويتكوف وجاريد كوشنر يعتزمان التوجه إلى إسرائيل ...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/world/1765437-%D9%88%D9%8A%D8%AA%D9%83%D9%88%D9%81-%D9%88%D9%83%D9%88%D8%B4%D9%86%D8%B1-%D9%8A%D8%AA%D9%88%D8%AC%D9%87%D8%A7%D9%86-%D8%A5%D9%84%D9%89-%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84-%D8%BA%D8%AF%D8%A7-%D9%84%D8%A8%D8%AD%D8%AB-%D8%A7%D9%84%D8%AE%D9%84%D8%A7%D9%81-%D8%AD%D9%88%D9%84-%D8%B6%D8%B1%D8%A8%D8%A7%D8%AA-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae450042360469db1095f7.png" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">الدفاع السعودية تعلن اعتراض وتدمير 4 مسيرات متجهة إلى حقل شيبة</h2>
-                    <p class="card-snippet">
-         أفاد المتحدث باسم وزارة الدفاع السعودية اللواء الركن تركي المالكي، اليوم الاثنين، بأنه تم اعتراض وتد...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/middle_east/1765435-%D8%A7%D9%84%D8%AF%D9%81%D8%A7%D8%B9-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9-%D8%AA%D8%B9%D9%84%D9%86-%D8%A7%D8%B9%D8%AA%D8%B1%D8%A7%D8%B6-%D9%88%D8%AA%D8%AF%D9%85%D9%8A%D8%B1-4-%D9%85%D8%B3%D9%8A%D8%B1%D8%A7%D8%AA-%D9%85%D8%AA%D8%AC%D9%87%D8%A9-%D8%A5%D9%84%D9%89-%D8%AD%D9%82%D9%84-%D8%B4%D9%8A%D8%A8%D8%A9/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-            <article class="premium-card">
-                <div class="badge">حصري</div>
-                <div class="card-image">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae3f6c4c59b76fe4787dff.jpg" loading="lazy" alt="news">
-                    </a>
-                </div>
-                <div class="card-content">
-                    <h2 class="card-title">وسائل إعلام: سقوط صاروخ "باتريوت" أمريكي على منطقة سكنية في البحرين</h2>
-                    <p class="card-snippet">
-         أفادت صحيفة Haberler التركية أن صاروخا أُطلق من نظام صواريخ "باتريوت" الأمريكي سقط على منطقة سكنية ف...</p>
-                    <div class="meta-data">
-                        <span>🕒 06:08 AM</span>
-                        <span>🔥 ترند الآن</span>
-                    </div>
-                    <div class="action-area">
-                        <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="https://arabic.rt.com/world/1765433-%D9%88%D8%B3%D8%A7%D8%A6%D9%84-%D8%A5%D8%B9%D9%84%D8%A7%D9%85-%D8%B3%D9%82%D9%88%D8%B7-%D8%B5%D8%A7%D8%B1%D9%88%D8%AE-%D8%A8%D8%A7%D8%AA%D8%B1%D9%8A%D9%88%D8%AA-%D8%A3%D9%85%D8%B1%D9%8A%D9%83%D9%8A-%D8%B9%D9%84%D9%89-%D9%85%D9%86%D8%B7%D9%82%D8%A9-%D8%B3%D9%83%D9%86%D9%8A%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D8%AD%D8%B1%D9%8A%D9%86/" target="_blank" class="btn-sub">المصدر الأصلي</a>
-                    </div>
-                </div>
-            </article>
-                <div class="special-ad-block">
-                    <a href="Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="ad-link">
-                        <div class="ad-inner">
-                            <span class="live-pulse">LIVE</span>
-                            <h3>تغطية حية ومباشرة من قلب الحدث</h3>
-                            <p>انقر هنا للمتابعة الفورية والحصرية</p>
-                            <div class="ad-cta">شاهد الآن ⚡</div>
-                        </div>
-                    </a>
-                </div></main>
-    <footer style="text-align:center; padding: 30px; color: #484f58; font-size: 12px;">
-        <p>Alhadath 24 &copy; 2026 | Automated Update System</p>
+        
+    </main>
+
+    <footer>
+        <p>Celebrity Trend Dashboard &copy; 2026</p>
     </footer>
 </body>
 </html>
