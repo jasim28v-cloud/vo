@@ -3,7 +3,7 @@ import re
 from datetime import datetime
 
 def run():
-    url = "https://t.me/s/kg33d"
+    url = "https://t.me/s/v2nodes"
     # الرابط الإعلاني الخاص بك
     my_ad_link = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
     
