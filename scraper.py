@@ -4,13 +4,10 @@ from datetime import datetime
 
 def run():
     url = "https://t.me/s/v2nodes"
-    # الرابط الإعلاني الخاص بك
     my_ad_link = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
-    
     headers = {'User-Agent': 'Mozilla/5.0'}
     
     try:
-        # 1. جلب وتنظيف البيانات
         response = requests.get(url, headers=headers, timeout=20)
         links = re.findall(r'(?:vless|vmess|trojan|ss)://[^\s<"\'\s]+', response.text)
         
@@ -21,7 +18,6 @@ def run():
         
         now = datetime.now().strftime("%Y-%m-%d")
         
-        # وحدة الإعلان المتكررة (300x250)
         ad_unit_html = f'''
         <div class="flex justify-center my-8">
             <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default">
@@ -29,180 +25,164 @@ def run():
             </ins>
         </div>'''
 
-        # بناء بطاقات السيرفرات
         server_cards = ""
         for i, link in enumerate(clean_links):
             proto = link.split('://')[0].upper()
             server_cards += f'''
-            <div class="bg-white border border-gray-200 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all mb-4 text-right">
+            <div class="server-card bg-white border border-gray-200 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all mb-4 text-right" data-type="{proto}">
                 <div class="flex justify-between items-center mb-3">
-                    <span class="bg-indigo-600 text-white px-3 py-1 rounded-lg text-xs font-bold uppercase">{proto} SERVER</span>
+                    <div class="flex items-center gap-2">
+                        <span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span></span>
+                        <span class="bg-indigo-600 text-white px-3 py-1 rounded-lg text-xs font-bold uppercase">{proto} SERVER</span>
+                    </div>
                     <button onclick="copyText('{link}')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy"></i></button>
                 </div>
-                <p class="text-[10px] text-gray-400 font-mono break-all mb-4 bg-gray-50 p-2 rounded">{link[:80]}...</p>
-                <div class="flex gap-2">
-                    <button onclick="copyText('{link}')" class="flex-1 py-3 bg-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100">نسخ الإعدادات</button>
-                    <button onclick="toggleQR('q{i}', '{link}')" class="px-4 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200 transition-colors"><i class="fas fa-qrcode"></i></button>
+                <p class="text-[10px] text-gray-400 font-mono break-all mb-4 bg-gray-50 p-2 rounded leading-relaxed">{link[:85]}...</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="copyText('{link}')" class="py-3 bg-indigo-600 text-white rounded-xl font-bold text-xs hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100">نسخ الإعدادات</button>
+                    <button onclick="downloadConfig('{proto}_{i}', '{link}')" class="py-3 bg-slate-800 text-white rounded-xl font-bold text-xs hover:bg-black transition-all shadow-lg">تحميل الملف <i class="fas fa-download ml-1"></i></button>
+                    <button onclick="toggleQR('q{i}', '{link}')" class="col-span-2 py-2 bg-gray-100 text-gray-600 rounded-xl text-xs font-semibold hover:bg-gray-200 uppercase">إظهار الباركود 🔳</button>
                 </div>
-                <div id="q{i}" class="hidden mt-4 p-4 border-2 border-dashed border-indigo-50 bg-indigo-50/30 rounded-2xl flex flex-col items-center animate-fade-in">
-                    <span class="text-[10px] text-indigo-400 mb-2 font-bold">امسح الكود للاستخدام الفوري</span>
-                </div>
+                <div id="q{i}" class="hidden mt-4 p-4 border-2 border-dashed border-indigo-50 bg-indigo-50/30 rounded-2xl flex flex-col items-center animate-fade-in"></div>
             </div>'''
-            # إضافة إعلان بعد كل 4 سيرفرات
-            if (i + 1) % 4 == 0:
-                server_cards += ad_unit_html
+            if (i + 1) % 5 == 0: server_cards += ad_unit_html
 
         html = f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freevmess - V2Ray Tunneling</title>
+    <title>Freevmess Pro - Ultimate V2Ray</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    
     <script type="text/javascript" src="//data527.click/129ba2282fccd3392338/b1a648bd38/?placementName=default"></script>
-
     <style>
-        body {{ font-family: 'Cairo', sans-serif; background-color: #fff; overflow-x: hidden; scroll-behavior: smooth; }}
+        body {{ font-family: 'Cairo', sans-serif; background-color: #fbfbfd; overflow-x: hidden; scroll-behavior: smooth; }}
         .gradient-text {{ background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }}
-        .ad-click {{ cursor: pointer; transition: opacity 0.3s; }}
-        .ad-click:hover {{ opacity: 0.9; }}
-        .animate-fade-in {{ animation: fadeIn 0.4s ease-out; }}
+        .ad-click {{ cursor: pointer; }}
+        .filter-btn.active {{ background-color: #4338ca; color: white; }}
+        #bridge-page {{ display: none; background: rgba(255,255,255,0.98); z-index: 9999; }}
         @keyframes fadeIn {{ from {{ opacity: 0; transform: scale(0.95); }} to {{ opacity: 1; transform: scale(1); }} }}
+        .animate-fade-in {{ animation: fadeIn 0.4s ease-out; }}
     </style>
 </head>
-<body>
+<body class="pb-10">
 
-    <nav class="flex justify-between items-center px-6 py-6 max-w-6xl mx-auto border-b border-gray-50">
-        <div class="flex items-center gap-3 ad-click" onclick="window.open('{my_ad_link}', '_blank')">
-            <div class="w-10 h-10 bg-indigo-900 rounded-lg flex items-center justify-center shadow-lg transform rotate-3">
-                <i class="fas fa-bolt text-white"></i>
-            </div>
-            <div class="leading-none">
-                <span class="text-xl font-black text-slate-800 block uppercase tracking-tighter">Freevmess</span>
-                <span class="text-[10px] text-gray-400">V2Ray or Vmess Tunneling</span>
-            </div>
+    <div id="bridge-page" class="fixed inset-0 flex flex-col items-center justify-center text-center p-6">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-indigo-600 mb-4"></div>
+        <h2 class="text-2xl font-black mb-2">جاري فحص وتأمين الرابط...</h2>
+        <p class="text-gray-500">يرجى الانتظار قليلاً للحصول على أفضل أداء</p>
+    </div>
+
+    <nav class="flex justify-between items-center px-6 py-5 max-w-6xl mx-auto border-b border-gray-100 bg-white sticky top-0 z-40">
+        <div class="flex items-center gap-3 ad-click" onclick="triggerBridge()">
+            <div class="w-10 h-10 bg-indigo-900 rounded-lg flex items-center justify-center shadow-lg"><i class="fas fa-bolt text-white"></i></div>
+            <span class="text-xl font-black text-slate-800 uppercase tracking-tighter">Freevmess</span>
         </div>
-        <i class="fas fa-bars text-gray-400 text-xl ad-click" onclick="window.open('{my_ad_link}', '_blank')"></i>
+        <div class="text-left leading-none">
+            <span id="countdown" class="text-indigo-600 font-bold text-sm block tracking-widest">--:--:--</span>
+            <span class="text-[9px] text-gray-400 uppercase">Next Update In</span>
+        </div>
     </nav>
 
-    <section class="px-6 pt-12 text-center max-w-4xl mx-auto">
-        <h1 class="text-5xl md:text-7xl font-black tracking-tighter mb-6 gradient-text">خادم VMESS <br> مخصص</h1>
-        <p class="text-gray-500 text-sm leading-loose mb-10 px-4">خادم v2ray مجاني مميز، خادم بدون v7، حصان طروادة VPN، مقبس ويب vmess وإنشاء حساب v2ray سهل.</p>
-        
-        <div class="ad-click inline-block mb-10" onclick="window.open('{my_ad_link}', '_blank')">
-            <img src="https://cdni.iconscout.com/illustration/premium/thumb/network-infrastructure-4437294-3684813.png" class="w-80 mx-auto">
-        </div>
+    <section class="px-6 py-12 text-center max-w-4xl mx-auto bg-white rounded-b-[40px] shadow-sm mb-8">
+        <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-4 gradient-text">خادم VMESS ذكي</h1>
+        <p class="text-gray-400 text-sm mb-8">سيرفرات محدثة من v2nodes بأفضل سرعة استجابة.</p>
+        <div class="ad-click" onclick="triggerBridge()"><img src="https://cdni.iconscout.com/illustration/premium/thumb/network-infrastructure-4437294-3684813.png" class="w-64 mx-auto"></div>
     </section>
 
     {ad_unit_html}
 
-    <section class="bg-gray-50 py-16 px-6 text-center rounded-t-[50px]">
-        <div class="max-w-4xl mx-auto space-y-16">
-            <div class="ad-click" onclick="window.open('{my_ad_link}', '_blank')">
-                <img src="https://www.freevmess.com/assets/img/all-devices.png" class="h-28 mx-auto mb-6">
-                <h3 class="text-xl font-bold mb-3 text-slate-800">الوصول إلى جميع الأجهزة</h3>
-                <p class="text-gray-500 text-sm leading-relaxed px-4">قم بتثبيت تطبيق v2ray وقم بالوصول إلى v2ray/vmess على جميع أجهزتك بسهولة تامة.</p>
-            </div>
-            
-            <div class="ad-click" onclick="window.open('{my_ad_link}', '_blank')">
-                <h2 class="text-4xl font-black text-indigo-600 mb-3 tracking-tighter">FREE ACCESS</h2>
-                <h3 class="text-xl font-bold mb-3 text-slate-800">مجاني وسهل</h3>
-                <p class="text-gray-500 text-sm leading-relaxed px-4">الوصول إلى جميع الخوادم مجاني 100% وبدون تعقيدات.</p>
-            </div>
-        </div>
-    </section>
+    <div class="flex overflow-x-auto gap-2 px-6 mb-8 max-w-2xl mx-auto no-scrollbar">
+        <button onclick="filterServers('ALL')" class="filter-btn active whitespace-nowrap px-6 py-2 rounded-full border border-indigo-100 text-xs font-bold shadow-sm transition-all">الكل</button>
+        <button onclick="filterServers('VMESS')" class="filter-btn whitespace-nowrap px-6 py-2 rounded-full border border-indigo-100 bg-white text-xs font-bold shadow-sm transition-all">VMESS</button>
+        <button onclick="filterServers('VLESS')" class="filter-btn whitespace-nowrap px-6 py-2 rounded-full border border-indigo-100 bg-white text-xs font-bold shadow-sm transition-all">VLESS</button>
+        <button onclick="filterServers('TROJAN')" class="filter-btn whitespace-nowrap px-6 py-2 rounded-full border border-indigo-100 bg-white text-xs font-bold shadow-sm transition-all">TROJAN</button>
+        <button onclick="filterServers('SS')" class="filter-btn whitespace-nowrap px-6 py-2 rounded-full border border-indigo-100 bg-white text-xs font-bold shadow-sm transition-all">Shadowsocks</button>
+    </div>
 
-    <section class="py-16 px-6 max-w-2xl mx-auto">
-        <div class="flex items-center justify-between mb-10">
-            <h2 class="text-2xl font-black text-slate-800 flex items-center gap-3">
-                <span class="w-2.5 h-8 bg-indigo-600 rounded-full"></span>
-                أحدث السيرفرات
-            </h2>
-            <span class="bg-indigo-50 text-indigo-600 px-4 py-1 rounded-full text-xs font-bold border border-indigo-100">{now}</span>
-        </div>
-        
-        <div class="grid gap-2">
-            {server_cards if clean_links else '<p class="text-center py-20 text-gray-400">جاري تحديث السيرفرات...</p>'}
-        </div>
-    </section>
-
-    {ad_unit_html}
-
-    <section class="bg-white px-6 py-12 border-t border-gray-100">
-        <div class="max-w-4xl mx-auto space-y-10">
-            <div class="text-right ad-click" onclick="window.open('{my_ad_link}', '_blank')">
-                <h3 class="text-xl font-black text-gray-800 mb-4">خادمنا</h3>
-                <p class="text-sm text-gray-500 italic bg-slate-50 p-5 rounded-2xl border-r-8 border-indigo-600 shadow-sm leading-relaxed">" أحد أفضل مزودي الخوادم الافتراضية الخاصة والخوادم المخصصة الذين نعتقد أنهم يقدمون أفضل أداء - فولتر "</p>
-            </div>
-
-            <div class="text-right">
-                <h3 class="text-xl font-black text-gray-800 mb-2">الشروط والأحكام</h3>
-                <p class="text-xs text-gray-400 leading-loose mb-3">تحدد هذه الشروط والأحكام قواعد وأنظمة استخدام موقع freevmess الإلكتروني...</p>
-                <span class="text-indigo-600 text-xs font-bold ad-click" onclick="window.open('{my_ad_link}', '_blank')">اقرأ المزيد</span>
-            </div>
-
-            <div class="border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
-                <div class="bg-gray-50 p-5 font-black text-slate-800 border-b">اكتشف المزيد</div>
-                <div class="divide-y divide-gray-50">
-                    <div class="p-5 flex justify-between items-center hover:bg-indigo-50 transition-colors ad-click" onclick="window.open('{my_ad_link}', '_blank')">
-                        <span class="text-sm font-semibold text-gray-600">أدوات مراقبة الشبكة</span>
-                        <i class="fas fa-chevron-left text-indigo-300 text-xs"></i>
-                    </div>
-                    <div class="p-5 flex justify-between items-center hover:bg-indigo-50 transition-colors ad-click" onclick="window.open('{my_ad_link}', '_blank')">
-                        <span class="text-sm font-semibold text-gray-600">مخطط VPN</span>
-                        <i class="fas fa-chevron-left text-indigo-300 text-xs"></i>
-                    </div>
-                    <div class="p-5 flex justify-between items-center hover:bg-indigo-50 transition-colors ad-click" onclick="window.open('{my_ad_link}', '_blank')">
-                        <span class="text-sm font-semibold text-gray-600">Websockets</span>
-                        <i class="fas fa-chevron-left text-indigo-300 text-xs"></i>
-                    </div>
-                </div>
+    <main class="max-w-xl mx-auto px-6">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="font-black text-xl text-slate-800">سيرفرات اليوم</h2>
+            <div class="flex gap-2">
+                <button onclick="copyAllConfig()" class="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-lg text-[10px] font-bold border border-indigo-100"><i class="fas fa-copy ml-1"></i> نسخ الكل</button>
             </div>
         </div>
-    </section>
+        <div id="servers-container">{server_cards}</div>
+    </main>
 
-    <footer class="bg-slate-900 pt-20 pb-10 px-6 text-center text-white relative mt-20">
-        <div class="absolute -top-10 left-0 w-full overflow-hidden leading-none rotate-180">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-full h-10 fill-white">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
-            </svg>
-        </div>
-        
-        <p class="text-gray-400 text-sm mb-6 font-medium">جميع الحقوق محفوظة &copy; Freevmess.com</p>
-        <div class="flex justify-center gap-8 text-indigo-400 font-bold text-xs mb-10">
-            <span class="ad-click uppercase tracking-widest" onclick="window.open('{my_ad_link}', '_blank')">Privacy Policy</span>
-            <span class="ad-click uppercase tracking-widest" onclick="window.open('{my_ad_link}', '_blank')">Contact Us</span>
-        </div>
-        <div class="bg-indigo-800/30 border border-indigo-500/20 text-indigo-200 p-6 rounded-3xl text-[10px] leading-relaxed max-w-lg mx-auto backdrop-blur-sm ad-click" onclick="window.open('{my_ad_link}', '_blank')">
-            إعدادات الخصوصية وملفات تعريف الارتباط تدار بواسطة جوجل. متوافقة مع إطار الشفافية والموافقة العالمي.
+    <footer class="bg-slate-950 mt-20 pt-16 pb-10 px-6 text-center text-white">
+        <div class="ad-click mb-8" onclick="triggerBridge()"><img src="https://www.freevmess.com/assets/img/all-devices.png" class="h-20 mx-auto filter brightness-0 invert opacity-50"></div>
+        <p class="text-gray-500 text-[10px] uppercase tracking-widest mb-4">© {now} Freevmess.com Network</p>
+        <div class="flex justify-center gap-6 text-indigo-400 font-bold text-xs">
+            <span class="ad-click" onclick="triggerBridge()">Privacy</span>
+            <span class="ad-click" onclick="triggerBridge()">API</span>
+            <span class="ad-click" onclick="triggerBridge()">Support</span>
         </div>
     </footer>
 
-    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-indigo-600 text-white px-8 py-3 rounded-full text-sm font-bold shadow-2xl transition-all opacity-0 pointer-events-none z-50 border border-indigo-400">تم النسخ بنجاح! ✨</div>
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-8 py-3 rounded-full text-xs font-bold opacity-0 transition-all pointer-events-none z-50">تمت العملية بنجاح! ✅</div>
 
     <script>
+        // 1. نظام الفلترة
+        function filterServers(type) {{
+            const cards = document.querySelectorAll('.server-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(b => b.classList.remove('active', 'bg-indigo-600', 'text-white'));
+            event.target.classList.add('active', 'bg-indigo-600', 'text-white');
+            
+            cards.forEach(c => {{
+                if(type === 'ALL' || c.getAttribute('data-type') === type) c.style.display = 'block';
+                else c.style.display = 'none';
+            }});
+        }}
+
+        // 2. التحميل كملف
+        function downloadConfig(filename, text) {{
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename + ".txt");
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }}
+
+        // 3. صفحة التحويل
+        function triggerBridge() {{
+            const bridge = document.getElementById('bridge-page');
+            bridge.style.display = 'flex';
+            setTimeout(() => {{
+                window.open('{my_ad_link}', '_blank');
+                bridge.style.display = 'none';
+            }}, 1500);
+        }}
+
+        // 4. عداد التحديث (6 ساعات)
+        function startCountdown() {{
+            let hours = 5, minutes = 59, seconds = 59;
+            setInterval(() => {{
+                seconds--;
+                if(seconds < 0) {{ seconds = 59; minutes--; }}
+                if(minutes < 0) {{ minutes = 59; hours--; }}
+                document.getElementById('countdown').innerText = 
+                    String(hours).padStart(2, '0') + ":" + String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0');
+            }}, 1000);
+        }}
+        startCountdown();
+
         function copyText(t) {{
             navigator.clipboard.writeText(t);
             const toast = document.getElementById('toast');
             toast.style.opacity = '1';
-            setTimeout(() => toast.style.opacity = '0', 2500);
+            setTimeout(() => toast.style.opacity = '0', 2000);
         }}
-        
+
         function toggleQR(id, link) {{
             const el = document.getElementById(id);
-            if (el.children.length <= 1) {{
-                new QRCode(el, {{
-                    text: link, 
-                    width: 180, 
-                    height: 180,
-                    colorDark: "#312e81",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H
-                }});
+            if (el.children.length === 0) {{
+                new QRCode(el, {{ text: link, width: 160, height: 160, colorDark: "#1e1b4b" }});
             }}
             el.classList.toggle('hidden');
         }}
@@ -212,7 +192,7 @@ def run():
         
         with open("index.html", "w", encoding="utf-8") as f:
             f.write(html)
-        print("🚀 تم دمج الإعلانات والباركود المطور بنجاح!")
+        print("🚀 الميزات الخارقة جاهزة الآن في index.html!")
             
     except Exception as e: print(f"Error: {e}")
 
