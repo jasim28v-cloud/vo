@@ -4,6 +4,9 @@ from datetime import datetime
 
 def run():
     url = "https://t.me/s/kg33d"
+    # الرابط الإعلاني الخاص بك
+    my_ad_link = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
+    
     headers = {'User-Agent': 'Mozilla/5.0'}
     
     try:
@@ -16,26 +19,38 @@ def run():
             c = l.replace('&amp;', '&').split('<')[0].split('"')[0].strip()
             if c not in clean_links: clean_links.append(c)
         
-        # 2. بناء الأقسام (تكرار العناصر كما في الصور)
         now = datetime.now().strftime("%Y-%m-%d")
         
-        # قسم بطاقات السيرفرات
+        # وحدة الإعلان المتكررة (300x250)
+        ad_unit_html = f'''
+        <div class="flex justify-center my-8">
+            <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default">
+                <script src="//data527.click/js/responsive.js" async></script>
+            </ins>
+        </div>'''
+
+        # بناء بطاقات السيرفرات
         server_cards = ""
         for i, link in enumerate(clean_links):
             proto = link.split('://')[0].upper()
             server_cards += f'''
-            <div class="bg-white border border-gray-200 p-5 rounded-xl shadow-sm hover:shadow-md transition-all mb-4 text-right">
+            <div class="bg-white border border-gray-200 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all mb-4 text-right">
                 <div class="flex justify-between items-center mb-3">
-                    <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-lg text-xs font-bold uppercase">{proto} SERVER</span>
+                    <span class="bg-indigo-600 text-white px-3 py-1 rounded-lg text-xs font-bold uppercase">{proto} SERVER</span>
                     <button onclick="copyText('{link}')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy"></i></button>
                 </div>
-                <p class="text-[11px] text-gray-400 font-mono break-all mb-4 bg-gray-50 p-2 rounded">{link[:70]}...</p>
+                <p class="text-[10px] text-gray-400 font-mono break-all mb-4 bg-gray-50 p-2 rounded">{link[:80]}...</p>
                 <div class="flex gap-2">
-                    <button onclick="copyText('{link}')" class="flex-1 py-3 bg-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-indigo-700 transition-all">نسخ الإعدادات</button>
-                    <button onclick="toggleQR('q{i}', '{link}')" class="px-4 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200"><i class="fas fa-qrcode"></i></button>
+                    <button onclick="copyText('{link}')" class="flex-1 py-3 bg-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100">نسخ الإعدادات</button>
+                    <button onclick="toggleQR('q{i}', '{link}')" class="px-4 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200 transition-colors"><i class="fas fa-qrcode"></i></button>
                 </div>
-                <div id="q{i}" class="hidden mt-4 p-4 border-t flex justify-center"></div>
+                <div id="q{i}" class="hidden mt-4 p-4 border-2 border-dashed border-indigo-50 bg-indigo-50/30 rounded-2xl flex flex-col items-center animate-fade-in">
+                    <span class="text-[10px] text-indigo-400 mb-2 font-bold">امسح الكود للاستخدام الفوري</span>
+                </div>
             </div>'''
+            # إضافة إعلان بعد كل 4 سيرفرات
+            if (i + 1) % 4 == 0:
+                server_cards += ad_unit_html
 
         html = f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -47,111 +62,148 @@ def run():
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <script type="text/javascript" src="//data527.click/129ba2282fccd3392338/b1a648bd38/?placementName=default"></script>
+
     <style>
-        body {{ font-family: 'Cairo', sans-serif; background-color: #fff; overflow-x: hidden; }}
+        body {{ font-family: 'Cairo', sans-serif; background-color: #fff; overflow-x: hidden; scroll-behavior: smooth; }}
         .gradient-text {{ background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }}
-        .section-divider {{ position: relative; padding-bottom: 50px; }}
-        .section-divider::after {{ content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg"><path fill="%23f9fafb" fill-opacity="1" d="M0,224L120,213.3C240,203,480,181,720,186.7C960,192,1200,224,1320,240L1440,256L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path></svg>'); background-size: cover; }}
+        .ad-click {{ cursor: pointer; transition: opacity 0.3s; }}
+        .ad-click:hover {{ opacity: 0.9; }}
+        .animate-fade-in {{ animation: fadeIn 0.4s ease-out; }}
+        @keyframes fadeIn {{ from {{ opacity: 0; transform: scale(0.95); }} to {{ opacity: 1; transform: scale(1); }} }}
     </style>
 </head>
 <body>
 
-    <nav class="flex justify-between items-center px-6 py-6 max-w-6xl mx-auto">
-        <div class="flex items-center gap-3">
-            <img src="https://www.freevmess.com/assets/img/logo.png" alt="Logo" class="h-10" onerror="this.src='https://cdn-icons-png.flaticon.com/512/733/733641.png'">
+    <nav class="flex justify-between items-center px-6 py-6 max-w-6xl mx-auto border-b border-gray-50">
+        <div class="flex items-center gap-3 ad-click" onclick="window.open('{my_ad_link}', '_blank')">
+            <div class="w-10 h-10 bg-indigo-900 rounded-lg flex items-center justify-center shadow-lg transform rotate-3">
+                <i class="fas fa-bolt text-white"></i>
+            </div>
             <div class="leading-none">
-                <span class="text-xl font-black text-slate-800 block">Freevmess</span>
+                <span class="text-xl font-black text-slate-800 block uppercase tracking-tighter">Freevmess</span>
                 <span class="text-[10px] text-gray-400">V2Ray or Vmess Tunneling</span>
             </div>
         </div>
-        <i class="fas fa-bars text-gray-400 text-xl"></i>
+        <i class="fas fa-bars text-gray-400 text-xl ad-click" onclick="window.open('{my_ad_link}', '_blank')"></i>
     </nav>
 
-    <section class="px-6 pt-16 text-center max-w-4xl mx-auto">
-        <h1 class="text-5xl md:text-6xl font-black tracking-tighter mb-6 gradient-text">خادم VMESS <br> مخصص</h1>
+    <section class="px-6 pt-12 text-center max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-black tracking-tighter mb-6 gradient-text">خادم VMESS <br> مخصص</h1>
         <p class="text-gray-500 text-sm leading-loose mb-10 px-4">خادم v2ray مجاني مميز، خادم بدون v7، حصان طروادة VPN، مقبس ويب vmess وإنشاء حساب v2ray سهل.</p>
-        <img src="https://cdni.iconscout.com/illustration/premium/thumb/network-infrastructure-4437294-3684813.png" class="w-72 mx-auto mb-10">
+        
+        <div class="ad-click inline-block mb-10" onclick="window.open('{my_ad_link}', '_blank')">
+            <img src="https://cdni.iconscout.com/illustration/premium/thumb/network-infrastructure-4437294-3684813.png" class="w-80 mx-auto">
+        </div>
     </section>
 
-    <section class="bg-gray-50 py-16 px-6 text-center">
+    {ad_unit_html}
+
+    <section class="bg-gray-50 py-16 px-6 text-center rounded-t-[50px]">
         <div class="max-w-4xl mx-auto space-y-16">
-            <div>
-                <img src="https://www.freevmess.com/assets/img/all-devices.png" class="h-24 mx-auto mb-4" onerror="this.style.display='none'">
-                <h3 class="text-xl font-bold mb-3">الوصول إلى جميع الأجهزة</h3>
-                <p class="text-gray-500 text-sm leading-relaxed">قم بتثبيت تطبيق v2ray وقم بالوصول إلى v2ray/vmess على جميع أجهزة Android وأجهزة الكمبيوتر/أجهزة الكمبيوتر المحمولة وأجهزة iPhone و Windows و GNU/linux و iOS</p>
+            <div class="ad-click" onclick="window.open('{my_ad_link}', '_blank')">
+                <img src="https://www.freevmess.com/assets/img/all-devices.png" class="h-28 mx-auto mb-6">
+                <h3 class="text-xl font-bold mb-3 text-slate-800">الوصول إلى جميع الأجهزة</h3>
+                <p class="text-gray-500 text-sm leading-relaxed px-4">قم بتثبيت تطبيق v2ray وقم بالوصول إلى v2ray/vmess على جميع أجهزتك بسهولة تامة.</p>
             </div>
-            <div>
-                <h2 class="text-3xl font-black text-cyan-500 mb-3 tracking-tighter">FREE ACCESS</h2>
-                <h3 class="text-xl font-bold mb-3">مجاني وسهل</h3>
-                <p class="text-gray-500 text-sm leading-relaxed">الوصول إلى جميع الخوادم مجاني 100%، ويمكنك الحصول على الوصول إلى الخادم والحساب بسهولة (لا حاجة إلى خطوات معقدة).</p>
+            
+            <div class="ad-click" onclick="window.open('{my_ad_link}', '_blank')">
+                <h2 class="text-4xl font-black text-indigo-600 mb-3 tracking-tighter">FREE ACCESS</h2>
+                <h3 class="text-xl font-bold mb-3 text-slate-800">مجاني وسهل</h3>
+                <p class="text-gray-500 text-sm leading-relaxed px-4">الوصول إلى جميع الخوادم مجاني 100% وبدون تعقيدات.</p>
             </div>
         </div>
     </section>
 
     <section class="py-16 px-6 max-w-2xl mx-auto">
-        <h2 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-2">
-            <span class="w-2 h-8 bg-indigo-600 rounded-full"></span>
-            أحدث السيرفرات المتاحة
-        </h2>
-        {server_cards if clean_links else '<p class="text-center py-10">جاري البحث عن سيرفرات...</p>'}
+        <div class="flex items-center justify-between mb-10">
+            <h2 class="text-2xl font-black text-slate-800 flex items-center gap-3">
+                <span class="w-2.5 h-8 bg-indigo-600 rounded-full"></span>
+                أحدث السيرفرات
+            </h2>
+            <span class="bg-indigo-50 text-indigo-600 px-4 py-1 rounded-full text-xs font-bold border border-indigo-100">{now}</span>
+        </div>
+        
+        <div class="grid gap-2">
+            {server_cards if clean_links else '<p class="text-center py-20 text-gray-400">جاري تحديث السيرفرات...</p>'}
+        </div>
     </section>
 
+    {ad_unit_html}
+
     <section class="bg-white px-6 py-12 border-t border-gray-100">
-        <div class="max-w-4xl mx-auto space-y-8">
-            <div class="text-right">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">خادمنا</h3>
-                <p class="text-sm text-gray-500 italic bg-slate-50 p-4 rounded-lg border-r-4 border-red-500">" أحد أفضل مزودي الخوادم الافتراضية الخاصة والخوادم المخصصة الذين نعتقد أنهم يقدمون أفضل أداء - فولتر "</p>
+        <div class="max-w-4xl mx-auto space-y-10">
+            <div class="text-right ad-click" onclick="window.open('{my_ad_link}', '_blank')">
+                <h3 class="text-xl font-black text-gray-800 mb-4">خادمنا</h3>
+                <p class="text-sm text-gray-500 italic bg-slate-50 p-5 rounded-2xl border-r-8 border-indigo-600 shadow-sm leading-relaxed">" أحد أفضل مزودي الخوادم الافتراضية الخاصة والخوادم المخصصة الذين نعتقد أنهم يقدمون أفضل أداء - فولتر "</p>
             </div>
 
             <div class="text-right">
-                <h3 class="text-xl font-bold text-gray-800 mb-2">الشروط والأحكام</h3>
-                <p class="text-xs text-gray-400 leading-loose">تحدد هذه الشروط والأحكام قواعد وأنظمة استخدام موقع freevmess الإلكتروني. بدخولك إلى هذا الموقع نفترض موافقتك على هذه الشروط والأحكام...</p>
-                <a href="#" class="text-red-400 text-xs">اقرأ المزيد</a>
+                <h3 class="text-xl font-black text-gray-800 mb-2">الشروط والأحكام</h3>
+                <p class="text-xs text-gray-400 leading-loose mb-3">تحدد هذه الشروط والأحكام قواعد وأنظمة استخدام موقع freevmess الإلكتروني...</p>
+                <span class="text-indigo-600 text-xs font-bold ad-click" onclick="window.open('{my_ad_link}', '_blank')">اقرأ المزيد</span>
             </div>
 
-            <div class="border rounded-xl overflow-hidden">
-                <div class="bg-gray-50 p-4 font-bold border-b">اكتشف المزيد</div>
-                <div class="divide-y">
-                    <div class="p-4 flex justify-between items-center hover:bg-gray-50">
-                        <span class="text-sm text-gray-600">أدوات مراقبة الشبكة</span>
-                        <i class="fas fa-chevron-left text-gray-300"></i>
+            <div class="border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+                <div class="bg-gray-50 p-5 font-black text-slate-800 border-b">اكتشف المزيد</div>
+                <div class="divide-y divide-gray-50">
+                    <div class="p-5 flex justify-between items-center hover:bg-indigo-50 transition-colors ad-click" onclick="window.open('{my_ad_link}', '_blank')">
+                        <span class="text-sm font-semibold text-gray-600">أدوات مراقبة الشبكة</span>
+                        <i class="fas fa-chevron-left text-indigo-300 text-xs"></i>
                     </div>
-                    <div class="p-4 flex justify-between items-center hover:bg-gray-50">
-                        <span class="text-sm text-gray-600">مخطط VPN</span>
-                        <i class="fas fa-chevron-left text-gray-300"></i>
+                    <div class="p-5 flex justify-between items-center hover:bg-indigo-50 transition-colors ad-click" onclick="window.open('{my_ad_link}', '_blank')">
+                        <span class="text-sm font-semibold text-gray-600">مخطط VPN</span>
+                        <i class="fas fa-chevron-left text-indigo-300 text-xs"></i>
                     </div>
-                    <div class="p-4 flex justify-between items-center hover:bg-gray-50">
-                        <span class="text-sm text-gray-600">Websockets</span>
-                        <i class="fas fa-chevron-left text-gray-300"></i>
+                    <div class="p-5 flex justify-between items-center hover:bg-indigo-50 transition-colors ad-click" onclick="window.open('{my_ad_link}', '_blank')">
+                        <span class="text-sm font-semibold text-gray-600">Websockets</span>
+                        <i class="fas fa-chevron-left text-indigo-300 text-xs"></i>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-slate-50 pt-16 pb-8 px-6 text-center section-divider">
-        <p class="text-gray-400 text-sm mb-4">جميع الحقوق محفوظة &copy; Freevmess.com</p>
-        <div class="flex justify-center gap-4 text-indigo-600 font-bold text-xs mb-8">
-            <a href="#">سياسة الخصوصية</a>
-            <a href="#">اتصل بنا</a>
+    <footer class="bg-slate-900 pt-20 pb-10 px-6 text-center text-white relative mt-20">
+        <div class="absolute -top-10 left-0 w-full overflow-hidden leading-none rotate-180">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-full h-10 fill-white">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
+            </svg>
         </div>
-        <div class="bg-indigo-900 text-white p-4 rounded-xl text-[10px] leading-relaxed max-w-lg mx-auto">
-            إعدادات الخصوصية وملفات تعريف الارتباط تدار بواسطة جوجل. متوافقة مع إطار الشفافية والموافقة.
+        
+        <p class="text-gray-400 text-sm mb-6 font-medium">جميع الحقوق محفوظة &copy; Freevmess.com</p>
+        <div class="flex justify-center gap-8 text-indigo-400 font-bold text-xs mb-10">
+            <span class="ad-click uppercase tracking-widest" onclick="window.open('{my_ad_link}', '_blank')">Privacy Policy</span>
+            <span class="ad-click uppercase tracking-widest" onclick="window.open('{my_ad_link}', '_blank')">Contact Us</span>
+        </div>
+        <div class="bg-indigo-800/30 border border-indigo-500/20 text-indigo-200 p-6 rounded-3xl text-[10px] leading-relaxed max-w-lg mx-auto backdrop-blur-sm ad-click" onclick="window.open('{my_ad_link}', '_blank')">
+            إعدادات الخصوصية وملفات تعريف الارتباط تدار بواسطة جوجل. متوافقة مع إطار الشفافية والموافقة العالمي.
         </div>
     </footer>
 
-    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full text-sm font-bold opacity-0 transition-opacity pointer-events-none z-50">تم النسخ بنجاح! ✅</div>
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-indigo-600 text-white px-8 py-3 rounded-full text-sm font-bold shadow-2xl transition-all opacity-0 pointer-events-none z-50 border border-indigo-400">تم النسخ بنجاح! ✨</div>
 
     <script>
         function copyText(t) {{
             navigator.clipboard.writeText(t);
             const toast = document.getElementById('toast');
             toast.style.opacity = '1';
-            setTimeout(() => toast.style.opacity = '0', 2000);
+            setTimeout(() => toast.style.opacity = '0', 2500);
         }}
+        
         function toggleQR(id, link) {{
             const el = document.getElementById(id);
-            if (!el.innerHTML) new QRCode(el, {{text: link, width: 140, height: 140}});
+            if (el.children.length <= 1) {{
+                new QRCode(el, {{
+                    text: link, 
+                    width: 180, 
+                    height: 180,
+                    colorDark: "#312e81",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                }});
+            }}
             el.classList.toggle('hidden');
         }}
     </script>
@@ -160,7 +212,7 @@ def run():
         
         with open("index.html", "w", encoding="utf-8") as f:
             f.write(html)
-        print("✅ تم إنشاء الموقع بالكامل بنجاح!")
+        print("🚀 تم دمج الإعلانات والباركود المطور بنجاح!")
             
     except Exception as e: print(f"Error: {e}")
 
