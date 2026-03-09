@@ -4,17 +4,38 @@ from datetime import datetime
 import re
 
 def run_news():
-    rss_url = "https://arabic.rt.com/rss/"
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+    # تم تغيير الرابط ليجلب أخبار الفن والمشاهير بدلاً من الأخبار العامة
+    rss_url = "https://arabic.rt.com/rss/news/entertainment/"
+    headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'Accept-Language': 'ar-IQ,ar;q=0.9,en-US;q=0.8,en;q=0.7',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Referer': 'https://www.google.com/',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-User': '?1',
+    'Upgrade-Insecure-Requests': '1',
+    'Cache-Control': 'max-age=0',
+    'Connection': 'keep-alive',
+    'DNT': '1',
+    'Sec-Ch-Ua': '"Google Chrome";v="124", "Not:A-Brand";v="8", "Chromium";v="124"',
+    'Sec-Ch-Ua-Mobile': '?0',
+    'Sec-Ch-Ua-Platform': '"Windows"'
+}
     
     try:
-        # الرابط الجديد الخاص بك
-        my_direct_link = "Https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
+        # الرابط المباشر الخاص بك
+        my_direct_link = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
+        
+        # أكواد الإعلانات الإضافية
+        ad_ins_code = '<ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>'
+        ad_script_code = '<script type="text/javascript" src="//data527.click/129ba2282fccd3392338/b1a648bd38/?placementName=default"></script>'
         
         response = requests.get(rss_url, headers=headers, timeout=20)
         response.encoding = 'utf-8'
         
-        # استخدام lxml لمعالجة البيانات بسرعة كما هو محدد في ملف التشغيل الآلي الخاص بك
         soup = BeautifulSoup(response.content, 'xml')
         items = soup.find_all('item')
         
@@ -25,14 +46,14 @@ def run_news():
             title = item.title.text
             news_url = item.link.text
             img_element = item.find('enclosure')
-            img_url = img_element.get('url') if img_element else "https://via.placeholder.com/800x500/1a1a1a/ffffff?text=ALHADATH+24"
+            img_url = img_element.get('url') if img_element else "https://via.placeholder.com/800x500/1a1a1a/ffffff?text=CELEBRITY+NEWS"
             
             description = item.description.text if item.description else ""
             clean_desc = re.sub('<[^<]+?>', '', description)[:110] + "..."
 
             news_html += f'''
-            <article class="premium-card">
-                <div class="badge">{"عاجل" if i < 3 else "حصري"}</div>
+            <article class="glass-card">
+                <div class="badge">{"ترند الآن" if i < 3 else "مشاهير"}</div>
                 <div class="card-image">
                     <a href="{my_direct_link}" target="_blank">
                         <img src="{img_url}" loading="lazy" alt="news">
@@ -43,26 +64,19 @@ def run_news():
                     <p class="card-snippet">{clean_desc}</p>
                     <div class="meta-data">
                         <span>🕒 {datetime.now().strftime("%I:%M %p")}</span>
-                        <span>🔥 ترند الآن</span>
+                        <span class="trending-fire">🔥 حصري</span>
                     </div>
                     <div class="action-area">
-                        <a href="{my_direct_link}" target="_blank" class="btn-main">اقرأ الخبر كاملاً</a>
-                        <a href="{news_url}" target="_blank" class="btn-sub">المصدر الأصلي</a>
+                        <a href="{my_direct_link}" target="_blank" class="btn-prime">شاهد التفاصيل</a>
+                        <a href="{news_url}" target="_blank" class="btn-outline">المصدر</a>
                     </div>
                 </div>
             </article>'''
 
             if (i + 1) % 4 == 0:
                 news_html += f'''
-                <div class="special-ad-block">
-                    <a href="{my_direct_link}" target="_blank" class="ad-link">
-                        <div class="ad-inner">
-                            <span class="live-pulse">LIVE</span>
-                            <h3>تغطية حية ومباشرة من قلب الحدث</h3>
-                            <p>انقر هنا للمتابعة الفورية والحصرية</p>
-                            <div class="ad-cta">شاهد الآن ⚡</div>
-                        </div>
-                    </a>
+                <div class="ad-slot-wrapper">
+                    {ad_ins_code}
                 </div>'''
 
         now_date = datetime.now().strftime("%Y-%m-%d")
@@ -72,61 +86,105 @@ def run_news():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الحدث 24 | Alhadath News</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <title>مشاهير ترند | عالم النجوم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {{
-            --bg: #0d1117; --card: #161b22; --text: #f0f6fc;
-            --primary: #f85149; --accent: #58a6ff; --gold: #f2cc60;
+            --glass-bg: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --primary-accent: #f093fb;
+            --danger-accent: #f5576c;
+            --text-main: #ffffff;
         }}
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-        body {{ background: var(--bg); font-family: 'Cairo', sans-serif; color: var(--text); padding-top: 130px; }}
-        header {{ background: rgba(13, 17, 23, 0.95); backdrop-filter: blur(12px); padding: 15px 5%; position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 2px solid var(--primary); display: flex; justify-content: space-between; align-items: center; }}
+        body {{ 
+            background: linear-gradient(135deg, #2d3436, #000000);
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: 'Cairo', sans-serif; 
+            color: var(--text-main); 
+            padding-top: 150px;
+        }}
+        
+        header {{ 
+            background: rgba(0, 0, 0, 0.6); 
+            backdrop-filter: blur(25px); 
+            padding: 15px 5%; 
+            position: fixed; top: 0; width: 100%; z-index: 1000; 
+            border-bottom: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; align-items: center; 
+        }}
         .logo {{ font-size: 26px; font-weight: 900; color: #fff; text-decoration: none; }}
-        .logo span {{ color: var(--primary); }}
-        .ticker-wrap {{ position: fixed; top: 75px; width: 100%; background: var(--primary); color: #fff; overflow: hidden; height: 35px; display: flex; align-items: center; z-index: 999; }}
-        .ticker-title {{ background: #000; padding: 0 15px; font-weight: 800; font-size: 13px; z-index: 2; height: 100%; display: flex; align-items: center; }}
-        .ticker-scroll {{ white-space: nowrap; animation: scroll 45s linear infinite; font-weight: 600; }}
-        @keyframes scroll {{ 0% {{ transform: translateX(100%); }} 100% {{ transform: translateX(-180%); }} }}
-        .container {{ max-width: 1200px; margin: 0 auto 50px; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }}
-        .premium-card {{ background: var(--card); border-radius: 12px; overflow: hidden; transition: 0.3s; border: 1px solid #30363d; position: relative; }}
-        .premium-card:hover {{ transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 8px 24px rgba(0,0,0,0.5); }}
-        .badge {{ position: absolute; top: 12px; left: 12px; background: var(--primary); color: #fff; padding: 3px 12px; font-size: 11px; font-weight: 800; border-radius: 4px; z-index: 5; }}
-        .card-image {{ height: 200px; overflow: hidden; border-bottom: 1px solid #30363d; }}
-        .card-image img {{ width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }}
-        .card-content {{ padding: 20px; }}
-        .card-title {{ font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 10px; line-height: 1.5; }}
-        .card-snippet {{ font-size: 14px; color: #8b949e; margin-bottom: 15px; }}
-        .meta-data {{ display: flex; justify-content: space-between; font-size: 11px; color: var(--gold); margin-bottom: 15px; font-weight: 600; }}
-        .action-area {{ display: flex; gap: 8px; }}
-        .btn-main {{ flex: 2; background: var(--primary); color: #fff; text-decoration: none; text-align: center; padding: 10px; border-radius: 6px; font-weight: 800; font-size: 14px; }}
-        .btn-sub {{ flex: 1; background: #21262d; color: #c9d1d9; text-decoration: none; text-align: center; padding: 10px; border-radius: 6px; font-size: 12px; border: 1px solid #30363d; }}
-        .special-ad-block {{ grid-column: 1 / -1; background: #161b22; border-radius: 12px; padding: 30px; text-align: center; border: 2px dashed #30363d; }}
-        .ad-link {{ text-decoration: none; color: inherit; }}
-        .live-pulse {{ background: #ff3e3e; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 11px; font-weight: 900; animation: blink 1.2s infinite; }}
-        @keyframes blink {{ 0% {{ opacity: 1; }} 50% {{ opacity: 0.5; }} 100% {{ opacity: 1; }} }}
-        .ad-cta {{ margin-top: 15px; background: var(--gold); color: #000; display: inline-block; padding: 8px 30px; border-radius: 4px; font-weight: 900; }}
+        .logo span {{ color: var(--danger-accent); text-shadow: 0 0 10px var(--danger-accent); }}
+        
+        .ticker-wrap {{ 
+            position: fixed; top: 85px; width: 100%; 
+            background: rgba(245, 87, 108, 0.85); 
+            backdrop-filter: blur(10px);
+            color: #fff; overflow: hidden; height: 40px; 
+            display: flex; align-items: center; z-index: 999;
+        }}
+        .ticker-title {{ background: #000; padding: 0 20px; font-weight: 900; z-index: 2; height: 100%; display: flex; align-items: center; font-size: 13px; }}
+        .ticker-scroll {{ white-space: nowrap; animation: scroll 60s linear infinite; }}
+        @keyframes scroll {{ 0% {{ transform: translateX(100%); }} 100% {{ transform: translateX(-250%); }} }}
+
+        .container {{ max-width: 1250px; margin: 0 auto 50px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }}
+        
+        .glass-card {{ 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(20px);
+            border-radius: 25px; overflow: hidden; 
+            transition: 0.4s; 
+            border: 1px solid var(--glass-border); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }}
+        .glass-card:hover {{ transform: scale(1.03); border-color: var(--primary-accent); }}
+        
+        .badge {{ position: absolute; top: 15px; left: 15px; background: var(--danger-accent); color: #fff; padding: 4px 15px; font-size: 11px; font-weight: 700; border-radius: 10px; z-index: 5; }}
+        .card-image {{ height: 210px; overflow: hidden; }}
+        .card-image img {{ width: 100%; height: 100%; object-fit: cover; }}
+        
+        .card-content {{ padding: 25px; }}
+        .card-title {{ font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 12px; line-height: 1.5; }}
+        .card-snippet {{ font-size: 13px; color: #ccc; margin-bottom: 20px; }}
+        
+        .meta-data {{ display: flex; justify-content: space-between; font-size: 11px; color: var(--primary-accent); margin-bottom: 20px; border-top: 1px solid var(--glass-border); padding-top: 15px; }}
+        
+        .action-area {{ display: flex; gap: 10px; }}
+        .btn-prime {{ flex: 2; background: linear-gradient(90deg, #f5576c, #f093fb); color: #fff; text-decoration: none; text-align: center; padding: 12px; border-radius: 12px; font-weight: 700; }}
+        .btn-outline {{ flex: 1; background: rgba(255,255,255,0.05); color: #fff; text-decoration: none; text-align: center; padding: 12px; border-radius: 12px; font-size: 12px; border: 1px solid var(--glass-border); }}
+        
+        .ad-slot-wrapper {{ grid-column: 1 / -1; display: flex; justify-content: center; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px dashed var(--glass-border); }}
+        
+        footer {{ text-align: center; padding: 40px; color: rgba(255,255,255,0.4); font-size: 12px; border-top: 1px solid var(--glass-border); }}
+        
         @media (max-width: 600px) {{ .container {{ grid-template-columns: 1fr; }} }}
     </style>
 </head>
 <body>
-    <header>
-        <a href="#" class="logo">الحدث <span>24</span></a>
-        <div style="font-size: 11px; color: #8b949e;">📅 {now_date}</div>
+    {ad_script_code} <header>
+        <a href="#" class="logo">مشاهير <span>ترند</span></a>
+        <div style="font-size: 12px; letter-spacing: 1px;">📅 {now_date}</div>
     </header>
+
     <div class="ticker-wrap">
-        <div class="ticker-title">عاجل الآن</div>
+        <div class="ticker-title">آخر أخبار النجوم</div>
         <div class="ticker-scroll">{ticker_items}</div>
     </div>
-    <main class="container">{news_html}</main>
-    <footer style="text-align:center; padding: 30px; color: #484f58; font-size: 12px;">
-        <p>Alhadath 24 &copy; 2026 | Automated Update System</p>
+
+    <main class="container">
+        {news_html}
+    </main>
+
+    <footer>
+        <p>Celebrity Trend Dashboard &copy; 2026</p>
     </footer>
 </body>
 </html>'''
 
         with open("index.html", "w", encoding="utf-8") as f:
             f.write(full_html)
+        print("تم التحديث! موقع 'مشاهير ترند' جاهز الآن مع الإعلانات.")
             
     except Exception as e:
         print(f"Error: {e}")
