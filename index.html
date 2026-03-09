@@ -17,6 +17,7 @@
         #bridge-page { display: none; background: rgba(255,255,255,0.98); z-index: 9999; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="pb-10">
@@ -60,11 +61,16 @@
     </div>
 
     <main class="max-w-xl mx-auto px-6">
-        <div class="flex items-center justify-between mb-6">
-            <h2 class="font-black text-xl text-slate-800">سيرفرات اليوم</h2>
-            <div class="flex gap-2">
-                <button onclick="copyAllConfig()" class="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-lg text-[10px] font-bold border border-indigo-100"><i class="fas fa-copy ml-1"></i> نسخ الكل</button>
+        <div class="flex flex-col mb-10">
+            <div class="flex items-center justify-between mb-2">
+                <h2 class="font-black text-xl text-slate-800">سيرفرات اليوم</h2>
+                <span class="bg-indigo-50 text-indigo-600 px-4 py-1 rounded-full text-[10px] font-bold border border-indigo-100 uppercase tracking-widest">2026-03-09</span>
             </div>
+            <p class="text-[11px] text-gray-400 leading-relaxed text-right border-r-2 border-indigo-200 pr-3">
+                يتم جلب البيانات وتحديثها تلقائياً من خوادم النخبة لضمان استقرار الاتصال وحماية الخصوصية.
+                <br>
+                <span class="text-indigo-300">Premium Nodes collected globally for secure & high-speed tunneling.</span>
+            </p>
         </div>
         <div id="servers-container">
             <div class="server-card bg-white border border-gray-200 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all mb-4 text-right" data-type="VLESS">
@@ -239,12 +245,24 @@
         </div></div>
     </main>
 
-    <footer class="bg-slate-950 mt-20 pt-16 pb-10 px-6 text-center text-white">
+    
+        <div class="flex justify-center my-8">
+            <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default">
+                <script src="//data527.click/js/responsive.js" async></script>
+            </ins>
+        </div>
+
+    <footer class="bg-slate-950 mt-20 pt-16 pb-10 px-6 text-center text-white relative">
+         <div class="absolute -top-10 left-0 w-full overflow-hidden leading-none rotate-180">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-full h-10 fill-slate-950">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
+            </svg>
+        </div>
         <div class="ad-click mb-8" onclick="triggerBridge()"><img src="https://www.freevmess.com/assets/img/all-devices.png" class="h-20 mx-auto filter brightness-0 invert opacity-50"></div>
         <p class="text-gray-500 text-[10px] uppercase tracking-widest mb-4">© 2026-03-09 Freevmess.com Network</p>
         <div class="flex justify-center gap-6 text-indigo-400 font-bold text-xs">
-            <span class="ad-click" onclick="triggerBridge()">Privacy</span>
-            <span class="ad-click" onclick="triggerBridge()">API</span>
+            <span class="ad-click" onclick="triggerBridge()">Privacy Policy</span>
+            <span class="ad-click" onclick="triggerBridge()">API Access</span>
             <span class="ad-click" onclick="triggerBridge()">Support</span>
         </div>
     </footer>
@@ -252,7 +270,6 @@
     <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-8 py-3 rounded-full text-xs font-bold opacity-0 transition-all pointer-events-none z-50">تمت العملية بنجاح! ✅</div>
 
     <script>
-        // 1. نظام الفلترة
         function filterServers(type) {
             const cards = document.querySelectorAll('.server-card');
             const buttons = document.querySelectorAll('.filter-btn');
@@ -265,7 +282,6 @@
             });
         }
 
-        // 2. التحميل كملف
         function downloadConfig(filename, text) {
             const element = document.createElement('a');
             element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -275,25 +291,20 @@
             document.body.removeChild(element);
         }
 
-        // 3. صفحة التحويل
         function triggerBridge() {
             const bridge = document.getElementById('bridge-page');
             bridge.style.display = 'flex';
             setTimeout(() => {
                 window.open('https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default', '_blank');
                 bridge.style.display = 'none';
-            }, 1500);
+            }, 1200);
         }
 
-        // 4. عداد التحديث (6 ساعات)
         function startCountdown() {
-            let hours = 5, minutes = 59, seconds = 59;
+            let h = 5, m = 59, s = 59;
             setInterval(() => {
-                seconds--;
-                if(seconds < 0) { seconds = 59; minutes--; }
-                if(minutes < 0) { minutes = 59; hours--; }
-                document.getElementById('countdown').innerText = 
-                    String(hours).padStart(2, '0') + ":" + String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0');
+                s--; if(s<0){s=59; m--;} if(m<0){m=59; h--;}
+                document.getElementById('countdown').innerText = String(h).padStart(2,'0')+":"+String(m).padStart(2,'0')+":"+String(s).padStart(2,'0');
             }, 1000);
         }
         startCountdown();
