@@ -75,7 +75,7 @@ def run():
 
     <div id="bridge-page" class="fixed inset-0 flex flex-col items-center justify-center text-center p-6">
         <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-indigo-600 mb-4"></div>
-        <h2 class="text-2xl font-black mb-2">جاري فحص وتأمين الرابط...</h2>
+        <h2 class="text-2xl font-black mb-2 text-slate-800">جاري فحص وتأمين الرابط...</h2>
         <p class="text-gray-500">يرجى الانتظار قليلاً للحصول على أفضل أداء</p>
     </div>
 
@@ -115,26 +115,60 @@ def run():
             <p class="text-[11px] text-gray-400 leading-relaxed text-right border-r-2 border-indigo-200 pr-3">
                 يتم جلب البيانات وتحديثها تلقائياً من خوادم النخبة لضمان استقرار الاتصال وحماية الخصوصية.
                 <br>
-                <span class="text-indigo-300">Premium Nodes collected globally for secure & high-speed tunneling.</span>
+                <span class="text-indigo-300 uppercase">Premium Nodes globally collected.</span>
             </p>
         </div>
+        
         <div id="servers-container">{server_cards}</div>
     </main>
 
-    {ad_unit_html}
+    <section class="max-w-xl mx-auto px-6 mt-16 text-right">
+        <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm space-y-8">
+            <div>
+                <h3 class="text-lg font-black text-slate-800 mb-3 flex items-center gap-2">
+                    <i class="fas fa-file-contract text-indigo-500"></i> الشروط والأحكام
+                </h3>
+                <p class="text-xs text-gray-500 leading-loose">
+                    تحدد هذه الشروط والأحكام قواعد وأنظمة استخدام موقع freevmess الإلكتروني، الموجود على الرابط 
+                    <a href="https://jasim28v-cloud.github.io/vo/" class="text-indigo-600 underline">https://jasim28v-cloud.github.io/vo/</a>. 
+                    بدخولك إلى هذا الموقع، فإننا نفترض موافقتك على هذه الشروط والأحكام. لا تستمر في استخدام freevmess إذا كنت لا توافق على جميع الشروط والأحكام المذكورة في هذه الصفحة... 
+                    <span class="text-indigo-500 font-bold ad-click" onclick="triggerBridge()">اقرأ المزيد</span>
+                </p>
+            </div>
+
+            <div class="border-t border-gray-50 pt-6">
+                <h3 class="text-lg font-black text-slate-800 mb-3 flex items-center gap-2">
+                    <i class="fas fa-user-shield text-indigo-500"></i> سياسة الخصوصية
+                </h3>
+                <p class="text-xs text-gray-500 leading-loose">
+                    في freevmess، الذي يمكن الوصول إليه من خلال 
+                    <a href="https://jasim28v-cloud.github.io/vo/" class="text-indigo-600 underline">https://jasim28v-cloud.github.io/vo/</a>، 
+                    تُعد خصوصية زوارنا إحدى أولوياتنا الرئيسية. تحتوي وثيقة سياسة الخصوصية هذه على أنواع المعلومات التي يتم جمعها وتسجيلها وكيفية استخدامنا لها.
+                </p>
+            </div>
+
+            <div class="border-t border-gray-50 pt-6">
+                <h3 class="text-lg font-black text-slate-800 mb-3 flex items-center gap-2">
+                    <i class="fas fa-database text-indigo-500"></i> ملفات السجل
+                </h3>
+                <p class="text-xs text-gray-500 leading-loose">
+                    تتبع منصة Freevmess إجراءً قياسيًا لاستخدام ملفات السجل. تسجل هذه الملفات زيارات المستخدمين للمواقع الإلكترونية، وهو جزء من تحليلات خدمات الاستضافة. تتضمن المعلومات عناوين بروتوكول الإنترنت (IP)... 
+                    <span class="text-indigo-500 font-bold ad-click" onclick="triggerBridge()">اقرأ المزيد</span>
+                </p>
+            </div>
+        </div>
+    </section>
 
     <footer class="bg-slate-950 mt-20 pt-16 pb-10 px-6 text-center text-white relative">
-         <div class="absolute -top-10 left-0 w-full overflow-hidden leading-none rotate-180">
+        <div class="absolute -top-10 left-0 w-full overflow-hidden leading-none rotate-180">
             <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-full h-10 fill-slate-950">
                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
             </svg>
         </div>
-        <div class="ad-click mb-8" onclick="triggerBridge()"><img src="https://www.freevmess.com/assets/img/all-devices.png" class="h-20 mx-auto filter brightness-0 invert opacity-50"></div>
-        <p class="text-gray-500 text-[10px] uppercase tracking-widest mb-4">© {now} Freevmess.com Network</p>
+        <p class="text-gray-500 text-[10px] uppercase tracking-widest mb-4 italic">© Freevmess.com. جميع الحقوق محفوظة.</p>
         <div class="flex justify-center gap-6 text-indigo-400 font-bold text-xs">
             <span class="ad-click" onclick="triggerBridge()">Privacy Policy</span>
-            <span class="ad-click" onclick="triggerBridge()">API Access</span>
-            <span class="ad-click" onclick="triggerBridge()">Support</span>
+            <span class="ad-click" onclick="triggerBridge()">Contact Us</span>
         </div>
     </footer>
 
@@ -146,7 +180,6 @@ def run():
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(b => b.classList.remove('active', 'bg-indigo-600', 'text-white'));
             event.target.classList.add('active', 'bg-indigo-600', 'text-white');
-            
             cards.forEach(c => {{
                 if(type === 'ALL' || c.getAttribute('data-type') === type) c.style.display = 'block';
                 else c.style.display = 'none';
@@ -157,18 +190,13 @@ def run():
             const element = document.createElement('a');
             element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
             element.setAttribute('download', filename + ".txt");
-            document.body.appendChild(element);
             element.click();
-            document.body.removeChild(element);
         }}
 
         function triggerBridge() {{
             const bridge = document.getElementById('bridge-page');
             bridge.style.display = 'flex';
-            setTimeout(() => {{
-                window.open('{my_ad_link}', '_blank');
-                bridge.style.display = 'none';
-            }}, 1200);
+            setTimeout(() => {{ window.open('{my_ad_link}', '_blank'); bridge.style.display = 'none'; }}, 1200);
         }}
 
         function startCountdown() {{
@@ -200,7 +228,7 @@ def run():
         
         with open("index.html", "w", encoding="utf-8") as f:
             f.write(html)
-        print("🚀 تم إضافة الوصف الفخم وتحديث الموقع بنجاح!")
+        print("✅ تم تحديث الموقع بنجاح وإضافة النصوص القانونية!")
             
     except Exception as e: print(f"Error: {e}")
 
