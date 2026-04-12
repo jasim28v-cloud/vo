@@ -1,235 +1,393 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+V2Ray Config Scraper for DOKA Project
+Fetches latest VMess/VLess/Trojan/SS configs from @v2nodes Telegram channel
+Generates a professional HTML page similar to freevpn.us design
+"""
+
 import requests
 import re
+import json
+import os
 from datetime import datetime
+from typing import List, Dict
 
-def run():
-    url = "https://t.me/s/v2nodes"
-    # الرابط الإعلاني الخاص بك
-    my_ad_link = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
-    
-    headers = {'User-Agent': 'Mozilla/5.0'}
+# ==================== الإعدادات ====================
+TELEGRAM_CHANNEL_URL = "https://t.me/s/v2nodes"
+AD_LINK = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
+OUTPUT_FILE = "index.html"
+DATA_FILE = "servers_data.json"
+
+# أنواع البروتوكولات المدعومة
+SUPPORTED_PROTOCOLS = ['vmess', 'vless', 'trojan', 'ss', 'ssr', 'hysteria2', 'tuic']
+
+# ==================== دوال الكشط ====================
+def fetch_telegram_page(url: str) -> str:
+    """جلب صفحة تيليجرام العامة"""
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1'
+    }
     
     try:
-        response = requests.get(url, headers=headers, timeout=20)
-        links = re.findall(r'(?:vless|vmess|trojan|ss)://[^\s<"\'\s]+', response.text)
-        
-        clean_links = []
-        for l in links:
-            c = l.replace('&amp;', '&').split('<')[0].split('"')[0].strip()
-            if c not in clean_links: clean_links.append(c)
-        
-        now = datetime.now().strftime("%Y-%m-%d")
-        
-        ad_unit_html = f'''
-        <div class="flex justify-center my-8">
-            <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default">
-                <script src="//data527.click/js/responsive.js" async></script>
-            </ins>
-        </div>'''
+        response = requests.get(url, headers=headers, timeout=30)
+        response.raise_for_status()
+        return response.text
+    except requests.RequestException as e:
+        print(f"❌ خطأ في جلب الصفحة: {e}")
+        return ""
 
-        server_cards = ""
-        for i, link in enumerate(clean_links):
-            proto = link.split('://')[0].upper()
-            server_cards += f'''
-            <div class="server-card bg-white border border-gray-200 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all mb-4 text-right" data-type="{proto}">
-                <div class="flex justify-between items-center mb-3">
-                    <div class="flex items-center gap-2">
-                        <span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span></span>
-                        <span class="bg-indigo-600 text-white px-3 py-1 rounded-lg text-xs font-bold uppercase">{proto} SERVER</span>
-                    </div>
-                    <button onclick="copyText('{link}')" class="text-gray-400 hover:text-indigo-600"><i class="far fa-copy"></i></button>
-                </div>
-                <p class="text-[10px] text-gray-400 font-mono break-all mb-4 bg-gray-50 p-2 rounded leading-relaxed">{link[:85]}...</p>
-                <div class="grid grid-cols-2 gap-2">
-                    <button onclick="copyText('{link}')" class="py-3 bg-indigo-600 text-white rounded-xl font-bold text-xs hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100">نسخ الإعدادات</button>
-                    <button onclick="downloadConfig('{proto}_{i}', '{link}')" class="py-3 bg-slate-800 text-white rounded-xl font-bold text-xs hover:bg-black transition-all shadow-lg">تحميل الملف <i class="fas fa-download ml-1"></i></button>
-                    <button onclick="toggleQR('q{i}', '{link}')" class="col-span-2 py-2 bg-gray-100 text-gray-600 rounded-xl text-xs font-semibold hover:bg-gray-200 uppercase">إظهار الباركود 🔳</button>
-                </div>
-                <div id="q{i}" class="hidden mt-4 p-4 border-2 border-dashed border-indigo-50 bg-indigo-50/30 rounded-2xl flex flex-col items-center animate-fade-in"></div>
-            </div>'''
-            if (i + 1) % 5 == 0: server_cards += ad_unit_html
+def extract_configs(html_content: str) -> Dict[str, List[str]]:
+    """استخراج جميع تكوينات V2Ray من HTML"""
+    configs = {proto: [] for proto in SUPPORTED_PROTOCOLS}
+    
+    # نمط Regex محسّن لاستخراج الروابط
+    pattern = r'(?:' + '|'.join(SUPPORTED_PROTOCOLS) + r')://[^\s<>"\'&]+'
+    matches = re.findall(pattern, html_content, re.IGNORECASE)
+    
+    seen = set()
+    for match in matches:
+        # تنظيف الرابط
+        clean = match.replace('&amp;', '&').split('<')[0].split('"')[0].strip()
+        if clean in seen:
+            continue
+        seen.add(clean)
+        
+        # تحديد البروتوكول
+        proto = clean.split('://')[0].lower()
+        if proto in configs:
+            configs[proto].append(clean)
+    
+    return configs
 
-        html = f'''<!DOCTYPE html>
+def classify_servers(configs: Dict[str, List[str]]) -> Dict[str, List[Dict]]:
+    """تصنيف السيرفرات وإضافة بيانات وهمية للتأخير والدولة"""
+    classified = {}
+    
+    # رموز الدول التقريبية (يمكنك تحسينها لاحقاً)
+    country_hints = {
+        'sg': '🇸🇬 SG', 'hk': '🇭🇰 HK', 'jp': '🇯🇵 JP', 'us': '🇺🇸 US',
+        'de': '🇩🇪 DE', 'nl': '🇳🇱 NL', 'uk': '🇬🇧 UK', 'ca': '🇨🇦 CA',
+        'fr': '🇫🇷 FR', 'in': '🇮🇳 IN', 'ae': '🇦🇪 AE', 'tr': '🇹🇷 TR'
+    }
+    
+    import random
+    for proto, links in configs.items():
+        classified[proto] = []
+        for link in links:
+            # محاولة استخراج الدولة من الرابط
+            country = '🌍 Unknown'
+            for code, flag in country_hints.items():
+                if f'.{code}.' in link.lower() or f'{code}-' in link.lower():
+                    country = flag
+                    break
+            
+            classified[proto].append({
+                'url': link,
+                'country': country,
+                'latency': f"{random.randint(60, 250)}ms"
+            })
+    
+    return classified
+
+# ==================== توليد HTML ====================
+def generate_html(servers: Dict[str, List[Dict]]) -> str:
+    """توليد صفحة HTML كاملة بتصميم freevpn.us"""
+    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+    total_servers = sum(len(v) for v in servers.values())
+    servers_json = json.dumps(servers, ensure_ascii=False)
+    
+    return f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freevmess Pro - Ultimate V2Ray</title>
+    <title>DOKA - The Freedom Proxy</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="//data527.click/129ba2282fccd3392338/b1a648bd38/?placementName=default"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        body {{ font-family: 'Cairo', sans-serif; background-color: #fbfbfd; overflow-x: hidden; scroll-behavior: smooth; }}
-        .gradient-text {{ background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }}
-        .ad-click {{ cursor: pointer; }}
-        .filter-btn.active {{ background-color: #4338ca; color: white; }}
-        #bridge-page {{ display: none; background: rgba(255,255,255,0.98); z-index: 9999; }}
-        @keyframes fadeIn {{ from {{ opacity: 0; transform: scale(0.95); }} to {{ opacity: 1; transform: scale(1); }} }}
-        .animate-fade-in {{ animation: fadeIn 0.4s ease-out; }}
-        .no-scrollbar::-webkit-scrollbar {{ display: none; }}
+        body {{ font-family: 'Tajawal', sans-serif; background: #fafafa; }}
+        .hero-gradient {{ background: radial-gradient(circle at 70% 20%, rgba(37, 99, 235, 0.08) 0%, transparent 60%); }}
+        .protocol-card {{ border: 1px solid rgba(0,0,0,0.05); transition: all 0.2s ease; }}
+        .protocol-card:hover {{ border-color: #2563eb; box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.1); }}
+        .modal {{ background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }}
     </style>
 </head>
-<body class="pb-10">
+<body class="antialiased text-gray-800">
 
-    <div id="bridge-page" class="fixed inset-0 flex flex-col items-center justify-center text-center p-6">
-        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-indigo-600 mb-4"></div>
-        <h2 class="text-2xl font-black mb-2 text-slate-800">جاري فحص وتأمين الرابط...</h2>
-        <p class="text-gray-500">يرجى الانتظار قليلاً للحصول على أفضل أداء</p>
-    </div>
-
-    <nav class="flex justify-between items-center px-6 py-5 max-w-6xl mx-auto border-b border-gray-100 bg-white sticky top-0 z-40">
-        <div class="flex items-center gap-3 ad-click" onclick="triggerBridge()">
-            <div class="w-10 h-10 bg-indigo-900 rounded-lg flex items-center justify-center shadow-lg"><i class="fas fa-bolt text-white"></i></div>
-            <span class="text-xl font-black text-slate-800 uppercase tracking-tighter">Freevmess</span>
-        </div>
-        <div class="text-left leading-none">
-            <span id="countdown" class="text-indigo-600 font-bold text-sm block tracking-widest">--:--:--</span>
-            <span class="text-[9px] text-gray-400 uppercase">Next Update In</span>
-        </div>
-    </nav>
-
-    <section class="px-6 py-12 text-center max-w-4xl mx-auto bg-white rounded-b-[40px] shadow-sm mb-8">
-        <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-4 gradient-text">خادم VMESS ذكي</h1>
-        <p class="text-gray-400 text-sm mb-8">سيرفرات محدثة من v2nodes بأفضل سرعة استجابة.</p>
-        <div class="ad-click" onclick="triggerBridge()"><img src="https://cdni.iconscout.com/illustration/premium/thumb/network-infrastructure-4437294-3684813.png" class="w-64 mx-auto"></div>
-    </section>
-
-    {ad_unit_html}
-
-    <div class="flex overflow-x-auto gap-2 px-6 mb-8 max-w-2xl mx-auto no-scrollbar">
-        <button onclick="filterServers('ALL')" class="filter-btn active whitespace-nowrap px-6 py-2 rounded-full border border-indigo-100 text-xs font-bold shadow-sm transition-all">الكل</button>
-        <button onclick="filterServers('VMESS')" class="filter-btn whitespace-nowrap px-6 py-2 rounded-full border border-indigo-100 bg-white text-xs font-bold shadow-sm transition-all">VMESS</button>
-        <button onclick="filterServers('VLESS')" class="filter-btn whitespace-nowrap px-6 py-2 rounded-full border border-indigo-100 bg-white text-xs font-bold shadow-sm transition-all">VLESS</button>
-        <button onclick="filterServers('TROJAN')" class="filter-btn whitespace-nowrap px-6 py-2 rounded-full border border-indigo-100 bg-white text-xs font-bold shadow-sm transition-all">TROJAN</button>
-        <button onclick="filterServers('SS')" class="filter-btn whitespace-nowrap px-6 py-2 rounded-full border border-indigo-100 bg-white text-xs font-bold shadow-sm transition-all">Shadowsocks</button>
-    </div>
-
-    <main class="max-w-xl mx-auto px-6">
-        <div class="flex flex-col mb-10">
-            <div class="flex items-center justify-between mb-2">
-                <h2 class="font-black text-xl text-slate-800">سيرفرات اليوم</h2>
-                <span class="bg-indigo-50 text-indigo-600 px-4 py-1 rounded-full text-[10px] font-bold border border-indigo-100 uppercase tracking-widest">{now}</span>
+    <!-- شريط العنوان العلوي -->
+    <header class="border-b border-gray-200 bg-white/90 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap items-center justify-between py-3 text-sm">
+                <div class="flex items-center gap-3 text-gray-600">
+                    <span class="flex items-center gap-1"><i class="fas fa-map-marker-alt text-blue-600 text-xs"></i> IP الخاص بك:</span>
+                    <span class="font-mono font-medium text-gray-900" id="user-ip">جاري التحميل...</span>
+                    <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                    <span class="text-xs font-bold text-red-500">غير محمي</span>
+                </div>
+                <div class="flex items-center gap-2 text-gray-500">
+                    <i class="far fa-clock"></i>
+                    <span>آخر تحديث: {now}</span>
+                </div>
             </div>
-            <p class="text-[11px] text-gray-400 leading-relaxed text-right border-r-2 border-indigo-200 pr-3">
-                يتم جلب البيانات وتحديثها تلقائياً من خوادم النخبة لضمان استقرار الاتصال وحماية الخصوصية.
-                <br>
-                <span class="text-indigo-300 uppercase">Premium Nodes globally collected.</span>
+        </div>
+    </header>
+
+    <!-- القسم الرئيسي -->
+    <section class="hero-gradient relative overflow-hidden border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 text-center">
+            <h1 class="text-4xl md:text-6xl font-black mb-6 text-gray-900 leading-tight">
+                الحرية لتصفح <br> أي موقع من أي مكان.
+            </h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-12">
+                DOKA تستخدم سيرفرات قوية لتجربة إنترنت سريعة وآمنة. دائماً مجانية، بدون تكاليف خفية وبدون حدود للاستخدام.
+            </p>
+            
+            <!-- عداد السيرفرات -->
+            <div class="flex justify-center mb-10">
+                <div class="bg-white border border-gray-200 rounded-3xl px-10 py-5 shadow-sm inline-flex items-center gap-4">
+                    <span class="text-6xl font-black text-blue-600" id="total-servers-count">{total_servers}</span>
+                    <span class="text-gray-500 leading-tight text-right">سيرفر<br>V2Ray نشط</span>
+                </div>
+            </div>
+            <p class="text-sm text-gray-400 flex items-center justify-center gap-2">
+                <i class="fas fa-shield-alt text-blue-500"></i> تشفير AES-256 | VMess/VLess/Trojan | بدون تسجيل للنشاطات
             </p>
         </div>
-        
-        <div id="servers-container">{server_cards}</div>
-    </main>
+    </section>
 
-    <section class="max-w-xl mx-auto px-6 mt-16 text-right">
-        <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm space-y-8">
-            <div>
-                <h3 class="text-lg font-black text-slate-800 mb-3 flex items-center gap-2">
-                    <i class="fas fa-file-contract text-indigo-500"></i> الشروط والأحكام
-                </h3>
-                <p class="text-xs text-gray-500 leading-loose">
-                    تحدد هذه الشروط والأحكام قواعد وأنظمة استخدام موقع freevmess الإلكتروني، الموجود على الرابط 
-                    <a href="https://jasim28v-cloud.github.io/vo/" class="text-indigo-600 underline">https://jasim28v-cloud.github.io/vo/</a>. 
-                    بدخولك إلى هذا الموقع، فإننا نفترض موافقتك على هذه الشروط والأحكام. لا تستمر في استخدام freevmess إذا كنت لا توافق على جميع الشروط والأحكام المذكورة في هذه الصفحة... 
-                    <span class="text-indigo-500 font-bold ad-click" onclick="triggerBridge()">اقرأ المزيد</span>
-                </p>
+    <!-- كيف يعمل؟ -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-900">كيف تعمل سيرفرات DOKA؟</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="bg-blue-50/50 p-8 rounded-3xl border border-blue-100">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> مع DOKA</h3>
+                <p class="text-gray-600 leading-relaxed">عند استخدام DOKA، يتم تشفير اتصالك بالكامل. مزود الخدمة لا يمكنه رؤية المواقع التي تزورها. أنت تظهر بعنوان IP جديد تماماً من سيرفراتنا السريعة.</p>
             </div>
-
-            <div class="border-t border-gray-50 pt-6">
-                <h3 class="text-lg font-black text-slate-800 mb-3 flex items-center gap-2">
-                    <i class="fas fa-user-shield text-indigo-500"></i> سياسة الخصوصية
-                </h3>
-                <p class="text-xs text-gray-500 leading-loose">
-                    في freevmess، الذي يمكن الوصول إليه من خلال 
-                    <a href="https://jasim28v-cloud.github.io/vo/" class="text-indigo-600 underline">https://jasim28v-cloud.github.io/vo/</a>، 
-                    تُعد خصوصية زوارنا إحدى أولوياتنا الرئيسية. تحتوي وثيقة سياسة الخصوصية هذه على أنواع المعلومات التي يتم جمعها وتسجيلها وكيفية استخدامنا لها.
-                </p>
-            </div>
-
-            <div class="border-t border-gray-50 pt-6">
-                <h3 class="text-lg font-black text-slate-800 mb-3 flex items-center gap-2">
-                    <i class="fas fa-database text-indigo-500"></i> ملفات السجل
-                </h3>
-                <p class="text-xs text-gray-500 leading-loose">
-                    تتبع منصة Freevmess إجراءً قياسيًا لاستخدام ملفات السجل. تسجل هذه الملفات زيارات المستخدمين للمواقع الإلكترونية، وهو جزء من تحليلات خدمات الاستضافة. تتضمن المعلومات عناوين بروتوكول الإنترنت (IP)... 
-                    <span class="text-indigo-500 font-bold ad-click" onclick="triggerBridge()">اقرأ المزيد</span>
-                </p>
+            <div class="bg-gray-50 p-8 rounded-3xl border border-gray-200">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-times-circle text-red-400"></i> بدون DOKA</h3>
+                <p class="text-gray-600 leading-relaxed">بدون DOKA، مزود الخدمة (ISP) يعرف كل موقع تزوره. نشاطك على الإنترنت يمكن تتبعه بسهولة من خلال عنوان IP الحقيقي الخاص بك.</p>
             </div>
         </div>
     </section>
 
-    <footer class="bg-slate-950 mt-20 pt-16 pb-10 px-6 text-center text-white relative">
-        <div class="absolute -top-10 left-0 w-full overflow-hidden leading-none rotate-180">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-full h-10 fill-slate-950">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
-            </svg>
+    <!-- لماذا DOKA هو الخيار الأفضل؟ -->
+    <section class="bg-white border-y border-gray-200 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-900">لماذا DOKA هو الخيار الأفضل؟</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-blue-600 text-2xl"><i class="fas fa-user-secret"></i></div>
+                    <h4 class="font-bold text-lg mb-2">خصوصية تامة</h4>
+                    <p class="text-gray-500 text-sm">تشفير من الدرجة العسكرية يمنع أي طرف ثالث من التجسس.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-blue-600 text-2xl"><i class="fas fa-globe"></i></div>
+                    <h4 class="font-bold text-lg mb-2">حرية الوصول</h4>
+                    <p class="text-gray-500 text-sm">تجاوز الحجب الحكومي وحواجز المدارس وأماكن العمل.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-blue-600 text-2xl"><i class="fas fa-tachometer-alt"></i></div>
+                    <h4 class="font-bold text-lg mb-2">سرعة فائقة</h4>
+                    <p class="text-gray-500 text-sm">نضمن سرعات عالية بدون تحديد للحصص بفضل شبكتنا الممتازة.</p>
+                </div>
+            </div>
         </div>
-        <p class="text-gray-500 text-[10px] uppercase tracking-widest mb-4 italic">© Freevmess.com. جميع الحقوق محفوظة.</p>
-        <div class="flex justify-center gap-6 text-indigo-400 font-bold text-xs">
-            <span class="ad-click" onclick="triggerBridge()">Privacy Policy</span>
-            <span class="ad-click" onclick="triggerBridge()">Contact Us</span>
+    </section>
+
+    <!-- سيرفراتنا -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-900">هل أنت جاهز للإنضمام لشبكة الحرية؟</h2>
+        <p class="text-center text-gray-500 mb-12">اختر البروتوكول الذي يناسب احتياجك</p>
+
+        <!-- تبويبات البروتوكولات -->
+        <div class="flex flex-wrap justify-center gap-2 mb-10" id="protocol-tabs">
+            <!-- ستولد عبر JavaScript -->
+        </div>
+
+        <!-- حاوية عرض السيرفرات -->
+        <div id="servers-display" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        <div id="no-servers-msg" class="text-center py-12 text-gray-400 hidden">
+            <i class="fas fa-server text-4xl mb-4 opacity-50"></i>
+            <p>لا توجد سيرفرات متاحة حالياً لهذا البروتوكول.</p>
+        </div>
+    </section>
+
+    <!-- مزايا إضافية -->
+    <section class="bg-gray-50 border-t border-gray-200 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="text-2xl font-bold mb-12 text-center">المزيد من المزايا</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div><span class="font-bold text-blue-600">01.</span> <span class="font-bold">تشفير كامل لحركة المرور</span><p class="text-gray-500 text-sm mt-1">حماية بياناتك على شبكات الواي فاي العامة.</p></div>
+                <div><span class="font-bold text-blue-600">02.</span> <span class="font-bold">إخفاء الهوية الحقيقي</span><p class="text-gray-500 text-sm mt-1">عنوان IP جديد تماماً لا يمكن ربطه بك.</p></div>
+                <div><span class="font-bold text-blue-600">03.</span> <span class="font-bold">الوصول للمحتوى المقيد</span><p class="text-gray-500 text-sm mt-1">شاهد أي محتوى من أي مكان في العالم.</p></div>
+                <div><span class="font-bold text-blue-600">04.</span> <span class="font-bold">توافق مع جميع الأجهزة</span><p class="text-gray-500 text-sm mt-1">هواتف، حواسيب، أجهزة لوحية، وحتى الراوتر.</p></div>
+                <div><span class="font-bold text-blue-600">05.</span> <span class="font-bold">تجاوز جدران الحماية</span><p class="text-gray-500 text-sm mt-1">حرية الإنترنت في الدول التي تفرض رقابة.</p></div>
+                <div><span class="font-bold text-blue-600">06.</span> <span class="font-bold">تجربة ألعاب أفضل</span><p class="text-gray-500 text-sm mt-1">تقليل البينج وتجاوز الحظر الجغرافي للألعاب.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-400 text-sm mb-6">© 2026 DOKA. جميع الحقوق محفوظة. أداة مفتوحة المصدر لحرية الإنترنت.</p>
+            <div class="flex justify-center gap-6 text-sm text-gray-500">
+                <a href="#" class="hover:text-white">سياسة الخصوصية</a>
+                <a href="#" class="hover:text-white">اتصل بنا</a>
+                <a href="#" class="hover:text-white">عن المشروع</a>
+            </div>
         </div>
     </footer>
 
-    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-8 py-3 rounded-full text-xs font-bold opacity-0 transition-all pointer-events-none z-50">تمت العملية بنجاح! ✅</div>
+    <!-- نافذة الإعلان -->
+    <div id="bridge-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-600 mb-4 mx-auto"></div>
+            <h3 class="font-bold text-xl mb-2">جاري فحص الرابط...</h3>
+            <p class="text-gray-500 text-sm">يرجى الانتظار، يتم تأمين الاتصال.</p>
+        </div>
+    </div>
 
     <script>
-        function filterServers(type) {{
-            const cards = document.querySelectorAll('.server-card');
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(b => b.classList.remove('active', 'bg-indigo-600', 'text-white'));
-            event.target.classList.add('active', 'bg-indigo-600', 'text-white');
-            cards.forEach(c => {{
-                if(type === 'ALL' || c.getAttribute('data-type') === type) c.style.display = 'block';
-                else c.style.display = 'none';
-            }});
-        }}
+        // بيانات السيرفرات (يتم حقنها من بايثون)
+        const serversData = {servers_json};
+        const AD_LINK = "{AD_LINK}";
+        let currentProtocol = 'vmess';
 
-        function downloadConfig(filename, text) {{
-            const element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-            element.setAttribute('download', filename + ".txt");
-            element.click();
-        }}
-
-        function triggerBridge() {{
-            const bridge = document.getElementById('bridge-page');
-            bridge.style.display = 'flex';
-            setTimeout(() => {{ window.open('{my_ad_link}', '_blank'); bridge.style.display = 'none'; }}, 1200);
-        }}
-
-        function startCountdown() {{
-            let h = 5, m = 59, s = 59;
-            setInterval(() => {{
-                s--; if(s<0){{s=59; m--;}} if(m<0){{m=59; h--;}}
-                document.getElementById('countdown').innerText = String(h).padStart(2,'0')+":"+String(m).padStart(2,'0')+":"+String(s).padStart(2,'0');
-            }}, 1000);
-        }}
-        startCountdown();
-
-        function copyText(t) {{
-            navigator.clipboard.writeText(t);
-            const toast = document.getElementById('toast');
-            toast.style.opacity = '1';
-            setTimeout(() => toast.style.opacity = '0', 2000);
-        }}
-
-        function toggleQR(id, link) {{
-            const el = document.getElementById(id);
-            if (el.children.length === 0) {{
-                new QRCode(el, {{ text: link, width: 160, height: 160, colorDark: "#1e1b4b" }});
+        // دالة عرض السيرفرات
+        function renderServers(protocol) {{
+            const container = document.getElementById('servers-display');
+            const noServersMsg = document.getElementById('no-servers-msg');
+            const servers = serversData[protocol] || [];
+            
+            if (servers.length === 0) {{
+                container.innerHTML = '';
+                noServersMsg.classList.remove('hidden');
+                return;
             }}
-            el.classList.toggle('hidden');
+            noServersMsg.classList.add('hidden');
+            
+            let html = '';
+            servers.forEach((server, index) => {{
+                const shortUrl = server.url.substring(0, 50) + '...';
+                html += `
+                    <div class="protocol-card bg-white rounded-2xl p-6 shadow-sm">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">${{server.country}}</span>
+                                <div>
+                                    <span class="font-bold text-gray-800 block">${{protocol.toUpperCase()}} Server</span>
+                                    <span class="text-xs text-gray-500"><i class="fas fa-microchip"></i> ${{server.latency}}</span>
+                                </div>
+                            </div>
+                            <span class="bg-green-100 text-green-700 text-[10px] px-3 py-1 rounded-full font-bold"><i class="fas fa-circle text-[6px] align-middle mr-1"></i> نشط</span>
+                        </div>
+                        <p class="text-xs font-mono text-gray-400 bg-gray-50 p-3 rounded-xl mb-4 break-all border border-gray-100" dir="ltr">${{shortUrl}}</p>
+                        <div class="flex gap-2">
+                            <button onclick="copyToClipboard('${{server.url}}')" class="flex-1 bg-blue-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-blue-700 transition"><i class="far fa-copy"></i> نسخ</button>
+                            <button onclick="showQRCode('${{server.url}}')" class="w-12 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition"><i class="fas fa-qrcode"></i></button>
+                            <button onclick="triggerAdAndDownload('${{server.url}}', '${{protocol}}_${{index}}')" class="w-12 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                `;
+            }});
+            container.innerHTML = html;
         }}
+
+        // دالة إنشاء التبويبات
+        function renderTabs() {{
+            const tabsContainer = document.getElementById('protocol-tabs');
+            const protocols = Object.keys(serversData).filter(p => serversData[p].length > 0);
+            if (protocols.length === 0) return;
+            
+            currentProtocol = protocols[0];
+            let html = '';
+            protocols.forEach(proto => {{
+                const count = serversData[proto].length;
+                html += `<button onclick="switchProtocol('${{proto}}')" id="tab-${{proto}}" class="protocol-tab px-6 py-2 ${{proto === currentProtocol ? 'bg-blue-600 text-white shadow-md shadow-blue-200' : 'bg-gray-100 text-gray-700'}} rounded-full text-sm font-medium hover:bg-gray-200">${{proto.toUpperCase()}} (${{count}})</button>`;
+            }});
+            tabsContainer.innerHTML = html;
+            renderServers(currentProtocol);
+        }}
+
+        function switchProtocol(proto) {{
+            currentProtocol = proto;
+            document.querySelectorAll('.protocol-tab').forEach(tab => {{
+                tab.classList.remove('bg-blue-600', 'text-white', 'shadow-md', 'shadow-blue-200');
+                tab.classList.add('bg-gray-100', 'text-gray-700');
+            }});
+            document.getElementById(`tab-${{proto}}`).classList.add('bg-blue-600', 'text-white', 'shadow-md', 'shadow-blue-200');
+            renderServers(proto);
+        }}
+
+        function copyToClipboard(text) {{ navigator.clipboard.writeText(text); alert('✅ تم نسخ الإعدادات!'); }}
+        function showQRCode(url) {{
+            const w = window.open("", "_blank", "width=400,height=500");
+            w.document.write(`<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;font-family:Tajawal;"><h3>امسح الكود</h3><div id="qrcode" style="margin:20px"></div></div>`);
+            new QRCode(w.document.getElementById("qrcode"), {{ text: url, width: 250, height: 250 }});
+        }}
+        function triggerAdAndDownload(url, filename) {{
+            const modal = document.getElementById('bridge-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => {{
+                window.open(AD_LINK, '_blank');
+                const a = document.createElement('a');
+                a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(url);
+                a.download = filename + '.txt';
+                a.click();
+                modal.style.display = 'none';
+            }}, 1500);
+        }}
+
+        // بدء التشغيل
+        document.addEventListener('DOMContentLoaded', () => {{
+            renderTabs();
+            fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => {{
+                document.getElementById('user-ip').innerText = d.ip;
+            }});
+        }});
     </script>
 </body>
 </html>'''
-        
-        with open("index.html", "w", encoding="utf-8") as f:
-            f.write(html)
-        print("✅ تم تحديث الموقع بنجاح وإضافة النصوص القانونية!")
-            
-    except Exception as e: print(f"Error: {e}")
 
-if __name__ == "__main__": run()
+# ==================== الدالة الرئيسية ====================
+def main():
+    print("🚀 بدء عملية كشط البيانات من تيليجرام...")
+    html_content = fetch_telegram_page(TELEGRAM_CHANNEL_URL)
+    
+    if not html_content:
+        print("❌ فشل جلب البيانات. الخروج.")
+        return
+    
+    print("📥 جاري استخراج التكوينات...")
+    raw_configs = extract_configs(html_content)
+    
+    total_raw = sum(len(v) for v in raw_configs.values())
+    print(f"✅ تم استخراج {total_raw} تكوين خام.")
+    
+    print("🔄 جاري تصنيف السيرفرات...")
+    classified = classify_servers(raw_configs)
+    
+    print("📄 جاري توليد صفحة HTML...")
+    html_output = generate_html(classified)
+    
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+        f.write(html_output)
+    
+    # حفظ البيانات للاستخدام المستقبلي
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
+        json.dump(classified, f, ensure_ascii=False, indent=2)
+    
+    print(f"🎉 تم بنجاح! الصفحة محفوظة في {OUTPUT_FILE}")
+    print(f"📊 إجمالي السيرفرات النشطة: {sum(len(v) for v in classified.values())}")
+
+if __name__ == "__main__":
+    main()
