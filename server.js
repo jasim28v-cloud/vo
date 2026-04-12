@@ -19,5 +19,5 @@ app.get('/status', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(System active on port ${PORT});
+    console.log(`System active on port ${PORT}`);
 });
