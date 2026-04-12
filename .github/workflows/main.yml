@@ -1,37 +1,56 @@
-name: Alhadath 24 Auto Update
+name: Scrape and Deploy DOKA
 
 on:
   schedule:
-    # التحديث الآن كل 30 دقيقة بالضبط
-    - cron: '*/30 * * * *'
-  workflow_dispatch:
+    # يعمل كل 3 ساعات
+    - cron: '0 */3 * * *'
+  workflow_dispatch:  # يسمح بالتشغيل اليدوي
+  push:
+    branches: [ main ]
 
+# أذونات GitHub Pages
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: 📥 استنساخ المستودع
+        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: 🐍 إعداد بايثون
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.11'
 
-      - name: Install dependencies
-        run: |
-          pip install requests beautifulsoup4 lxml
+      - name: 📦 تثبيت المكتبات المطلوبة
+        run: pip install requests
 
-      - name: Run Scraper
+      - name: 🚀 تشغيل سكريبت الكشط
         run: python scraper.py
 
-      - name: Commit and Push changes
+      - name: 📤 رفع النتائج للمستودع
         run: |
-          git config --global user.name "Alhadath24-Bot"
-          git config --global user.email "bot@alhadath24.com"
-          git add index.html
-          git commit -m "Auto Update News: $(date)" || exit 0
-          git push
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add index.html servers_data.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 تحديث تلقائي للسيرفرات $(date +'%Y-%m-%d %H:%M')" && git push)
+
+      - name: ⚙️ إعداد GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: 📎 رفع الملفات
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: 🚀 النشر على GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
