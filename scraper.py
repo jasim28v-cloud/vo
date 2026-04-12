@@ -3,6 +3,7 @@
 """
 DOKA PRO - Legendary Edition (v2nodes Exclusive)
 Fetches ONLY: vmess, vless, trojan, ss
+FIXED: Now extracts FULL config links without cutting at '&'.
 Includes: Flags, Ping, Filter Tabs, Dark Mode, Multi-lang, Stats, Professional Design.
 """
 
@@ -17,12 +18,12 @@ from typing import List, Dict
 TELEGRAM_CHANNEL_URL = "https://t.me/s/v2nodes"
 AD_LINK = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
 OUTPUT_FILE = "index.html"
-DATA_FILE = "stats.json"  # سنستخدمه للإحصائيات
+DATA_FILE = "stats.json"
 
 # أنواع البروتوكولات المدعومة (فقط الأربعة المطلوبة)
 SUPPORTED_PROTOCOLS = ['vmess', 'vless', 'trojan', 'ss']
 
-# ==================== دوال الكشط ====================
+# ==================== دوال الكشط (مع التعديل الجديد) ====================
 def fetch_telegram_page(url: str) -> str:
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -38,18 +39,25 @@ def fetch_telegram_page(url: str) -> str:
         return ""
 
 def extract_configs(html_content: str) -> Dict[str, List[str]]:
+    """استخراج جميع تكوينات V2Ray من HTML (نسخة محسنة لالتقاط الروابط كاملة)"""
     configs = {proto: [] for proto in SUPPORTED_PROTOCOLS}
-    pattern = r'(?:' + '|'.join(SUPPORTED_PROTOCOLS) + r')://[^\s<>"\'&]+'
+    
+    # ✨ التعديل السحري: تم حذف '&' من قائمة التوقف، مما يسمح بالتقاط الروابط كاملة ✨
+    pattern = r'(?:' + '|'.join(SUPPORTED_PROTOCOLS) + r')://[^\s<>"\']+'
     matches = re.findall(pattern, html_content, re.IGNORECASE)
     
     seen = set()
     for match in matches:
+        # تنظيف الرابط من أي بقايا HTML
         clean = match.replace('&amp;', '&').split('<')[0].split('"')[0].strip()
-        if clean in seen: continue
+        if clean in seen:
+            continue
         seen.add(clean)
+        
         proto = clean.split('://')[0].lower()
         if proto in configs:
             configs[proto].append(clean)
+            
     return configs
 
 def classify_servers(configs: Dict[str, List[str]]) -> Dict[str, List[Dict]]:
@@ -80,7 +88,6 @@ def generate_html(servers: Dict[str, List[Dict]]) -> str:
     total_servers = sum(len(v) for v in servers.values())
     servers_json = json.dumps(servers, ensure_ascii=False)
     
-    # إحصائيات للرسم البياني
     stats_data = {
         "last_updated": datetime.now().isoformat(),
         "total_servers": total_servers,
@@ -279,14 +286,14 @@ def generate_html(servers: Dict[str, List[Dict]]) -> str:
 
 # ==================== الدالة الرئيسية ====================
 def main():
-    print("🚀 بدء كشط v2nodes (VMess/VLess/Trojan/SS فقط)...")
+    print("🚀 بدء كشط v2nodes (VMess/VLess/Trojan/SS فقط - روابط كاملة)...")
     html_content = fetch_telegram_page(TELEGRAM_CHANNEL_URL)
     if not html_content: return
     raw_configs = extract_configs(html_content)
     classified = classify_servers(raw_configs)
     html_output = generate_html(classified)
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f: f.write(html_output)
-    print(f"🎉 تم! الإجمالي: {sum(len(v) for v in classified.values())} سيرفر")
+    print(f"🎉 تم! الإجمالي: {sum(len(v) for v in classified.values())} سيرفر كامل.")
 
 if __name__ == "__main__":
     main()
