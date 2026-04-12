@@ -38,7 +38,7 @@
                     <option value="ar">🇸🇦 عربي</option>
                     <option value="en">🇬🇧 English</option>
                 </select>
-                <div class="text-gray-500"><i class="far fa-clock"></i> <span>2026-04-12 16:26</span></div>
+                <div class="text-gray-500"><i class="far fa-clock"></i> <span>2026-04-12 18:53</span></div>
             </div>
         </div>
     </header>
@@ -48,7 +48,7 @@
         <h1 class="text-4xl md:text-6xl font-black mb-4" id="main-title">حرية التصفح بلا حدود</h1>
         <p class="text-gray-600 max-w-2xl mx-auto mb-10" id="main-sub">سيرفرات V2Ray محدثة تلقائياً. اختر بروتوكولك واستمتع بالحرية.</p>
         <div class="inline-flex items-center gap-4 bg-white border border-gray-200 rounded-3xl px-10 py-5 shadow-sm">
-            <span class="text-6xl font-black text-blue-600">19</span>
+            <span class="text-6xl font-black text-blue-600">16</span>
             <span class="text-gray-500" id="counter-label">سيرفر نشط</span>
         </div>
     </section>
@@ -56,11 +56,11 @@
     <!-- تبويبات الفلترة -->
     <section class="max-w-7xl mx-auto px-4 py-8">
         <div class="flex flex-wrap justify-center gap-2">
-            <button class="tab-btn active px-6 py-2 bg-blue-600 text-white rounded-full" data-filter="all">الكل (<span id="count-all">19</span>)</button>
+            <button class="tab-btn active px-6 py-2 bg-blue-600 text-white rounded-full" data-filter="all">الكل (<span id="count-all">16</span>)</button>
             <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="vmess">VMess (<span id="count-vmess">0</span>)</button>
             <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="vless">VLess (<span id="count-vless">13</span>)</button>
-            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="trojan">Trojan (<span id="count-trojan">1</span>)</button>
-            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="ss">Shadowsocks (<span id="count-ss">5</span>)</button>
+            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="trojan">Trojan (<span id="count-trojan">0</span>)</button>
+            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="ss">Shadowsocks (<span id="count-ss">3</span>)</button>
         </div>
     </section>
 
@@ -88,7 +88,7 @@
     <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-8 py-3 rounded-full opacity-0 transition-all z-50">✅ تم النسخ!</div>
 
     <script>
-        const serversData = {"vmess": [], "vless": [{"url": "vless://3d243df5-9cda-4aac-89d5-354de77d79e2@reserve.pilates.rodeo:2053?allowInsecure=1", "country": "🌍", "latency": "74ms"}, {"url": "vless://6ec3c298-1058-43bd-81e3-54b155c4ae21@85.209.153.60:52335?encryption=none", "country": "🌍", "latency": "229ms"}, {"url": "vless://7a36ff3b-9571-407c-95c0-9f6d57177c20@62.84.100.201:59999?encryption=none", "country": "🌍", "latency": "129ms"}, {"url": "vless://8f8380ae-9f5d-4cb5-8f5f-0f70fbe054a9@195.66.27.89:7443?encryption=none", "country": "🇦🇪", "latency": "89ms"}, {"url": "vless://0eca1f22-e5a1-4888-a0fa-c2345e87cf2f@in-nl-1c.ray-balance.space:443?encryption=none", "country": "🇳🇱", "latency": "233ms"}, {"url": "vless://050fb692-dba7-4b69-b1fd-182c8e1c53eb@gb-6.flowersyellow.ru:443?encryption=none", "country": "🌍", "latency": "72ms"}, {"url": "vless://4ce98305-2c38-4e1f-aa7b-ef6f77bbfc7c@austria.coverprotect.info:443?encryption=none", "country": "🌍", "latency": "70ms"}, {"url": "vless://0eca1f22-e5a1-4888-a0fa-c2345e87cf2f@in-fi-he.ray-balance.space:443?encryption=none", "country": "🇮🇳", "latency": "127ms"}, {"url": "vless://181ae5ba-0be0-4f00-be30-14451a33bd35@89.124.93.150:443?encryption=none", "country": "🌍", "latency": "136ms"}, {"url": "vless://e060f013-53e5-4d88-bf5e-f93baa562ac5@83.97.78.219:443?encryption=none", "country": "🌍", "latency": "183ms"}, {"url": "vless://47777915-7325-44c1-8122-251f701f5cb0@empty-dust.ru:443?encryption=none", "country": "🌍", "latency": "98ms"}, {"url": "vless://43488128-319e-f480-64ea-0acdc712e2a8@91.199.50.37:443?encryption=none", "country": "🌍", "latency": "115ms"}, {"url": "vless://050fb692-dba7-4b69-b1fd-182c8e1c53eb@nl-6.flowersyellow.ru:443?encryption=none", "country": "🇳🇱", "latency": "64ms"}], "trojan": [{"url": "trojan://telegram-id-privatevpns@35.180.104.104:22222?security=tls", "country": "🌍", "latency": "77ms"}], "ss": [{"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTo3ZTczMWVjMy1mOGUxLTQzZjYtOTJjZi0zOTc4ZDE0NzA1YzQ@n8mrcg005964vnc.cybervena.com:50099#", "country": "🌍", "latency": "223ms"}, {"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTo4YmE2YTM3ZC04NzE1LTQ0MGQtOTQyYS1hM2U2YzIzYTkyOTA@xgrr.sdnlv0.cn:44099#", "country": "🌍", "latency": "83ms"}, {"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTo4YmE2YTM3ZC04NzE1LTQ0MGQtOTQyYS1hM2U2YzIzYTkyOTA@xgrr.sdnlv0.cn:33144#", "country": "🌍", "latency": "231ms"}, {"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpXNzRYRkFMTEx1dzZtNUlB@series-a2.samanehha.co:443#", "country": "🌍", "latency": "183ms"}, {"url": "ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@57.128.214.100:12000#", "country": "🌍", "latency": "99ms"}]};
+        const serversData = {"vmess": [], "vless": [{"url": "vless://0eca1f22-e5a1-4888-a0fa-c2345e87cf2f@in-nl-1c.ray-balance.space:443?encryption=none", "country": "🇳🇱", "latency": "199ms"}, {"url": "vless://050fb692-dba7-4b69-b1fd-182c8e1c53eb@gb-6.flowersyellow.ru:443?encryption=none", "country": "🌍", "latency": "184ms"}, {"url": "vless://4ce98305-2c38-4e1f-aa7b-ef6f77bbfc7c@austria.coverprotect.info:443?encryption=none", "country": "🌍", "latency": "229ms"}, {"url": "vless://0eca1f22-e5a1-4888-a0fa-c2345e87cf2f@in-fi-he.ray-balance.space:443?encryption=none", "country": "🇮🇳", "latency": "180ms"}, {"url": "vless://181ae5ba-0be0-4f00-be30-14451a33bd35@89.124.93.150:443?encryption=none", "country": "🌍", "latency": "172ms"}, {"url": "vless://e060f013-53e5-4d88-bf5e-f93baa562ac5@83.97.78.219:443?encryption=none", "country": "🌍", "latency": "161ms"}, {"url": "vless://47777915-7325-44c1-8122-251f701f5cb0@empty-dust.ru:443?encryption=none", "country": "🌍", "latency": "116ms"}, {"url": "vless://43488128-319e-f480-64ea-0acdc712e2a8@91.199.50.37:443?encryption=none", "country": "🌍", "latency": "87ms"}, {"url": "vless://050fb692-dba7-4b69-b1fd-182c8e1c53eb@nl-6.flowersyellow.ru:443?encryption=none", "country": "🇳🇱", "latency": "120ms"}, {"url": "vless://050fb692-dba7-4b69-b1fd-182c8e1c53eb@ge-6.flowersyellow.ru:443?encryption=none", "country": "🌍", "latency": "248ms"}, {"url": "vless://2202983c-4238-4beb-8519-27cd3dcd12ab@109.234.39.219:443?encryption=none", "country": "🌍", "latency": "81ms"}, {"url": "vless://82b5b465-3307-4a25-acef-abd1649bbedf@fr1.samovargate.com:443?encryption=none", "country": "🌍", "latency": "118ms"}, {"url": "vless://110d7bad-5e17-4ce3-afd0-2cf2ebc71787@n05.zqwerty.ru:2053?encryption=none", "country": "🌍", "latency": "189ms"}], "trojan": [], "ss": [{"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpXNzRYRkFMTEx1dzZtNUlB@series-a2.samanehha.co:443#", "country": "🌍", "latency": "108ms"}, {"url": "ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@57.128.214.100:12000#", "country": "🌍", "latency": "175ms"}, {"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpiMjM1Njk2ZC03ODczLTRiMTUtOWIyMi03ZGFlM2EwYjY3NDc=@vn02.network-cdn-gw-yd.net:20002#", "country": "🌍", "latency": "184ms"}]};
         const AD_LINK = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default";
         let currentFilter = 'all';
         let chartInstance = null;
