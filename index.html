@@ -38,7 +38,7 @@
                     <option value="ar">🇸🇦 عربي</option>
                     <option value="en">🇬🇧 English</option>
                 </select>
-                <div class="text-gray-500"><i class="far fa-clock"></i> <span>2026-04-17 02:42</span></div>
+                <div class="text-gray-500"><i class="far fa-clock"></i> <span>2026-04-17 05:29</span></div>
             </div>
         </div>
     </header>
@@ -58,9 +58,9 @@
         <div class="flex flex-wrap justify-center gap-2">
             <button class="tab-btn active px-6 py-2 bg-blue-600 text-white rounded-full" data-filter="all">الكل (<span id="count-all">12</span>)</button>
             <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="vmess">VMess (<span id="count-vmess">0</span>)</button>
-            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="vless">VLess (<span id="count-vless">2</span>)</button>
-            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="trojan">Trojan (<span id="count-trojan">0</span>)</button>
-            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="ss">Shadowsocks (<span id="count-ss">10</span>)</button>
+            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="vless">VLess (<span id="count-vless">1</span>)</button>
+            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="trojan">Trojan (<span id="count-trojan">2</span>)</button>
+            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="ss">Shadowsocks (<span id="count-ss">9</span>)</button>
         </div>
     </section>
 
@@ -88,7 +88,7 @@
     <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-8 py-3 rounded-full opacity-0 transition-all z-50">✅ تم النسخ!</div>
 
     <script>
-        const serversData = {"vmess": [], "vless": [{"url": "vless://913c6074-a747-492b-a7e9-5abfcad6369d@es.milas.click:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=DoZSKLwNQjogQMlE7oEEuB8TqpNa-umXzG-2Q6dTTEY&security=reality&sid=4fa44664f6a566d3&sni=es.milas.click&type=tcp#", "country": "🌍", "latency": "76ms"}, {"url": "vless://69a2af58-d74a-44ca-864a-e09b493f4274@93.185.166.211:443?encryption=none&fp=chrome&pbk=CtifAtvBslpcKrjnoHUAR7AlptShWlecyy38owglTWA&security=reality&sid=c60c&sni=sun6-21.userapi.com&type=tcp#", "country": "🇨🇦", "latency": "184ms"}], "trojan": [], "ss": [{"url": "ss://YWVzLTI1Ni1nY206UkkwVWNHdklrSURv@212.192.12.137:8388#", "country": "🌍", "latency": "207ms"}, {"url": "ss://YWVzLTI1Ni1nY206b1hHT3ltR00xSUUx@192.124.176.153:8388#", "country": "🌍", "latency": "76ms"}, {"url": "ss://YWVzLTI1Ni1nY206ZGFkYTEyMDM@54.169.105.64:80#", "country": "🌍", "latency": "91ms"}, {"url": "ss://YWVzLTI1Ni1nY206ZGFkYTEyMDM@35.89.168.231:80#", "country": "🌍", "latency": "147ms"}, {"url": "ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@15.204.247.49:12000#", "country": "🌍", "latency": "223ms"}, {"url": "ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@57.128.214.100:12000#", "country": "🌍", "latency": "96ms"}, {"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTo2VGhEMUFnd1hjOFN0cHA3aEVvaExh@139.59.87.22:16970#", "country": "🌍", "latency": "89ms"}, {"url": "ss://YWVzLTI1Ni1nY206OWNhMjgwM2MxNmRlNzJjZA@46.17.40.29:10986#", "country": "🌍", "latency": "70ms"}, {"url": "ss://YWVzLTI1Ni1nY206ODNhY2Y2OWVkYjRlNTQ1Mw@194.87.69.100:12091#", "country": "🌍", "latency": "184ms"}, {"url": "ss://YWVzLTI1Ni1nY206ZjM0NTc5ZDAxNDhiMjU4MQ@46.17.44.206:60290#", "country": "🌍", "latency": "62ms"}]};
+        const serversData = {"vmess": [], "vless": [{"url": "vless://913c6074-a747-492b-a7e9-5abfcad6369d@es.milas.click:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=DoZSKLwNQjogQMlE7oEEuB8TqpNa-umXzG-2Q6dTTEY&security=reality&sid=4fa44664f6a566d3&sni=es.milas.click&type=tcp#", "country": "🌍", "latency": "159ms"}], "trojan": [{"url": "trojan://humanity@8.6.112.0:443?path=/assignment&security=tls&alpn=http/1.1&insecure=1&host=www.calmloud.com&fp=chrome&type=ws&allowInsecure=1&sni=www.calmloud.com#", "country": "🌍", "latency": "244ms"}, {"url": "trojan://BxceQaOe@57.180.60.151:3357?allowInsecure=1&sni=t.me%252Fripaojiedian#", "country": "🌍", "latency": "114ms"}], "ss": [{"url": "ss://YWVzLTI1Ni1nY206ZGFkYTEyMDM@35.89.168.231:80#", "country": "🌍", "latency": "140ms"}, {"url": "ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@15.204.247.49:12000#", "country": "🌍", "latency": "230ms"}, {"url": "ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@57.128.214.100:12000#", "country": "🌍", "latency": "63ms"}, {"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTo2VGhEMUFnd1hjOFN0cHA3aEVvaExh@139.59.87.22:16970#", "country": "🌍", "latency": "216ms"}, {"url": "ss://YWVzLTI1Ni1nY206OWNhMjgwM2MxNmRlNzJjZA@46.17.40.29:10986#", "country": "🌍", "latency": "139ms"}, {"url": "ss://YWVzLTI1Ni1nY206ODNhY2Y2OWVkYjRlNTQ1Mw@194.87.69.100:12091#", "country": "🌍", "latency": "250ms"}, {"url": "ss://YWVzLTI1Ni1nY206ZjM0NTc5ZDAxNDhiMjU4MQ@46.17.44.206:60290#", "country": "🌍", "latency": "111ms"}, {"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpQV3BqUG8zdHFoUE40eVJa@8.209.74.72:20001#", "country": "🌍", "latency": "107ms"}, {"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNToxa1ZyMEtBVElKSTdtd09G@admin.c1.havij.co:443#", "country": "🌍", "latency": "164ms"}]};
         const AD_LINK = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default";
         let currentFilter = 'all';
         let chartInstance = null;
