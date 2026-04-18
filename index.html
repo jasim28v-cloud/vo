@@ -38,7 +38,7 @@
                     <option value="ar">🇸🇦 عربي</option>
                     <option value="en">🇬🇧 English</option>
                 </select>
-                <div class="text-gray-500"><i class="far fa-clock"></i> <span>2026-04-17 21:43</span></div>
+                <div class="text-gray-500"><i class="far fa-clock"></i> <span>2026-04-18 02:33</span></div>
             </div>
         </div>
     </header>
@@ -58,8 +58,8 @@
         <div class="flex flex-wrap justify-center gap-2">
             <button class="tab-btn active px-6 py-2 bg-blue-600 text-white rounded-full" data-filter="all">الكل (<span id="count-all">9</span>)</button>
             <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="vmess">VMess (<span id="count-vmess">0</span>)</button>
-            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="vless">VLess (<span id="count-vless">2</span>)</button>
-            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="trojan">Trojan (<span id="count-trojan">1</span>)</button>
+            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="vless">VLess (<span id="count-vless">3</span>)</button>
+            <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="trojan">Trojan (<span id="count-trojan">0</span>)</button>
             <button class="tab-btn px-6 py-2 bg-gray-100 rounded-full" data-filter="ss">Shadowsocks (<span id="count-ss">6</span>)</button>
         </div>
     </section>
@@ -88,7 +88,7 @@
     <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-8 py-3 rounded-full opacity-0 transition-all z-50">✅ تم النسخ!</div>
 
     <script>
-        const serversData = {"vmess": [], "vless": [{"url": "vless://8d5e7f2a-3c1b-4d9e-a6f8-2b5c0e7d4a19@xianggang2.zqjsqapi.com:443?&security=tls&fp=chrome&packet-encoding=xudp&sni=xianggang2.zqjsqapi.com&type=ws&headerType=none&host=xianggang2.zqjsqapi.com&path=%2Fproxy#", "country": "🌍", "latency": "169ms"}, {"url": "vless://3daa8433-278c-495b-8095-8c7516c9a239@nl.umarketvpn.click:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=ubJtusa5qha4R14Wnv7ZHjcPfJfhgjD3HQ9w2D94bDY&security=reality&sni=www.apple.com&type=tcp#", "country": "🌍", "latency": "170ms"}], "trojan": [{"url": "trojan://e136d465-0558-43b9-b50c-b1f45d4cb2c2@jp2-8sb.6121999.dpdns.org:24534?allowInsecure=0&sni=jp2-8sb.6121999.dpdns.org#", "country": "🌍", "latency": "235ms"}], "ss": [{"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTppZE12b2V3clN5TEx2RXZQMDNrOXpS@138.68.153.223:46576#", "country": "🌍", "latency": "103ms"}, {"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpXQzBHYmlDazY3SzhuSERhREhtWUlY@159.223.236.36:19582#", "country": "🌍", "latency": "208ms"}, {"url": "ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@57.128.214.100:12000#", "country": "🌍", "latency": "73ms"}, {"url": "ss://YWVzLTI1Ni1nY206N2UxZGQ0YzU1YmY4NWRhNQ@212.192.15.209:19081#", "country": "🌍", "latency": "228ms"}, {"url": "ss://YWVzLTI1Ni1nY206N2FlNGU2OGNmNzdmNjA4OQ@195.133.5.36:60129#", "country": "🌍", "latency": "214ms"}, {"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTo3ZTczMWVjMy1mOGUxLTQzZjYtOTJjZi0zOTc4ZDE0NzA1YzQ=@n8mrcg004676x9e.cybervena.com:50099#", "country": "🌍", "latency": "134ms"}]};
+        const serversData = {"vmess": [], "vless": [{"url": "vless://8d5e7f2a-3c1b-4d9e-a6f8-2b5c0e7d4a19@xianggang2.zqjsqapi.com:443?&security=tls&fp=chrome&packet-encoding=xudp&sni=xianggang2.zqjsqapi.com&type=ws&headerType=none&host=xianggang2.zqjsqapi.com&path=%2Fproxy#", "country": "🌍", "latency": "182ms"}, {"url": "vless://3daa8433-278c-495b-8095-8c7516c9a239@nl.umarketvpn.click:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=ubJtusa5qha4R14Wnv7ZHjcPfJfhgjD3HQ9w2D94bDY&security=reality&sni=www.apple.com&type=tcp#", "country": "🌍", "latency": "214ms"}, {"url": "vless://fe5a22e1-961f-4b4e-b1ae-2a0415ebd777@www.livecut.cfd:443?&security=tls&fp=edge&sni=api.livecut.sbs&type=ws&headerType=none&host=api.livecut.sbs&path=%2Fmusic#", "country": "🇦🇪", "latency": "180ms"}], "trojan": [], "ss": [{"url": "ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@57.128.214.100:12000#", "country": "🌍", "latency": "128ms"}, {"url": "ss://YWVzLTI1Ni1nY206N2UxZGQ0YzU1YmY4NWRhNQ@212.192.15.209:19081#", "country": "🌍", "latency": "148ms"}, {"url": "ss://YWVzLTI1Ni1nY206N2FlNGU2OGNmNzdmNjA4OQ@195.133.5.36:60129#", "country": "🌍", "latency": "80ms"}, {"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTo3ZTczMWVjMy1mOGUxLTQzZjYtOTJjZi0zOTc4ZDE0NzA1YzQ=@n8mrcg004676x9e.cybervena.com:50099#", "country": "🌍", "latency": "98ms"}, {"url": "ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@15.204.247.49:12000#", "country": "🌍", "latency": "144ms"}, {"url": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpBUmd2R1p5d0ErZ2FjZ0dWMjZCdm11MDUrd1ptUlcvaitBZFUrWjhCdDQ0PQ==@193.135.174.135:990#", "country": "🌍", "latency": "193ms"}]};
         const AD_LINK = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default";
         let currentFilter = 'all';
         let chartInstance = null;
