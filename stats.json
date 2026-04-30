@@ -1,10 +1,16 @@
 {
-  "last_updated": "2026-04-30T06:06:55.093003+00:00",
-  "total_servers": 11,
-  "alive": 0,
+  "last_updated": "2026-04-30T06:24:52.434396+00:00",
+  "total": 65,
+  "alive": 4,
   "by_protocol": {
     "vless": 1,
     "hysteria2": 8,
-    "trojan": 2
+    "trojan": 2,
+    "unknown": 54
+  },
+  "by_source": {
+    "exclave": 11,
+    "collector": 34,
+    "v2root": 20
   }
 }
