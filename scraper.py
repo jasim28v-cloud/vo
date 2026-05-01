@@ -23,7 +23,7 @@ import requests
 # ==================== الثوابت ====================
 SOURCES: Final[dict[str, str]] = {
     "exclave": "https://t.me/s/exclaveVPN",
-    "collector": "https://t.me/s/V2ray_Collector",
+    "collector": "https://t.me/s/v2nodes",
     "v2root": "https://t.me/s/V2RayRootFree",
 }
 
