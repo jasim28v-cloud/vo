@@ -1,13 +1,13 @@
 {
-  "last_updated": "2026-05-02T17:28:33.392659+00:00",
+  "last_updated": "2026-05-02T19:01:49.529140+00:00",
   "total": 65,
-  "alive": 3,
+  "alive": 2,
   "by_protocol": {
-    "vless": 32,
+    "vless": 30,
     "trojan": 5,
     "hysteria2": 4,
-    "vmess": 9,
-    "ss": 15
+    "vmess": 10,
+    "ss": 16
   },
   "by_source": {
     "exclave": 11,
