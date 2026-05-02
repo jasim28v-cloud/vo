@@ -1,7 +1,7 @@
 {
-  "last_updated": "2026-05-02T09:58:41.034987+00:00",
+  "last_updated": "2026-05-02T13:15:24.385810+00:00",
   "total": 43,
-  "alive": 4,
+  "alive": 5,
   "by_protocol": {
     "vless": 4,
     "trojan": 3,
