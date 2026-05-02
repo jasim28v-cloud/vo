@@ -1,16 +1,16 @@
 {
-  "last_updated": "2026-05-02T15:49:07.058704+00:00",
-  "total": 43,
-  "alive": 5,
+  "last_updated": "2026-05-02T16:55:37.852089+00:00",
+  "total": 65,
+  "alive": 3,
   "by_protocol": {
     "vless": 4,
     "trojan": 3,
     "hysteria2": 4,
-    "unknown": 32
+    "unknown": 54
   },
   "by_source": {
     "exclave": 11,
-    "collector": 12,
+    "collector": 34,
     "v2root": 20
   }
 }
