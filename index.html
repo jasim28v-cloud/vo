@@ -1,118 +1,531 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#8b5cf6">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="DOKA PRO">
-    <title>DOKA PRO • V2Ray</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOKA V2Nodes | سيرفرات V2Ray</title>
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='120' fill='%238b5cf6'/%3E%3Ctext x='256' y='320' text-anchor='middle' font-size='220' fill='white'%3E🌐%3C/text%3E%3C/svg%3E">
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta name="theme-color" content="#6366f1">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0f172a; --surface: #1e293b; --border: #334155; --text: #f1f5f9; --sub: #94a3b8; --pri: #8b5cf6; --suc: #10b981; --dan: #ef4444; }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 12px 12px 32px; padding-top: max(12px, env(safe-area-inset-top)); }
-        .container { max-width: 480px; margin: 0 auto; }
-        .header { display:flex; align-items:center; justify-content:space-between; margin-bottom: 20px; }
-        .logo { font-size:1.5rem; font-weight:900; background: linear-gradient(135deg, #8b5cf6, #6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .live { display:flex; align-items:center; gap:6px; background:var(--surface); padding:6px 14px; border-radius:50px; font-size:0.7rem; font-weight:600; border:1px solid var(--border); }
-        .live-dot { width:8px; height:8px; background:var(--suc); border-radius:50%; animation:pulse 2s infinite; }
-        @keyframes pulse { 0%,100% { box-shadow:0 0 0 0 rgba(16,185,129,0.4); } 50% { box-shadow:0 0 0 10px rgba(16,185,129,0); } }
-        .stats-row { display:flex; gap:10px; margin-bottom:20px; }
-        .stat { flex:1; background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:16px 10px; text-align:center; }
-        .stat-num { font-size:1.8rem; font-weight:900; line-height:1; }
-        .stat-lbl { font-size:0.65rem; color:var(--sub); margin-top:4px; }
-        .section-title { font-size:0.7rem; color:var(--sub); margin-bottom:8px; font-weight:600; }
-        .filters { display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:14px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
-        .filters::-webkit-scrollbar { display:none; }
-        .chip { padding:8px 18px; border-radius:50px; border:1px solid var(--border); background:var(--surface); color:var(--sub); font-family:'Cairo',sans-serif; font-weight:700; font-size:0.8rem; white-space:nowrap; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:6px; }
-        .chip.active { background:var(--pri); color:white; border-color:transparent; }
-        .cnt { font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:50px; }
-        .card { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:16px; margin-bottom:12px; }
-        .card-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-        .badge { display:flex; align-items:center; gap:6px; }
-        .flag { font-size:1.5rem; }
-        .tag { padding:4px 10px; border-radius:50px; font-size:0.65rem; font-weight:700; color:white; }
-        .status { font-size:0.65rem; font-weight:600; display:flex; align-items:center; gap:3px; }
-        .dot { width:5px; height:5px; border-radius:50%; }
-        .dot-up { background:var(--suc); } .dot-down { background:var(--dan); }
-        .url-box { background:#0f172a; padding:10px 12px; border-radius:12px; font-family:monospace; font-size:0.65rem; color:var(--sub); direction:ltr; text-align:left; word-break:break-all; margin-bottom:10px; }
-        .actions { display:flex; gap:8px; }
-        .btn { flex:1; padding:12px; border-radius:14px; border:none; font-family:'Cairo',sans-serif; font-weight:700; font-size:0.8rem; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:6px; color:white; }
-        .btn:active { transform:scale(0.96); }
-        .btn-qr { width:44px; height:44px; border-radius:14px; border:1px solid var(--border); background:var(--surface); color:var(--text); cursor:pointer; font-size:1rem; flex-shrink:0; }
-        .qr-box { margin-top:10px; padding:16px; background:white; border-radius:14px; display:none; justify-content:center; }
-        .toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(100px); background:#10b981; color:white; padding:12px 24px; border-radius:50px; font-weight:700; font-size:0.85rem; z-index:999; opacity:0; transition:all 0.3s; }
-        .toast.on { opacity:1; transform:translateX(-50%) translateY(0); }
-        .stats-page { max-width:480px; margin:40px auto; padding:16px; text-align:center; }
-        .stats-card { background:var(--surface); border:1px solid var(--border); border-radius:24px; padding:32px 20px; }
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --glass-blur: blur(20px);
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.4);
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #e2e8f0;
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatOrb 12s ease-in-out infinite;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -15%;
+            right: -5%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(236,72,153,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatOrb 15s ease-in-out infinite reverse;
+        }
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+        .glass { background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .glass-card.visible { opacity: 1; transform: translateY(0); }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 30px var(--accent-glow);
+            transform: translateY(-4px) scale(1.02);
+        }
+        .glass-card.new-server { animation: newPulse 2s ease-in-out infinite; }
+        @keyframes newPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            50% { box-shadow: 0 0 30px 8px rgba(34, 197, 94, 0.15); }
+        }
+        .glass-nav { background: rgba(15, 12, 41, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .tab-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #cbd5e1; transition: all 0.3s ease; }
+        .tab-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.25); }
+        .tab-btn.active { background: var(--accent); border-color: var(--accent); color: white; box-shadow: 0 0 25px var(--accent-glow); }
+        .btn-primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); }
+        .btn-primary:hover { box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5); transform: translateY(-2px); }
+        .btn-glass { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #e2e8f0; transition: all 0.3s ease; }
+        .btn-glass:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.3); }
+        .pulse-dot { animation: pulse 2s ease-in-out infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+        }
+        .toast { background: rgba(30, 41, 59, 0.9); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .link-preview { background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; }
+        .badge-new { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; font-size: 0.65rem; font-weight: 800; padding: 2px 8px; border-radius: 20px; animation: badgeGlow 1.5s ease-in-out infinite; }
+        @keyframes badgeGlow {
+            0%, 100% { box-shadow: 0 0 5px rgba(34, 197, 94, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.8); }
+        }
+        .favorite-star { cursor: pointer; transition: all 0.3s ease; color: #6b7280; }
+        .favorite-star.active { color: #fbbf24; filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.6)); animation: starPop 0.3s ease-out; }
+        @keyframes starPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.4); }
+            100% { transform: scale(1); }
+        }
+        .typing-text::after { content: '|'; animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+        .visitor-badge { background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 20px; }
+        .remark-tag { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 2px 10px; font-size: 0.7rem; color: #a5b4fc; }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header"><div class="logo">🌐 DOKA PRO</div><div class="live"><div class="live-dot"></div> 2 حي</div></div>
-        <div class="stats-row">
-            <div class="stat"><div class="stat-num" style="color:#8b5cf6;">65</div><div class="stat-lbl">🔰 الإجمالي</div></div>
-            <div class="stat"><div class="stat-num" style="color:#10b981;">2</div><div class="stat-lbl">⚡ أونلاين</div></div>
-            <div class="stat"><div class="stat-num" style="color:#f59e0b;">3</div><div class="stat-lbl">📡 مصادر</div></div>
+<body class="antialiased relative z-10">
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="glass-nav sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center text-sm gap-3">
+            <div class="flex items-center gap-4">
+                <span class="text-2xl font-black bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">DOKA</span>
+                <span class="hidden sm:inline text-gray-400 text-xs">|</span>
+                <span class="hidden sm:inline text-gray-400 text-xs typing-text" id="typing-text"></span>
+            </div>
+            <div class="flex items-center gap-4 flex-wrap">
+                <div class="flex items-center gap-2 text-gray-400 text-xs">
+                    <i class="fas fa-globe text-indigo-400"></i>
+                    <span id="user-ip" class="font-mono text-gray-200">...</span>
+                    <span class="w-2 h-2 bg-red-500 rounded-full pulse-dot"></span>
+                    <span class="text-red-400 font-bold">غير محمي</span>
+                </div>
+                <div class="flex items-center gap-3 text-gray-400 text-xs">
+                    <i class="far fa-clock text-indigo-400"></i>
+                    <span id="live-clock">--:--:--</span>
+                    <span class="hidden sm:inline text-gray-600">|</span>
+                    <span class="hidden sm:inline" id="update-date">2026/05/02</span>
+                </div>
+                <div class="visitor-badge px-3 py-1 text-xs text-green-400 flex items-center gap-1.5">
+                    <i class="fas fa-users"></i>
+                    <span id="visitor-count">--</span> زائر
+                </div>
+            </div>
         </div>
-        <div class="section-title">📡 فلترة بالمصدر</div>
-        <div class="filters"><button class="chip active" data-filter="all" style="--c:#8b5cf6">🌐 الكل <span class="cnt">65</span></button><button class="chip" data-filter="exclave" style="--c:#6366f1">⬡ exclave <span class="cnt">11</span></button><button class="chip" data-filter="collector" style="--c:#6366f1">📡 collector <span class="cnt">34</span></button><button class="chip" data-filter="v2root" style="--c:#6366f1">🌐 v2root <span class="cnt">20</span></button></div>
-        <div class="section-title">🧩 فلترة بالبروتوكول</div>
-        <div class="filters"><button class="chip" data-filter="vmess" style="--c:#8b5cf6">VMESS <span class="cnt">10</span></button><button class="chip" data-filter="vless" style="--c:#06b6d4">VLESS <span class="cnt">30</span></button><button class="chip" data-filter="trojan" style="--c:#f59e0b">TROJAN <span class="cnt">5</span></button><button class="chip" data-filter="ss" style="--c:#10b981">SS <span class="cnt">16</span></button><button class="chip" data-filter="hysteria2" style="--c:#ec4899">HYSTERIA2 <span class="cnt">4</span></button></div>
-        <div id="list"></div>
-        <div id="empty" style="display:none; text-align:center; color:var(--sub); padding:40px;">😴 لا توجد سيرفرات</div>
-    </div>
-    <div class="toast" id="toast">✅ تم النسخ!</div>
-    <div class="stats-page" id="stats-pg" style="display:none;">
-        <div class="stats-card">
-            <h2 style="margin-bottom:20px;">📊 الإحصائيات</h2>
-            <canvas id="chart" style="max-height:300px;"></canvas>
-            <p style="color:var(--sub); margin-top:16px;">آخر تحديث: <span id="last-up"></span></p>
-            <button onclick="location.reload()" style="margin-top:20px; padding:14px 40px; border-radius:50px; border:none; background:#8b5cf6; color:white; font-family:'Cairo',sans-serif; font-weight:700; cursor:pointer;">⬅️ عودة</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative py-12 md:py-16 text-center px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="inline-flex items-center gap-2 glass rounded-full px-5 py-2 text-xs text-gray-300 mb-6">
+                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                <span id="countdown-next">التحديث القادم بعد: --:--:--</span>
+                <span class="text-gray-500">| المصدر: V2Nodes</span>
+            </div>
+            <h1 class="text-4xl md:text-7xl font-black mb-3 leading-tight">
+                <span class="bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 bg-clip-text text-transparent typing-text" id="hero-title">حرية التصفح</span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-2 typing-text" id="hero-subtitle"></p>
+            <p class="text-gray-500 text-sm mb-8" id="greeting-message"></p>
+            
+            <!-- Stats Cards -->
+            <div class="flex flex-wrap justify-center gap-3 mb-4">
+                <div class="glass px-5 py-3 rounded-2xl text-center min-w-[100px]">
+                    <span class="text-2xl md:text-3xl font-black bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">17</span>
+                    <p class="text-gray-500 text-xs mt-1">سيرفر</p>
+                </div>
+                <div class="glass px-5 py-3 rounded-2xl text-center min-w-[100px]">
+                    <span class="text-2xl md:text-3xl font-black text-green-400">17</span>
+                    <p class="text-gray-500 text-xs mt-1">جديد 🆕</p>
+                </div>
+                <div class="glass px-5 py-3 rounded-2xl text-center min-w-[100px]">
+                    <span class="text-2xl md:text-3xl font-black text-yellow-400">126</span>
+                    <p class="text-gray-500 text-xs mt-1">متوسط ms</p>
+                </div>
+                <div class="glass px-5 py-3 rounded-2xl text-center min-w-[120px]">
+                    <span class="text-lg md:text-xl font-black text-cyan-400">غير معروف</span>
+                    <p class="text-gray-500 text-xs mt-1">الأكثر (13)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Tabs & Search -->
+    <section class="max-w-7xl mx-auto px-4 py-2">
+        <div class="flex flex-wrap justify-center gap-2" id="filter-tabs">
+            
+    <button class="tab-btn active px-4 py-2 rounded-full text-xs font-medium" data-filter="all">
+        <i class="fas fa-globe ml-1"></i> الكل (<span id="count-all">17</span>)
+    </button>
+    <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="vmess">
+        🟠 VMess (<span id="count-vmess">2</span>)
+    </button>
+    <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="vless">
+        🔵 VLESS (<span id="count-vless">3</span>)
+    </button>
+    <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="trojan">
+        🟣 Trojan (<span id="count-trojan">4</span>)
+    </button>
+    <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="ss">
+        🟢 SS (<span id="count-ss">8</span>)
+    </button>
+            <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" id="fav-filter-btn" data-filter="favorites" style="display:none;">
+                ⭐ المفضلة (<span id="count-fav">0</span>)
+            </button>
+        </div>
+        <div class="flex justify-center mt-3">
+            <div class="glass flex items-center gap-2 px-4 py-2 rounded-full max-w-md w-full">
+                <i class="fas fa-search text-gray-500"></i>
+                <input type="text" id="search-input" placeholder="ابحث عن دولة، بروتوكول، أو ملاحظة..." 
+                    class="bg-transparent border-none outline-none text-white text-sm w-full placeholder-gray-500">
+                <button onclick="document.getElementById('search-input').value=''; renderServers(currentFilter);" 
+                    class="text-gray-500 hover:text-white text-xs">✕</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servers Grid -->
+    <section class="max-w-7xl mx-auto px-4 py-6">
+        <h2 class="text-lg font-bold mb-4 text-gray-300 flex items-center gap-2">
+            <i class="fas fa-server text-indigo-400"></i> سيرفرات V2Nodes
+            <span class="text-xs text-gray-500 font-normal" id="last-copied-info"></span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="servers-grid"></div>
+        <div id="no-servers-msg" class="text-center py-12 text-gray-500 hidden">
+            <i class="fas fa-search text-3xl mb-3 opacity-30"></i>
+            <p id="no-results-text">لا توجد سيرفرات</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 mt-12">
+        <div class="max-w-7xl mx-auto px-4 py-8 text-center">
+            <p class="text-gray-500 text-xs">© 2026 DOKA V2Nodes · جميع الحقوق محفوظة</p>
+            <p class="text-gray-600 text-xs mt-1">تحديث تلقائي كل 3 ساعات | المصدر: V2Nodes</p>
+            <button id="show-stats-btn" class="mt-4 glass px-5 py-2 rounded-full text-xs text-gray-300 hover:text-white transition-all">
+                <i class="fas fa-chart-bar ml-1"></i> الإحصائيات
+            </button>
+            <button id="clear-fav-btn" class="mt-2 block mx-auto text-xs text-gray-600 hover:text-red-400 transition-all" style="display:none;">
+                <i class="fas fa-trash-alt ml-1"></i> حذف المفضلة
+            </button>
+        </div>
+    </footer>
+
+    <!-- Stats Page -->
+    <div id="stats-page" class="max-w-4xl mx-auto px-4 py-12 hidden">
+        <div class="glass-card p-6">
+            <h2 class="text-2xl font-bold text-center mb-6">📊 لوحة الإحصائيات</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div><h3 class="text-base font-bold mb-3 text-gray-300">البروتوكولات</h3><canvas id="proto-chart"></canvas></div>
+                <div><h3 class="text-base font-bold mb-3 text-gray-300">الدول</h3><canvas id="country-chart"></canvas></div>
+            </div>
+            <p class="text-center text-gray-400 mt-6 text-xs">آخر تحديث: <span id="stats-last-update"></span></p>
+            <button id="back-to-servers" class="mt-6 btn-primary px-6 py-2.5 rounded-xl mx-auto block text-sm font-medium">
+                <i class="fas fa-arrow-right ml-2"></i> عودة
+            </button>
         </div>
     </div>
-    <div style="text-align:center; padding:20px; color:var(--sub); font-size:0.7rem;">© 2026 DOKA PRO • 3 مصادر • <button id="stats-btn" style="background:none; border:none; color:#8b5cf6; cursor:pointer; font-family:'Cairo',sans-serif;">📊 إحصائيات</button></div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast fixed bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full text-sm font-bold opacity-0 transition-all pointer-events-none z-50 text-white" style="transform: translate(-50%, 20px);">
+        <span id="toast-msg">تم النسخ!</span>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qr-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm" onclick="closeQRModal(event)">
+        <div class="glass-card p-6" onclick="event.stopPropagation()" style="opacity:1;transform:none;">
+            <div id="qr-modal-content" class="flex justify-center"></div>
+            <button onclick="closeQRModal()" class="mt-4 w-full btn-primary py-2.5 rounded-xl text-xs font-medium">إغلاق</button>
+        </div>
+    </div>
+
     <script>
-        const data = [{"url": "exclave://vless?eNpVjr1OwzAAhC0m3oOBycF2bKdstBtL-VEHVsd26lSxYxwnZO0r8AQsbCAhMQASr9MxUkfYSNh60t23nHR3AgCgWULS84SMxOzr7BSAZ54SlJJCQqZmElIlFRRMYSizAiGW8mzGc1e7XZT7Cdtt0KIq42_UxSYR3jdWhOh0TGQ9vFTz1Z21y3lLbwwN14sHlK9vozWM80V3ReLSlLlo2P1qc4kFQgUWn9KE2u5AH6sGBh962JVNWTvYKk_pe9-qPTgen0_bwBDb_oADHY1-HJ6-h4_X_3xD-EL3shKd7rybGn-2GlSm", "proto": "VLESS", "country": "🌍", "ping": 338, "alive": false, "source": "exclave"}, {"url": "exclave://vless?eNpTZmBgMDSx1DM0MNEzApJbtP0YGJaaGRkYJRkZG-iaGJon65qkWKTqJpkZmegapJkbJqYlWiabm6bk5ec9Lf9cnJepZ2hoaGBgoJeSV6yXWJT7c6e-fUZJSUGxqrGjqpEbEJXo5aYCqfDEvHTnxEwjVTcDVUs3VQtzVUcLBNvJ2JaBC-iY4NRk3fDUpOD85OzUEt2AovyS_OT8NyU52GxqBAEGMAlyDQMHUD-YkWGUW_qDAQUwAfGktwv2vN2-A0yuMTB0SK1IzkksSy0ryAOpAABeKFJo", "proto": "VLESS", "country": "🌍", "ping": 260, "alive": false, "source": "exclave"}, {"url": "exclave://trojan?eNpjYmBgUAZiQ0tjPSNDSz1LSz1D0x2_FRgYGhvLP3vn5ybqRoboBTi6pwbruaR-m6VfUhSSmpOaXpSY-3bBnrfbV4DJzdoO4Yl56c6JmUYMINBYkoOptxEEGEBEXn7eUwYOoDowI8Mot_QHAwqwKLKJtlTPMctw9Fe2iAp8yQQUmwS2aSOY3Glg6JBakZyTWJZaVpAH0gEAvg5Fvg", "proto": "TROJAN", "country": "🌍", "ping": 235, "alive": false, "source": "exclave"}, {"url": "exclave://trojan?eNpjYmBgUAZiQ0tjPSNDSz1LSz1Dg-2_FRgYGhvLP3vn5ybqRoboBTi6pwbruaR-m6VfUhSSmpOaXpSY-3bBnrfbV4DJzQoO4Yl56c6JmUYMINBYkoOptxEEGEBEXn7eUwYOoDowI8Mot_QHAwqwKLKJtlTPMctw9Fe2iAp8yQQUmwyxCUxuUTAwdEitSM5JLEstK8gDaQEA905Fyw", "proto": "TROJAN", "country": "🌍", "ping": 251, "alive": false, "source": "exclave"}, {"url": "exclave://trojan?eNpjYmBgUAZiQ0tjPSNDSz1LSz3Djb8VGBgaG8s_e-fnJupGhugFOLqnBuu5pH6bpV9SFJKak5pelJj7dsGet9tXgMnNCg7hiXnpzomZRgwg0FiSg6m3EQQYQEReft5TBg6gOjAjwyi39AcDCrAosom2VM8xy3D0V7aICnzJBBSbjGTfMgUDQ4fUiuScxLLUsoI8kBYAzH1FfA", "proto": "TROJAN", "country": "🌍", "ping": 233, "alive": false, "source": "exclave"}, {"url": "exclave://hysteria2?eNpjZ2BgsDTRMzQ1A2JTPdNtFiwMDCuKikvy8nKsMooCwwKy0kOLLD1C0r0rQ7IM8t2ci8yyTFwLgqoiQgLdKqIqc5IKnXNCC8MKHYuN8lKrwi2zAyrdkoxSU6I2FaWmpKQmpqQl5ukVpeiWpCbm6hV9bQQCRgY0YGRgtA3GBsqjSzMkJX0qLknMS0ksesIE5E55u2DP2-3LweQaBQUDI4fUiuScxLLUsoI8kHIAGeI_Sg", "proto": "HYSTERIA2", "country": "🌍", "ping": 204, "alive": false, "source": "exclave"}, {"url": "exclave://hysteria2?eNpjZ2BgsDDWMzIx1rMw0zM02GzBwsCwND2zJKM0SS85P1ffMacsM88SCHTzUssLEpP10xLzCjMT89Iby8vL9XIzk4vyi_PTSoBq3zYCASMDGjA0sjDdCuMAFaDLMyQlfSouScxLSSx6wgTkTnm7YM_b7SvB5CoFBQMjh9SK5JzEstSygjyQcgCzszJh", "proto": "HYSTERIA2", "country": "🌍", "ping": 304, "alive": false, "source": "exclave"}, {"url": "exclave://hysteria2?eNpjZ2BgMDQz1jM0N9IzNATShjssWBgYUvLz0ksSM8sT89L1kvPfNpaXl-vlZiYX5Rfnp5WARYCAAR2YGBpZbIZxsClISvpUXJKYl5JY9IQJyJ3ydsGet9tXg8ntCgoGRg6pFck5iWWpZQV5IOUAaugriA", "proto": "HYSTERIA2", "country": "🌍", "ping": 203, "alive": false, "source": "exclave"}, {"url": "exclave://hysteria2?eNpjZ2BgMDXRMzI10DM0t9QzNNtiwcLAUBiYalhlmh1qke1nFpzjnedSYhlUahz4obGsIE83q0DXwMBELy2xuCS1CCigV55flPOkEQgYGdCAiclmGBMojS7LkJT0qbgkMS8lsegJE5A75e2CPW-3rweTWxUUDIwcUiuScxLLUoGWgJQDAASlL7I", "proto": "HYSTERIA2", "country": "🌍", "ping": 282, "alive": false, "source": "exclave"}, {"url": "exclave://vless?eNpTYWBgMDHVMzQ10jM0NNYztNy6m5GBYWlSYlqyhbllkm5qamqaroGhoYluYrKJua5FarJZspGxsbFpqmVeft7TkuQPIKqxsSg1MSez5GdySp5eSVFiRn5KUX6uXlrpuzWeTmV-PqlFWX4-BW4m_gWhEbrl7l4FFpEuUUV53vkZuumuniWhLn4h8U7pjckZQF1PGSpKcop1iwqKKnTLMosz8_N0S1MKTEw2V5SmfGDgALoXZCNDhlFu6Q8GFNDIBCSmvF2w5-327WByl4KCgZFDakVyTmJZallBHkgRAB3WUso", "proto": "VLESS", "country": "🌍", "ping": 303, "alive": false, "source": "exclave"}, {"url": "exclave://vless?eNpTYWBgMDPTMzQ11DMx0DPatJuRgWGpeVpSapK5WZquUVqioa5JommirmWapaWuSUpSWmJiWpJJSqJRXn7e05LkDyCqsbEoNTEns-RneXm5Xnp-fnpOql5y_ts1JmXxJkHBua4WVSUeaYEmrmEWkblmXrpmzhaOziWRmVV5IR7JKeFe5WbhjomJSUnJySlPkjOK8nOfMlSU5BTrFhUUVeiWZRZn5ufplqYUmJhsrihN-cDAAXQxyFaGDKPc0h8MKKCRCUhMebtgz9vtK8HkKgUFAyOH1IrknMSy1LKCPJAiAGWAVDk", "proto": "VLESS", "country": "🌍", "ping": 308, "alive": false, "source": "exclave"}, {"url": "vless://c931b432-cbab-47f4-ae30-917b17e5fb1f@208.67.105.196:443?security=reality&sni=www.tradingview.com&fp=chrome&pbk=ameppwaxPsbMnl1d5xQ4nbkdiRLRQL7XLsFDwOv2XAY&sid=ba2e91d5d7be&type=tcp&flow=xtls-rprx-vision&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 300, "alive": false, "source": "collector"}, {"url": "vless://e4824193-4f54-453b-d037-88368e85ef0e@45.82.251.63:8880?security=&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 209, "alive": false, "source": "collector"}, {"url": "vless://e4824193-4f54-453b-d037-88368e85ef0e@45.82.251.80:8880?security=&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 363, "alive": false, "source": "collector"}, {"url": "vless://401374e6-df77-41fb-f638-dad8184f175b@141.11.203.139:443?security=tls&sni=pqh23v5.hiddendom.shop&alpn=h2&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 241, "alive": false, "source": "collector"}, {"url": "vless://e4824193-4f54-453b-d037-88368e85ef0e@185.236.232.129:8880?security=&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 278, "alive": false, "source": "collector"}, {"url": "vless://e4824193-4f54-453b-d037-88368e85ef0e@45.82.251.121:8880?security=&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 328, "alive": false, "source": "collector"}, {"url": "vless://e4824193-4f54-453b-d037-88368e85ef0e@45.82.251.124:8880?security=&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 253, "alive": false, "source": "collector"}, {"url": "vless://e4824193-4f54-453b-d037-88368e85ef0e@45.82.251.180:8880?security=&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 360, "alive": false, "source": "collector"}, {"url": "vless://df0680ca-e43c-498d-ed86-8e196eedd012@185.153.183.211:8880?security=&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 391, "alive": false, "source": "collector"}, {"url": "vless://bf9b316d-31ac-42ee-b8a5-8dc795118917@192.210.183.136:36678?security=reality&sni=swdist.apple.com&fp=chrome&pbk=rrGm0NemTtGQ8Vrd2AzB7pSoW_kYtqYvhRxsx_MtwG0&sid=5d20&type=tcp&flow=xtls-rprx-vision&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 269, "alive": false, "source": "collector"}, {"url": "vless://4c54aa59-3f7a-4257-bad6-5f2def2d9fb8@157.173.195.208:8081?security=reality&sni=yahoo.com&fp=chrome&pbk=maeBz8hpeApypC47VuYULiB8zupTv1HxlPpRJ5QsOUI&sid=9d41&type=tcp&flow=xtls-rprx-vision&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 384, "alive": false, "source": "collector"}, {"url": "vless://401374e6-df77-41fb-f638-dad8184f175b@89.116.180.248:443?security=tls&sni=pqh23v4.hiddendom.shop&alpn=h2&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 379, "alive": false, "source": "collector"}, {"url": "vless://401374e6-df77-41fb-f638-dad8184f175b@all.tellmethetrue.shop:443?security=tls&sni=pqh23v7.hiddendom.shop&alpn=h2&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 394, "alive": false, "source": "collector"}, {"url": "vless://e4824193-4f54-453b-d037-88368e85ef0e@45.82.251.58:8880?security=&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 235, "alive": false, "source": "collector"}, {"url": "vless://e4824193-4f54-453b-d037-88368e85ef0e@45.82.251.92:8880?security=&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 359, "alive": false, "source": "collector"}, {"url": "vless://e4824193-4f54-453b-d037-88368e85ef0e@45.82.251.93:8880?security=&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 309, "alive": false, "source": "collector"}, {"url": "vmess://eyJhZGQiOiIyMDkuMTI2Ljg0LjE4OSIsImFpZCI6IjAiLCJob3N0IjoiMjA5LjEyNi44NC4xODkiLCJpZCI6IjJjOTgxMTY0LTliOTMtNGJjYS05NGZmLWI3OGQzZjg0OThkNyIsIm5ldCI6IndzIiwicGF0aCI6Ii92bWVzc3dzIiwicG9ydCI6IjQ0MyIsInBzIjoiQFYycmF5X0NvbGxlY3RvciIsInNjeSI6ImF1dG8iLCJzbmkiOiIiLCJ0bHMiOiIiLCJ0eXBlIjoibm9uZSIsInYiOiIyIn0=", "proto": "VMESS", "country": "🌍", "ping": 309, "alive": false, "source": "collector"}, {"url": "vmess://eyJhZGQiOiI1LjE5Ni4yOS4xMjMiLCJhaWQiOiIwIiwiaG9zdCI6Imdvb2dsZS5jb20iLCJpZCI6IjExMmFjMzZmLTNmNTMtNGUyNi04MzcxLWQyNWMwMjhlMWI5YSIsIm5ldCI6IndzIiwicGF0aCI6Ii8iLCJwb3J0IjoiMjA4MiIsInBzIjoiQFYycmF5X0NvbGxlY3RvciIsInNjeSI6ImF1dG8iLCJzbmkiOiIiLCJ0bHMiOiIiLCJ0eXBlIjoiIiwidiI6IjIifQ==", "proto": "VMESS", "country": "🌍", "ping": 282, "alive": false, "source": "collector"}, {"url": "vmess://eyJhZGQiOiI1MS43Ny4yMjEuMTEzIiwiYWlkIjoiMCIsImhvc3QiOiJCTGFaZS1GUi0xMTMuQmxhemVzZVJ2ZVIxMi5zaVRlIiwiaWQiOiIzMmI1ZDA5Ny00NmIzLTQ5MDMtODdhYi0zODJhN2JlODU5YjgiLCJuZXQiOiJ3cyIsInBhdGgiOiIvbGlua3dzIiwicG9ydCI6IjQ0MyIsInBzIjoiQFYycmF5X0NvbGxlY3RvciIsInNjeSI6ImF1dG8iLCJzbmkiOiJCTGFaZS1GUi0xMTMuQmxhemVzZVJ2ZVIxMi5zaVRlIiwidGxzIjoidGxzIiwidHlwZSI6IiIsInYiOiIyIn0=", "proto": "VMESS", "country": "🌍", "ping": 87, "alive": true, "source": "collector"}, {"url": "trojan://2ee85121-31de-4581-a492-eb00f606e392@198.23.229.250:443?security=tls&sni=rc6.freeguard.org&type=tcp#@V2ray_Collector", "proto": "TROJAN", "country": "🌍", "ping": 205, "alive": false, "source": "collector"}, {"url": "trojan://740628@136.175.177.136:8000?security=tls&sni=sj.cestbon.work&fp=chrome&type=grpc&serviceName=cestbon#@V2ray_Collector", "proto": "TROJAN", "country": "🌍", "ping": 208, "alive": false, "source": "collector"}, {"url": "vless://401374e6-df77-41fb-f638-dad8184f175b@103.133.1.227:443?security=tls&sni=pqh24v3.hiddendom.shop&alpn=h2&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 321, "alive": false, "source": "collector"}, {"url": "vless://df0680ca-e43c-498d-ed86-8e196eedd012@185.231.205.253:8880?security=&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 282, "alive": false, "source": "collector"}, {"url": "vless://5a519368-9dbb-4ab4-8967-a30fb39a8881@194.55.235.202:443?security=reality&sni=mega.io&fp=chrome&pbk=2KRLht-me2Je8FrYcUUv8OJ3_xoT8KMCurzwfDZcvCk&sid=2c709739f487&type=tcp&flow=xtls-rprx-vision&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 377, "alive": false, "source": "collector"}, {"url": "vless://0cc9d390-42ee-461e-94ae-e4370883dc48@77.73.238.191:29505?security=&type=ws&path=/&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 251, "alive": false, "source": "collector"}, {"url": "vless://08704c01-7edb-454a-98a2-328ccb9936fa@45.88.183.156:12794?security=&type=tcp&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 359, "alive": false, "source": "collector"}, {"url": "vless://d3daa900-0377-4575-9ebc-c4d88cb8486c@45.88.183.158:44629?security=&type=tcp&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 376, "alive": false, "source": "collector"}, {"url": "vmess://eyJhZGQiOiI0NS42Ny4yMzAuNzkiLCJhaWQiOiIwIiwiaG9zdCI6IiIsImlkIjoiMzE0MTg1ZjctOTMxZC00NjU2LTkyMmQtMDg1N2U3YWZkMjI0IiwibmV0IjoidGNwIiwicGF0aCI6IiIsInBvcnQiOiIxMTA1MiIsInBzIjoiQFYycmF5X0NvbGxlY3RvciIsInNjeSI6ImF1dG8iLCJzbmkiOiIiLCJ0bHMiOiIiLCJ0eXBlIjoiIiwidiI6IjIifQ==", "proto": "VMESS", "country": "🌍", "ping": 291, "alive": false, "source": "collector"}, {"url": "vmess://eyJhZGQiOiIxMDMuNjEuMTM5LjEzNyIsImFpZCI6IjAiLCJob3N0IjoiIiwiaWQiOiJmOGQ5M2NmYi0zZDVkLTQ0N2MtYTY5Ny0xNjQ5NmRkNzQ2OTciLCJuZXQiOiJ3cyIsInBhdGgiOiIvIiwicG9ydCI6IjIwNTIxIiwicHMiOiJAVjJyYXlfQ29sbGVjdG9yIiwic2N5IjoiYXV0byIsInNuaSI6IiIsInRscyI6IiIsInR5cGUiOiIiLCJ2IjoiMiJ9", "proto": "VMESS", "country": "🌍", "ping": 379, "alive": false, "source": "collector"}, {"url": "vmess://eyJhZGQiOiIxNS4yMzUuNDEuMjAwIiwiYWlkIjoiMCIsImhvc3QiOiIiLCJpZCI6IjU4ZmUxNTQyLTUyOTAtNDBhZC04MTVhLTc3NzA3YTgxYWZlNSIsIm5ldCI6IndzIiwicGF0aCI6Ii9JT2ViaExNaGwxQ1RiRkhiTDk1bXlmUlgyIiwicG9ydCI6IjgwIiwicHMiOiJAVjJyYXlfQ29sbGVjdG9yIiwic2N5IjoiYXV0byIsInNuaSI6IiIsInRscyI6IiIsInR5cGUiOiIiLCJ2IjoiMiJ9", "proto": "VMESS", "country": "🌍", "ping": 261, "alive": false, "source": "collector"}, {"url": "vmess://eyJhZGQiOiI1MS43OS4xMDIuMjUzIiwiYWlkIjoiMCIsImhvc3QiOiI1MS43OS4xMDIuMjUzIiwiaWQiOiI1OGZlMTU0Mi01MjkwLTQwYWQtODE1YS03NzcwN2E4MWFmZTUiLCJuZXQiOiJ3cyIsInBhdGgiOiIvSU9lYmhMTWhsMUNUYkZIYkw5NW15ZlJYMiIsInBvcnQiOiI4MCIsInBzIjoiQFYycmF5X0NvbGxlY3RvciIsInNjeSI6ImF1dG8iLCJzbmkiOiIiLCJ0bHMiOiIiLCJ0eXBlIjoiIiwidiI6IjIifQ==", "proto": "VMESS", "country": "🌍", "ping": 292, "alive": false, "source": "collector"}, {"url": "vmess://eyJhZGQiOiI4NS4xOTUuMTAxLjEyMiIsImFpZCI6IjAiLCJob3N0IjoiIiwiaWQiOiJmM2Q0MTY3ZS1iMTVlLTRlNDYtODJlOS05Mjg2ZWY5M2ZkYTciLCJuZXQiOiJ0Y3AiLCJwYXRoIjoiIiwicG9ydCI6IjQwODc4IiwicHMiOiJAVjJyYXlfQ29sbGVjdG9yIiwic2N5IjoiYXV0byIsInNuaSI6IiIsInRscyI6IiIsInR5cGUiOiIiLCJ2IjoiMiJ9", "proto": "VMESS", "country": "🌍", "ping": 226, "alive": false, "source": "collector"}, {"url": "vless://5475990d-e0ce-46ea-95e5-50f9e4879af9@188.225.80.183:443?security=reality&sni=ru.sfasti.ru&fp=chrome&pbk=J_jQq9-SWQZjiMhuPaFV7V2MaJ4pkKgVRaz7x6tmvy8&sid=16895459a2c7768d&type=tcp&flow=xtls-rprx-vision&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 244, "alive": false, "source": "collector"}, {"url": "vless://401374e6-df77-41fb-f638-dad8184f175b@103.160.204.145:443?security=tls&sni=pqh23v4.hiddendom.shop&alpn=h2&fp=chrome&type=grpc&encryption=none#@V2ray_Collector", "proto": "VLESS", "country": "🌍", "ping": 361, "alive": false, "source": "collector"}, {"url": "vless://a49f6a19-9a09-40c2-8fb1-1151e14a02e6@snapp.ir:80?path=%2FFIRELINK&security=none&encryption=none&host=firelink.arian-go-internet.ir&type=ws#%D8%AA%D9%84%DA%AF%D8%B1%D8%A7%D9%85%7C%20%F0%9F%9A%80AshpaziMidas%F0%9F%9A%80%D8%B3%D9%81%D8%A7%D8%B1%D8%B4%20%D9%BE%DB%8C%D8%AA%D8%B2%D8%A7%20%D8%B1%D9%88%D8%A8%DB%8C%DA%A9%D8%A7%3A%20midas_net%20%F0%9F%8D%95", "proto": "VLESS", "country": "🌍", "ping": 363, "alive": false, "source": "v2root"}, {"url": "ss://a49f6a19-9a09-40c2-8fb1-1151e14a02e6@snapp.ir:80?path=%2FFIRELINK&security=none&encryption=none&host=firelink.arian-go-internet.ir&type=ws#%D8%AA%D9%84%DA%AF%D8%B1%D8%A7%D9%85%7C%20%F0%9F%9A%80AshpaziMidas%F0%9F%9A%80%D8%B3%D9%81%D8%A7%D8%B1%D8%B4%20%D9%BE%DB%8C%D8%AA%D8%B2%D8%A7%20%D8%B1%D9%88%D8%A8%DB%8C%DA%A9%D8%A7%3A%20midas_net%20%F0%9F%8D%95", "proto": "SS", "country": "🌍", "ping": 328, "alive": false, "source": "v2root"}, {"url": "vmess://eyJhZGQiOiJzbmFwcC5pciIsImFpZCI6IjAiLCJhbHBuIjoiIiwiZnAiOiIiLCJob3N0IjoibTEuYXJ0aWNsZXIuaXIiLCJpZCI6ImUxMGEyNDIwLTg0NGYtNGU1My04NDdmLWYzZWZmZTAxNWRiZiIsImluc2VjdXJlIjoiMCIsIm5ldCI6IndzIiwicGF0aCI6Ii9ETD9lZFx1MDAzZDIwNTMiLCJwb3J0IjoiMjA4NiIsInBzIjoi2obZhtmEINqp2KfZhtmB24zaryDYudi22Ygg2LTZiCBAdjJyYV9jb25maWciLCJzY3kiOiJhdXRvIiwic25pIjoiIiwidGxzIjoiIiwidHlwZSI6Ii0tLSIsInYiOiIyIn0=", "proto": "VMESS", "country": "🌍", "ping": 341, "alive": true, "source": "v2root"}, {"url": "ss://dbb1102e-d6da-a3d3-2c9e-fec3b49ec257@i-love-iran.amlakayuni.ir:2087?path=%3Fed%3D2087&security=tls&alpn=h2%2Chttp%2F1.1&encryption=none&insecure=0&host=i-love-iran.amlakayuni.ir&fp=randomized&type=ws&allowInsecure=0&sni=i-love-iran.amlakayuni.ir#%DA%86%D9%86%D9%84%20%DA%A9%D8%A7%D9%86%D9%81%DB%8C%DA%AF%20%D8%B9%D8%B6%D9%88%20%D8%B4%D9%88%20%40v2ra_config", "proto": "SS", "country": "🌍", "ping": 252, "alive": false, "source": "v2root"}, {"url": "ss://eyJhZGQiOiJzbmFwcC5pciIsImFpZCI6IjAiLCJhbHBuIjoiIiwiZnAiOiIiLCJob3N0IjoibTEuYXJ0aWNsZXIuaXIiLCJpZCI6ImUxMGEyNDIwLTg0NGYtNGU1My04NDdmLWYzZWZmZTAxNWRiZiIsImluc2VjdXJlIjoiMCIsIm5ldCI6IndzIiwicGF0aCI6Ii9ETD9lZFx1MDAzZDIwNTMiLCJwb3J0IjoiMjA4NiIsInBzIjoi2obZhtmEINqp2KfZhtmB24zaryDYudi22Ygg2LTZiCBAdjJyYV9jb25maWciLCJzY3kiOiJhdXRvIiwic25pIjoiIiwidGxzIjoiIiwidHlwZSI6Ii0tLSIsInYiOiIyIn0=", "proto": "SS", "country": "🌍", "ping": 337, "alive": false, "source": "v2root"}, {"url": "ss://ed29bb58-07e0-4eb6-a2c6-ed427066fd4b@s1.arisping-ir.online:8080?security=reality&encryption=none&pbk=LOS87LofEJA0paPzrS2mIFhmTaqkOZC-AUFgNvE1UEs&headerType=none&fp=chrome&type=tcp&sni=www.microsoft.com&sid=82cada35130f1ef2#@UnNurmal", "proto": "SS", "country": "🌍", "ping": 337, "alive": false, "source": "v2root"}, {"url": "vless://1f5358e8-f57c-44b8-9864-9c236672fbc8@185.143.233.235:80?path=%2F&security=none&encryption=none&host=d.nsa03.com&type=ws", "proto": "VLESS", "country": "🌍", "ping": 215, "alive": false, "source": "v2root"}, {"url": "ss://eyJhZGQiOiJjaXAuc2FsaW1vcmUuY29tIiwiYWlkIjoiMCIsImFscG4iOiIiLCJmcCI6IiIsImhvc3QiOiJjaXAuc2FsaW1vcmUuY29tIiwiaWQiOiIzNDM3NzM3YS1jOWI1LTRkZWEtYWI4MS02YjE3ZDc4ZWM1M2MiLCJpbnNlY3VyZSI6IjAiLCJuZXQiOiJ3cyIsInBhdGgiOiIvd3MvIiwicG9ydCI6IjQ0MyIsInBzIjoiQGljdjJyYXkiLCJzY3kiOiJhdXRvIiwic25pIjoiIiwidGxzIjoidGxzIiwidHlwZSI6Ii0tLSIsInYiOiIyIn0=", "proto": "SS", "country": "🌍", "ping": 312, "alive": false, "source": "v2root"}, {"url": "ss://1f5358e8-f57c-44b8-9864-9c236672fbc8@185.143.233.235:80?path=%2F&security=none&encryption=none&host=d.nsa03.com&type=ws", "proto": "SS", "country": "🌍", "ping": 323, "alive": false, "source": "v2root"}, {"url": "ss://1f5358e8-f57c-44b8-9864-9c236672fbc8@185.143.233.235:80?path=%2F&security=none&encryption=none&host=d.nsa03.com&type=ws#@UnNurmal", "proto": "SS", "country": "🌍", "ping": 384, "alive": false, "source": "v2root"}, {"url": "ss://6bab2b96-c7c9-4f67-8d73-2be702c6f2c2@trex.nahidapp.com:443?path=%2Fvless-ws&security=tls&encryption=none&insecure=1&host=trex.nahidapp.com&fp=chrome&type=ws&allowInsecure=1&sni=trex.nahidapp.com#VPNBEKS", "proto": "SS", "country": "🌍", "ping": 217, "alive": false, "source": "v2root"}, {"url": "ss://eyJhZGQiOiJjaXAuc2FsaW1vcmUuY29tIiwiYWlkIjoiMCIsImFscG4iOiIiLCJmcCI6IiIsImhvc3QiOiJjaXAuc2FsaW1vcmUuY29tIiwiaWQiOiIzNDM3NzM3YS1jOWI1LTRkZWEtYWI4MS02YjE3ZDc4ZWM1M2MiLCJpbnNlY3VyZSI6IjAiLCJuZXQiOiJ3cyIsInBhdGgiOiIvd3MvIiwicG9ydCI6IjQ0MyIsInBzIjoiQFRFTEVSQVlWUE4g8J+HqfCfh6rZiNi12YQg2LTYr9uMINis2YjbjNmGINio2K/ZhyIsInNjeSI6ImF1dG8iLCJzbmkiOiIiLCJ0bHMiOiJ0bHMiLCJ0eXBlIjoiLS0tIiwidiI6IjIifQ==#VPNBEKS", "proto": "SS", "country": "🌍", "ping": 342, "alive": false, "source": "v2root"}, {"url": "ss://ed29bb58-07e0-4eb6-a2c6-ed427066fd4b@s1.arisping-ir.online:8080?security=reality&encryption=none&pbk=LOS87LofEJA0paPzrS2mIFhmTaqkOZC-AUFgNvE1UEs&headerType=none&fp=chrome&type=tcp&sni=www.microsoft.com&sid=82cada35130f1ef2#VPNBEKS", "proto": "SS", "country": "🌍", "ping": 201, "alive": false, "source": "v2root"}, {"url": "ss://7ff7046d-6cdd-416d-badd-459bb873e919@arvancloud.ir:80?path=%2Fed%3D2047&security=none&encryption=none&host=edge.s7r.ir&type=ws#VPNBEKS", "proto": "SS", "country": "🌍", "ping": 281, "alive": false, "source": "v2root"}, {"url": "ss://1f5358e8-f57c-44b8-9864-9c236672fbc8@185.143.233.235:80?path=%2F&security=none&encryption=none&host=d.nsa03.com&type=ws#VPNBEKS", "proto": "SS", "country": "🌍", "ping": 267, "alive": false, "source": "v2root"}, {"url": "ss://eyJhZGQiOiIyMTcuMjE4LjUyLjEiLCJhaWQiOiIwIiwiYWxwbiI6IiIsImZwIjoiIiwiaG9zdCI6IiIsImlkIjoiZjYyZDI0MTEtYzM0ZC00NjBiLWE5M2UtYjc4OWUwM2NhOGIzIiwibmV0IjoidGNwIiwicGF0aCI6IiIsInBvcnQiOiIxMTE4MiIsInBzIjoiQHYycmF5X3Bob2VuaXgiLCJzY3kiOiJhdXRvIiwic25pIjoiIiwidGxzIjoiIiwidHlwZSI6Im5vbmUiLCJ2IjoiMiJ9", "proto": "SS", "country": "🌍", "ping": 224, "alive": false, "source": "v2root"}, {"url": "ss://e6e62041-221c-46b2-b313-c2d131e74dd6@tun2-vip.apbxz.com:43187?security=none&encryption=none&host=fast.com&headerType=http&type=tcp#Psiphon--%40V2ray_Raha-14", "proto": "SS", "country": "🌍", "ping": 268, "alive": false, "source": "v2root"}, {"url": "vmess://eyJhZGQiOiIyMTcuMjE4LjUyLjEiLCJhaWQiOiIwIiwiYWxwbiI6IiIsImZwIjoiIiwiaG9zdCI6IiIsImlkIjoiZjYyZDI0MTEtYzM0ZC00NjBiLWE5M2UtYjc4OWUwM2NhOGIzIiwibmV0IjoidGNwIiwicGF0aCI6IiIsInBvcnQiOiIxMTE4MiIsInBzIjoiQHYycmF5X3Bob2VuaXgiLCJzY3kiOiJhdXRvIiwic25pIjoiIiwidGxzIjoiIiwidHlwZSI6Im5vbmUiLCJ2IjoiMiJ9", "proto": "VMESS", "country": "🌍", "ping": 257, "alive": false, "source": "v2root"}, {"url": "ss://2f4e3910-aa35-41a4-856a-5a75d19dd853@trex.nahidapp.com:443?path=%2Fvless-ws&security=tls&encryption=none&insecure=0&host=trex.nahidapp.com&fp=chrome&type=ws&allowInsecure=0&sni=trex.nahidapp.com#Psiphon--%40V2ray_Raha-13", "proto": "SS", "country": "🌍", "ping": 203, "alive": false, "source": "v2root"}, {"url": "ss://1f5358e8-f57c-44b8-9864-9c236672fbc8@185.143.233.235:80?path=%2F&security=none&encryption=none&host=d.nsa03.com&type=ws#Psiphon--%40V2ray_Raha-15", "proto": "SS", "country": "🌍", "ping": 219, "alive": false, "source": "v2root"}];
-        const colors = {"vmess": "#8b5cf6", "vless": "#06b6d4", "trojan": "#f59e0b", "ss": "#10b981", "hysteria2": "#ec4899", "unknown": "#6366f1"};
-        const icons = {"vmess": "fa-bolt", "vless": "fa-feather", "trojan": "fa-shield-haltered", "ss": "fa-ghost", "hysteria2": "fa-fire", "unknown": "fa-cube"};
-        const srcIcons = {"exclave": "\u2b21", "collector": "\ud83d\udce1", "v2root": "\ud83c\udf10"};
-        let filter = 'all', chartInst = null;
-        function render(f) {
-            filter = f;
-            const list = document.getElementById('list');
-            let filtered = f === 'all' ? data : data.filter(s => { if (['exclave','collector','v2root'].includes(f)) return s.source === f; return s.proto.toLowerCase() === f; });
-            if(!filtered.length) { list.innerHTML = ''; document.getElementById('empty').style.display='block'; return; }
-            document.getElementById('empty').style.display='none';
-            list.innerHTML = filtered.map((s,i) => {
-                const c = colors[s.proto.toLowerCase()] || '#8b5cf6';
-                const ic = icons[s.proto.toLowerCase()] || 'fa-link';
-                const up = s.alive;
-                const srcIcon = srcIcons[s.source] || '';
-                return `<div class="card"><div class="card-row"><div class="badge"><span class="flag">${s.country}</span><span class="tag" style="background:${c}"><i class="fas ${ic}"></i> ${s.proto}</span><span class="status" style="color:${up?'var(--suc)':'var(--dan)'}"><span class="dot ${up?'dot-up':'dot-down'}"></span> ${up?'حي':'ميت'}</span><span style="font-size:0.7rem;" title="${s.source}">${srcIcon}</span></div><span style="font-size:0.65rem; color:var(--sub);">${up?s.ping+'ms':'---'}</span></div><div class="url-box">${s.url}</div><div class="actions"><button class="btn" style="background:${c}" onclick="cp('${s.url.replace(/'/g, "\'")}')"><i class="far fa-copy"></i> نسخ</button><button class="btn-qr" onclick="qr('q${i}','${s.url.replace(/'/g, "\'")}')"><i class="fas fa-qrcode"></i></button></div><div class="qr-box" id="q${i}"></div></div>`;
-            }).join('');
+        const serversData = [{"link": "vmess://eyJhZGQiOiJ4ZzFhNC53YWltYW9mdXd1amQuY2MiLCJhaWQiOiIwIiwiYWxwbiI6IiIsImZwIjoiIiwiaG9zdCI6IiIsImlkIjoiMWE4N2ZjODEtNjg0Ni00MjQ2LWFkZDMtMDBhMzhiYWE4YzBmIiwibmV0Ijoid3MiLCJwYXRoIjoiXC9hcGlcL3YxXC9ncmFwaHFsIiwicG9ydCI6IjQ0MyIsInBzIjoiXHVkODNjXHVkZGZhXHVkODNjXHVkZGY4W29wZW5wcm94eWxpc3QuY29tXSB2bWVzcy1VUyIsInNjeSI6ImF1dG8iLCJzbmkiOiJ4ZzFhNC53YWltYW9mdXd1amQuY2MiLCJ0bHMiOiJ0bHMiLCJ0eXBlIjoibm9uZSIsInYiOiIyIiwic2tpcC1jZXJ0LXZlcmlmeSI6dHJ1ZX0=", "proto": "VMESS", "proto_color": "orange", "proto_icon": "🟠", "proto_gradient": "from-orange-400 to-red-400", "proto_name": "VMess", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 174, "is_new": true, "added_time": "20:00"}, {"link": "vmess://eyJ2IjoiMiIsInBzIjoiXHVkODNjXHVkZGYzXHVkODNjXHVkZGYxW29wZW5wcm94eWxpc3QuY29tXSB2bWVzcy1OTCIsImFkZCI6InYzMC5oZGFjZC5jb20iLCJwb3J0IjoiMzA4MzAiLCJ0eXBlIjoibm9uZSIsImlkIjoiY2JiM2Y4NzctZDFmYi0zNDRjLTg3YTktZDE1M2JmZmQ1NDg0IiwiYWlkIjoiMCIsIm5ldCI6InRjcCIsInBhdGgiOiJcLyIsImhvc3QiOiJicGJnLmFuZ3Vzd2VuLnRvcCIsInRscyI6IiIsInNraXAtY2VydC12ZXJpZnkiOnRydWV9", "proto": "VMESS", "proto_color": "orange", "proto_icon": "🟠", "proto_gradient": "from-orange-400 to-red-400", "proto_name": "VMess", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 92, "is_new": true, "added_time": "20:00"}, {"link": "vless://32bfe5f3-a406-48e3-bad9-932945bd0bc1@94.156.122.179.vhub.pro:443?allowInsecure=0&sni=94.156.122.179.vhub.pro&type=grpc&serviceName=/sequre/grpc/&fp=chrome&security=tls#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 97, "is_new": true, "added_time": "20:00"}, {"link": "vless://89960e91-7f08-401d-98b1-60a8ca601c6f@170.168.103.156:8081?type=tcp&encryption=none&path=%2F&host=www.speedtest.net&headerType=http&security=none#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 76, "is_new": true, "added_time": "20:00"}, {"link": "vless://981fca81-5be1-41f8-ac9b-d138e8109943@50.228.203.26:443?encryption=none&security=tls&sni=babayaga-6i7.pages.dev&type=ws&host=babayaga-6i7.pages.dev&path=%2F%3Fed%3D2560%26Telegram%F0%9F%87%A8%F0%9F%87%B3%40WangCai2#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🇩🇪", "country": "ألمانيا", "remark": "", "ping": 103, "is_new": true, "added_time": "20:00"}, {"link": "trojan://R8ufkVqwRZAgtwjyrA@uk-1.fishchipsexpress.com:443?allowInsecure=0&sni=uk-1.fishchipsexpress.com#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🇫🇮", "country": "فنلندا", "remark": "", "ping": 159, "is_new": true, "added_time": "20:00"}, {"link": "trojan://q2jXRWncMA7pQren_VjQKhSQfoBWK_@170.168.102.234:2083?path=%2Ftrojan-ws&security=tls&host=xo.e0f.cx&type=ws&sni=xo.e0f.cx#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 182, "is_new": true, "added_time": "20:00"}, {"link": "trojan://telegram-id-privatevpns@35.180.146.148:22222?security=tls&alpn=http/1.1&headerType=none&type=tcp&sni=trojan.burgerip.co.uk#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🇬🇧", "country": "بريطانيا", "remark": "", "ping": 77, "is_new": true, "added_time": "20:00"}, {"link": "trojan://JaFKnqNcvnBT63t3rquidGsln@hl-freedom-1.undef.network:443?allowInsecure=0&sni=HL-FREEDOM-1.UNDEF.NETWORK&ws=1&wspath=%2Ff2fc2a1f#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 135, "is_new": true, "added_time": "20:00"}, {"link": "ss://32bfe5f3-a406-48e3-bad9-932945bd0bc1@94.156.122.179.vhub.pro:443?allowInsecure=0&sni=94.156.122.179.vhub.pro&type=grpc&serviceName=/sequre/grpc/&fp=chrome&security=tls#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 77, "is_new": true, "added_time": "20:00"}, {"link": "ss://89960e91-7f08-401d-98b1-60a8ca601c6f@170.168.103.156:8081?type=tcp&encryption=none&path=%2F&host=www.speedtest.net&headerType=http&security=none#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 169, "is_new": true, "added_time": "20:00"}, {"link": "ss://981fca81-5be1-41f8-ac9b-d138e8109943@50.228.203.26:443?encryption=none&security=tls&sni=babayaga-6i7.pages.dev&type=ws&host=babayaga-6i7.pages.dev&path=%2F%3Fed%3D2560%26Telegram%F0%9F%87%A8%F0%9F%87%B3%40WangCai2#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🇩🇪", "country": "ألمانيا", "remark": "", "ping": 115, "is_new": true, "added_time": "20:00"}, {"link": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpXNzRYRkFMTEx1dzZtNUlB@admin.c1.webramz.co:443#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 96, "is_new": true, "added_time": "20:00"}, {"link": "ss://eyJhZGQiOiJ4ZzFhNC53YWltYW9mdXd1amQuY2MiLCJhaWQiOiIwIiwiYWxwbiI6IiIsImZwIjoiIiwiaG9zdCI6IiIsImlkIjoiMWE4N2ZjODEtNjg0Ni00MjQ2LWFkZDMtMDBhMzhiYWE4YzBmIiwibmV0Ijoid3MiLCJwYXRoIjoiXC9hcGlcL3YxXC9ncmFwaHFsIiwicG9ydCI6IjQ0MyIsInBzIjoiXHVkODNjXHVkZGZhXHVkODNjXHVkZGY4W29wZW5wcm94eWxpc3QuY29tXSB2bWVzcy1VUyIsInNjeSI6ImF1dG8iLCJzbmkiOiJ4ZzFhNC53YWltYW9mdXd1amQuY2MiLCJ0bHMiOiJ0bHMiLCJ0eXBlIjoibm9uZSIsInYiOiIyIiwic2tpcC1jZXJ0LXZlcmlmeSI6dHJ1ZX0=", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 121, "is_new": true, "added_time": "20:00"}, {"link": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTo3ZTczMWVjMy1mOGUxLTQzZjYtOTJjZi0zOTc4ZDE0NzA1YzQ@r3mrcg007117fb8.cybervena.com:50099#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 87, "is_new": true, "added_time": "20:00"}, {"link": "ss://eyJ2IjoiMiIsInBzIjoiXHVkODNjXHVkZGYzXHVkODNjXHVkZGYxW29wZW5wcm94eWxpc3QuY29tXSB2bWVzcy1OTCIsImFkZCI6InYzMC5oZGFjZC5jb20iLCJwb3J0IjoiMzA4MzAiLCJ0eXBlIjoibm9uZSIsImlkIjoiY2JiM2Y4NzctZDFmYi0zNDRjLTg3YTktZDE1M2JmZmQ1NDg0IiwiYWlkIjoiMCIsIm5ldCI6InRjcCIsInBhdGgiOiJcLyIsImhvc3QiOiJicGJnLmFuZ3Vzd2VuLnRvcCIsInRscyI6IiIsInNraXAtY2VydC12ZXJpZnkiOnRydWV9", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 177, "is_new": true, "added_time": "20:00"}, {"link": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpDSm1UQ0N4N0x0dWQ@108.181.58.239:8388#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 211, "is_new": true, "added_time": "20:00"}];
+        const statsData = {"last_updated": "2026-05-02T20:00:30.230921", "source": "V2Nodes", "total_servers": 17, "new_servers": 17, "avg_ping": 126, "most_country": "غير معروف", "most_country_count": 13, "countries": {"غير معروف": 13, "ألمانيا": 2, "فنلندا": 1, "بريطانيا": 1}, "by_protocol": {"vmess": 2, "vless": 3, "trojan": 4, "ss": 8}};
+        const greetings = ["💛 أهلاً بك يا صديقي! سيرفرات V2Nodes جاهزة.", "☕ يومك سعيد، تصفح براحة وأمان.", "🌙 مساء النور، الحماية أولاً.", "⚡ سرعة وأمان في متناول يدك.", "🌟 سيرفرات جديدة بانتظارك!", "🔐 خصوصيتك تهمنا، اختر سيرفرك.", "🚀 انطلق بلا حدود مع V2Ray.", "🎯 دقة في الاختيار، حرية في التصفح.", "💪 أقوى السيرفرات بين يديك.", "🌈 تصفح العالم كما تريد.", "📡 اتصال آمن، سرعة فائقة.", "🛡️ درعك الرقمي جاهز."];
+        let currentFilter = 'all';
+        let chartInstances = {};
+        const UPDATE_INTERVAL = 3 * 60 * 60;
+        const updateTime = new Date('2026-05-02T20:00:30.230921');
+        
+        // ============ FAVORITES ============
+        function getFavorites() { try { return JSON.parse(localStorage.getItem('doka_v2nodes_fav') || '[]'); } catch { return []; } }
+        function saveFavorites(f) { localStorage.setItem('doka_v2nodes_fav', JSON.stringify(f)); }
+        function toggleFavorite(link) {
+            let f = getFavorites();
+            const i = f.indexOf(link);
+            i > -1 ? (f.splice(i,1), showToast('أزيل من المفضلة 💔')) : (f.push(link), showToast('أضيف للمفضلة ⭐'));
+            saveFavorites(f); renderServers(currentFilter); updateFavCount();
         }
-        document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', function() { document.querySelectorAll('.chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); render(this.dataset.filter); }));
-        window.cp = t => { navigator.clipboard.writeText(t); const toast=document.getElementById('toast'); toast.classList.add('on'); clearTimeout(toast._t); toast._t=setTimeout(()=>toast.classList.remove('on'), 2000); };
-        window.qr = (id, link) => { const el=document.getElementById(id); if(el.style.display==='flex') { el.style.display='none'; return; } if(!el.innerHTML) new QRCode(el, {text:link, width:140, height:140, colorDark:'#1e293b'}); el.style.display='flex'; };
-        document.getElementById('stats-btn').addEventListener('click', async () => {
-            document.querySelector('.header').style.display='none'; document.querySelectorAll('.stats-row,.section-title,.filters').forEach(e=>e.style.display='none'); document.getElementById('list').style.display='none'; document.querySelector('[style*="text-align:center; padding:20px"]').style.display='none'; document.getElementById('stats-pg').style.display='block';
-            try {
-                const res = await fetch('stats.json'); const stats = await res.json();
-                document.getElementById('last-up').innerText = new Date(stats.last_updated).toLocaleString('ar-SA');
-                const ctx = document.getElementById('chart').getContext('2d'); if(chartInst) chartInst.destroy();
-                const labels = Object.keys(stats.by_protocol).map(p=>p.toUpperCase());
-                chartInst = new Chart(ctx, { type:'doughnut', data:{ labels, datasets:[{ data:Object.values(stats.by_protocol), backgroundColor:labels.map(l=>colors[l.toLowerCase()]||'#8b5cf6'), borderColor:'#0f172a', borderWidth:3 }] }, options:{ responsive:true, plugins:{ legend:{ position:'bottom', labels:{ padding:16, font:{family:'Cairo',size:13}, color:'#94a3b8' } } } } });
-            } catch(e) {}
+        function isFavorite(l) { return getFavorites().includes(l); }
+        function updateFavCount() {
+            const f = getFavorites();
+            document.getElementById('count-fav').textContent = f.length;
+            const b = document.getElementById('fav-filter-btn'), c = document.getElementById('clear-fav-btn');
+            if (f.length > 0) { b.style.display = ''; c.style.display = ''; } else { b.style.display = 'none'; c.style.display = 'none'; }
+        }
+        
+        // ============ TOAST ============
+        function showToast(m) {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = m;
+            t.style.opacity = '1'; t.style.transform = 'translate(-50%, 0)';
+            setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translate(-50%, 20px)'; }, 2000);
+        }
+        
+        // ============ COPY ============
+        window.copyText = (text) => {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('✅ تم النسخ!');
+                localStorage.setItem('doka_v2nodes_last_copy', text);
+                updateLastCopied();
+            });
+        };
+        function updateLastCopied() {
+            const l = localStorage.getItem('doka_v2nodes_last_copy');
+            const e = document.getElementById('last-copied-info');
+            if (l) e.textContent = '| آخر نسخ: ' + l.substring(0, 25) + '...';
+        }
+        
+        // ============ QR ============
+        window.showQR = (link) => {
+            const m = document.getElementById('qr-modal'), c = document.getElementById('qr-modal-content');
+            c.innerHTML = '';
+            new QRCode(c, { text: link, width: 200, height: 200, colorDark: "#1e293b", colorLight: "#ffffff" });
+            m.classList.remove('hidden'); m.classList.add('flex');
+        };
+        window.closeQRModal = (e) => {
+            if (e && e.target !== document.getElementById('qr-modal')) return;
+            const m = document.getElementById('qr-modal');
+            m.classList.add('hidden'); m.classList.remove('flex');
+            document.getElementById('qr-modal-content').innerHTML = '';
+        };
+        
+        // ============ RENDER ============
+        function renderServers(filter) {
+            const grid = document.getElementById('servers-grid');
+            const s = document.getElementById('search-input').value.toLowerCase().trim();
+            const favs = getFavorites();
+            let filtered = serversData;
+            
+            if (filter === 'favorites') filtered = serversData.filter(s => favs.includes(s.link));
+            else if (filter !== 'all') filtered = serversData.filter(s => s.proto.toLowerCase() === filter);
+            
+            if (s) {
+                filtered = filtered.filter(srv => 
+                    srv.country.includes(s) || 
+                    srv.proto.toLowerCase().includes(s) ||
+                    srv.link.toLowerCase().includes(s) ||
+                    srv.remark.includes(s)
+                );
+            }
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                document.getElementById('no-servers-msg').classList.remove('hidden');
+                document.getElementById('no-results-text').textContent = s ? 'لا نتائج للبحث' : 'لا سيرفرات';
+                return;
+            }
+            document.getElementById('no-servers-msg').classList.add('hidden');
+            
+            let h = '';
+            filtered.forEach((srv, i) => {
+                const isFav = favs.includes(srv.link);
+                const dl = srv.link.length > 55 ? srv.link.substring(0, 28) + ' ... ' + srv.link.substring(srv.link.length - 18) : srv.link;
+                const remarkHtml = srv.remark ? `<span class="remark-tag">📝 ${srv.remark}</span>` : '';
+                
+                h += `<div class="glass-card p-4 ${srv.is_new ? 'new-server' : ''}" style="animation-delay:${i*0.06}s;">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex items-center gap-1.5 flex-wrap">
+                            <span class="text-2xl">${srv.flag}</span>
+                            <span class="bg-gradient-to-r ${srv.proto_gradient || 'from-gray-400 to-gray-500'} text-white text-xs font-bold px-2.5 py-0.5 rounded-full">${srv.proto}</span>
+                            ${srv.is_new ? '<span class="badge-new">جديد</span>' : ''}
+                            ${remarkHtml}
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <i class="favorite-star fa-star ${isFav ? 'fas active' : 'far'} text-base" onclick="toggleFavorite('${srv.link}'); event.stopPropagation();"></i>
+                            <span class="text-xs text-gray-500">${srv.ping}ms</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-2"><i class="fas fa-map-marker-alt ml-1 text-indigo-400"></i> ${srv.country}</p>
+                    <div class="link-preview p-2.5 mb-3 text-xs font-mono text-gray-300 break-all" dir="ltr">${dl}</div>
+                    <div class="flex gap-1.5">
+                        <button onclick="copyText('${srv.link}')" class="flex-1 btn-primary py-2 rounded-xl text-xs font-medium"><i class="far fa-copy ml-1"></i> نسخ</button>
+                        <button onclick="showQR('${srv.link}')" class="btn-glass px-3.5 rounded-xl text-xs"><i class="fas fa-qrcode"></i></button>
+                    </div>
+                </div>`;
+            });
+            grid.innerHTML = h;
+            requestAnimationFrame(() => { document.querySelectorAll('.glass-card').forEach((c, i) => setTimeout(() => c.classList.add('visible'), i * 60)); });
+        }
+        
+        // ============ FILTERS ============
+        document.querySelectorAll('.tab-btn').forEach(b => b.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+            b.classList.add('active');
+            currentFilter = b.dataset.filter;
+            renderServers(currentFilter);
+        }));
+        
+        document.getElementById('search-input').addEventListener('input', () => renderServers(currentFilter));
+        
+        // ============ CLOCK ============
+        function uc() { document.getElementById('live-clock').textContent = new Date().toLocaleTimeString('ar-IQ', { hour12: false }); }
+        setInterval(uc, 1000); uc();
+        
+        // ============ COUNTDOWN ============
+        function cd() {
+            const e = Math.floor((new Date() - updateTime) / 1000);
+            const r = Math.max(0, UPDATE_INTERVAL - e);
+            document.getElementById('countdown-next').textContent = `التحديث القادم بعد: ${String(Math.floor(r/3600)).padStart(2,'0')}:${String(Math.floor((r%3600)/60)).padStart(2,'0')}:${String(r%60).padStart(2,'0')}`;
+        }
+        setInterval(cd, 1000); cd();
+        
+        // ============ TYPING EFFECT ============
+        (function(e, t, s=80, d=40, p=2000) {
+            let i=0, c=0, del=false;
+            function tick() {
+                const cur = t[i];
+                e.textContent = cur.substring(0, del ? c-1 : c+1);
+                del ? c-- : c++;
+                if (!del && c === cur.length) setTimeout(() => del=true, p);
+                else if (del && c === 0) { del=false; i=(i+1)%t.length; }
+                setTimeout(tick, del ? d : s);
+            }
+            tick();
+        })(document.getElementById('typing-text'), ['V2Nodes', 'حرية بلا حدود', 'V2Ray Servers']);
+        (function(e, t, s=70, d=30, p=3000) {
+            let i=0, c=0, del=false;
+            function tick() {
+                const cur = t[i];
+                e.textContent = cur.substring(0, del ? c-1 : c+1);
+                del ? c-- : c++;
+                if (!del && c === cur.length) setTimeout(() => del=true, p);
+                else if (del && c === 0) { del=false; i=(i+1)%t.length; }
+                setTimeout(tick, del ? d : s);
+            }
+            tick();
+        })(document.getElementById('hero-subtitle'), ['سيرفرات V2Ray من V2Nodes · محدثة تلقائياً', 'VMess · VLESS · Trojan · SS · Hysteria2', 'تصفح آمن بدون قيود']);
+        
+        // ============ GREETING ============
+        document.getElementById('greeting-message').textContent = greetings[Math.floor(Math.random() * greetings.length)];
+        
+        // ============ VISITORS ============
+        function uv() { document.getElementById('visitor-count').textContent = Math.max(1, 17 + Math.floor(Math.random()*15)-5); }
+        uv(); setInterval(uv, 10000);
+        
+        // ============ PARTICLES ============
+        (function() {
+            const co = document.getElementById('particles');
+            const cols = ['rgba(99,102,241,0.4)','rgba(236,72,153,0.3)','rgba(34,197,94,0.3)','rgba(251,191,36,0.3)'];
+            for (let i=0; i<20; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.cssText = `width:${Math.random()*5+2}px;height:${Math.random()*5+2}px;left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${Math.random()*15+10}s;animation-delay:${Math.random()*10}s;`;
+                co.appendChild(p);
+            }
+        })();
+        
+        // ============ STATS ============
+        document.getElementById('show-stats-btn').addEventListener('click', () => {
+            document.querySelector('nav').style.display='none';
+            document.querySelector('section').style.display='none';
+            document.getElementById('filter-tabs').style.display='none';
+            document.getElementById('servers-grid').parentElement.style.display='none';
+            document.querySelector('footer').style.display='none';
+            document.querySelector('.particles-container').style.display='none';
+            document.getElementById('stats-page').classList.remove('hidden');
+            document.getElementById('stats-last-update').textContent = new Date(statsData.last_updated).toLocaleString('ar-IQ');
+            Object.values(chartInstances).forEach(c => c.destroy());
+            chartInstances = {};
+            
+            const ctx1 = document.getElementById('proto-chart').getContext('2d');
+            chartInstances.proto = new Chart(ctx1, {
+                type: 'doughnut',
+                data: { labels: Object.keys(statsData.by_protocol).map(p=>p.toUpperCase()), datasets: [{ data: Object.values(statsData.by_protocol), backgroundColor: ['#f97316','#3b82f6','#a855f7','#22c55e','#f43f5e','#ec4899','#f59e0b','#ef4444','#6366f1'], borderColor: 'rgba(255,255,255,0.1)', borderWidth: 3 }] },
+                options: { responsive: true, plugins: { legend: { position:'bottom', labels: { color:'#e2e8f0', padding:12, font: { family:'Tajawal', size:11 } } } } }
+            });
+            
+            const ctx2 = document.getElementById('country-chart').getContext('2d');
+            const co2 = statsData.countries || {};
+            chartInstances.country = new Chart(ctx2, {
+                type: 'pie',
+                data: { labels: Object.keys(co2), datasets: [{ data: Object.values(co2), backgroundColor: ['#6366f1','#ec4899','#22c55e','#f59e0b','#3b82f6','#ef4444','#8b5cf6','#14b8a6','#f97316'], borderColor: 'rgba(255,255,255,0.1)', borderWidth: 2 }] },
+                options: { responsive: true, plugins: { legend: { position:'bottom', labels: { color:'#e2e8f0', padding:10, font: { family:'Tajawal', size:9 } } } } }
+            });
         });
-        render('all');
-        console.log('%c🚀 DOKA PRO %c3 Sources %c📱', 'color:#8b5cf6;font-size:1.5rem;font-weight:900;', 'color:#f59e0b;', 'color:#10b981;');
+        
+        document.getElementById('back-to-servers').addEventListener('click', () => location.reload());
+        document.getElementById('clear-fav-btn').addEventListener('click', () => {
+            if (confirm('حذف كل المفضلة؟')) { localStorage.removeItem('doka_v2nodes_fav'); updateFavCount(); if (currentFilter==='favorites') renderServers('all'); else renderServers(currentFilter); showToast('تم الحذف 🗑️'); }
+        });
+        
+        // ============ INIT ============
+        fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>document.getElementById('user-ip').textContent=d.ip).catch(()=>document.getElementById('user-ip').textContent='غير معروف');
+        updateFavCount();
+        updateLastCopied();
+        renderServers('all');
     </script>
 </body>
 </html>

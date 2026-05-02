@@ -1,17 +1,1 @@
-{
-  "last_updated": "2026-05-02T19:01:49.529140+00:00",
-  "total": 65,
-  "alive": 2,
-  "by_protocol": {
-    "vless": 30,
-    "trojan": 5,
-    "hysteria2": 4,
-    "vmess": 10,
-    "ss": 16
-  },
-  "by_source": {
-    "exclave": 11,
-    "collector": 34,
-    "v2root": 20
-  }
-}
+{"last_updated": "2026-05-02T20:00:30.230921", "source": "V2Nodes", "total_servers": 17, "new_servers": 17, "avg_ping": 126, "most_country": "غير معروف", "most_country_count": 13, "countries": {"غير معروف": 13, "ألمانيا": 2, "فنلندا": 1, "بريطانيا": 1}, "by_protocol": {"vmess": 2, "vless": 3, "trojan": 4, "ss": 8}}
