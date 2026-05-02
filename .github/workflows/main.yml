@@ -1,6 +1,5 @@
-name: 🔄 Update DOKA Servers (Professional)
+name: 🔄 تحديث DOKA V2Nodes
 
-# ==================== المشغلات ====================
 on:
   schedule:
     - cron: '0 */3 * * *'
@@ -8,17 +7,15 @@ on:
   push:
     branches: [ main ]
 
-# ==================== الأذونات ====================
 permissions:
   contents: write
   pages: write
   id-token: write
 
-# ==================== المهام ====================
 jobs:
   scrape-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 15  # ✅ مهلة كلية
+    timeout-minutes: 15
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -35,11 +32,11 @@ jobs:
           python-version: '3.12'
 
       - name: 📦 3. تنصيب مكتبات بايثون
-        run: pip install requests
+        run: pip install requests schedule
 
       - name: 🚀 4. تشغيل سكريبت الكشط
         run: python scraper.py
-        timeout-minutes: 10  # ✅ مهلة للسكريبت
+        timeout-minutes: 10
 
       - name: 📊 5. التحقق من وجود تغييرات
         id: check_changes
@@ -55,8 +52,8 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add index.html stats.json manifest.json  # ✅ إضافة manifest
-          git commit -m "🔄 تحديث تلقائي للسيرفرات - $(date +'%Y-%m-%d %H:%M')"
+          git add index.html stats.json servers_cache.json changelog.txt manifest.json
+          git commit -m "🔄 تحديث تلقائي من V2Nodes - $(date +'%Y-%m-%d %H:%M')"
           git push
 
       - name: ⚙️ 7. إعداد GitHub Pages
@@ -66,7 +63,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
-          retention-days: 1  # ✅ توفير مساحة
+          retention-days: 1
 
       - name: 🚀 9. النشر على GitHub Pages
         id: deployment
