@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-DOKA PRO - Triple Source Mobile Edition 2025
+DOKA PRO - Triple Source Mobile Edition 2025 (VMess FIXED)
 Sources: Exclave VPN + V2ray_Collector + V2RayRootFree
+Fixed: VMess extraction from Exclave + All protocols
 Optimized 100% for Mobile - PWA Ready - Real Ping
 """
 
@@ -108,7 +109,7 @@ def measure_pings(servers: list[dict]) -> list[dict]:
     return servers
 
 
-# ==================== دوال الجلب ====================
+# ==================== دوال الجلب (تم إصلاح VMess) ====================
 def fetch_page(url: str, name: str) -> str:
     print(f"📥 جلب {name}...")
     try:
@@ -120,28 +121,44 @@ def fetch_page(url: str, name: str) -> str:
         return ""
 
 def extract_links(html: str, source: str) -> list[str]:
-    """استخراج الروابط حسب المصدر."""
+    """استخراج الروابط - تم إصلاحه ليدعم VMess الطويل."""
     if source == "exclave":
+        # ✅ نمط Exclave: يدعم كل البروتوكولات
         pattern = r'exclave://[^\s<"\'\s]+'
     else:
+        # ✅ نمط عادي: يدعم vmess:// base64 الطويل
         protocols = "|".join(SUPPORTED_PROTOCOLS)
-        pattern = rf"(?:{protocols})://[^\s<>\"'\s]+"
+        pattern = rf"(?:{protocols})://[^\s<>\"'\n\r\t]+"
     
     matches = re.findall(pattern, html, re.IGNORECASE)
     seen: set[str] = set()
     clean: list[str] = []
     for link in matches:
         cleaned = link.replace("&amp;", "&").split("<")[0].split('"')[0].strip()
-        if cleaned not in seen:
+        if cleaned and cleaned not in seen:
             seen.add(cleaned)
             clean.append(cleaned)
     return clean
 
 def extract_proto(url: str) -> str:
+    """استخراج نوع البروتوكول - تم إصلاحه لـ Exclave + VMess."""
     url_lower = url.lower()
+    
+    # ✅ فحص Exclave أولاً: exclave://vmess?, exclave://trojan?, إلخ
+    if "exclave://" in url_lower:
+        match = re.match(r'exclave://([a-z0-9]+)[?/]', url_lower)
+        if match and match.group(1) in SUPPORTED_PROTOCOLS:
+            return match.group(1).upper()
+        for proto in SUPPORTED_PROTOCOLS:
+            if f"exclave://{proto}" in url_lower:
+                return proto.upper()
+        return "UNKNOWN"
+    
+    # ✅ فحص البروتوكولات العادية: vmess://, vless://, إلخ
     for proto in SUPPORTED_PROTOCOLS:
-        if f"://{proto}" in url_lower or f"exclave://{proto}" in url_lower:
+        if f"{proto}://" in url_lower:
             return proto.upper()
+    
     return "UNKNOWN"
 
 def detect_country(url: str) -> str:
@@ -246,25 +263,21 @@ def gen_html(servers: list[dict], total: int, src_counts: dict) -> str:
         * {{ margin:0; padding:0; box-sizing:border-box; }}
         body {{ font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 12px 12px 32px; padding-top: max(12px, env(safe-area-inset-top)); }}
         .container {{ max-width: 480px; margin: 0 auto; }}
-        
         .header {{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 20px; }}
         .logo {{ font-size:1.5rem; font-weight:900; background: linear-gradient(135deg, #8b5cf6, #6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }}
         .live {{ display:flex; align-items:center; gap:6px; background:var(--surface); padding:6px 14px; border-radius:50px; font-size:0.7rem; font-weight:600; border:1px solid var(--border); }}
         .live-dot {{ width:8px; height:8px; background:var(--suc); border-radius:50%; animation:pulse 2s infinite; }}
         @keyframes pulse {{ 0%,100% {{ box-shadow:0 0 0 0 rgba(16,185,129,0.4); }} 50% {{ box-shadow:0 0 0 10px rgba(16,185,129,0); }} }}
-        
         .stats-row {{ display:flex; gap:10px; margin-bottom:20px; }}
         .stat {{ flex:1; background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:16px 10px; text-align:center; }}
         .stat-num {{ font-size:1.8rem; font-weight:900; line-height:1; }}
         .stat-lbl {{ font-size:0.65rem; color:var(--sub); margin-top:4px; }}
-        
         .section-title {{ font-size:0.7rem; color:var(--sub); margin-bottom:8px; font-weight:600; }}
         .filters {{ display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:14px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }}
         .filters::-webkit-scrollbar {{ display:none; }}
         .chip {{ padding:8px 18px; border-radius:50px; border:1px solid var(--border); background:var(--surface); color:var(--sub); font-family:'Cairo',sans-serif; font-weight:700; font-size:0.8rem; white-space:nowrap; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:6px; }}
         .chip.active {{ background:var(--pri); color:white; border-color:transparent; }}
         .cnt {{ font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:50px; }}
-        
         .card {{ background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:16px; margin-bottom:12px; }}
         .card-row {{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }}
         .badge {{ display:flex; align-items:center; gap:6px; }}
@@ -279,7 +292,6 @@ def gen_html(servers: list[dict], total: int, src_counts: dict) -> str:
         .btn:active {{ transform:scale(0.96); }}
         .btn-qr {{ width:44px; height:44px; border-radius:14px; border:1px solid var(--border); background:var(--surface); color:var(--text); cursor:pointer; font-size:1rem; flex-shrink:0; }}
         .qr-box {{ margin-top:10px; padding:16px; background:white; border-radius:14px; display:none; justify-content:center; }}
-        
         .toast {{ position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(100px); background:#10b981; color:white; padding:12px 24px; border-radius:50px; font-weight:700; font-size:0.85rem; z-index:999; opacity:0; transition:all 0.3s; }}
         .toast.on {{ opacity:1; transform:translateX(-50%) translateY(0); }}
         .stats-page {{ max-width:480px; margin:40px auto; padding:16px; text-align:center; }}
@@ -288,34 +300,20 @@ def gen_html(servers: list[dict], total: int, src_counts: dict) -> str:
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo">🌐 DOKA PRO</div>
-            <div class="live"><div class="live-dot"></div> {alive} حي</div>
-        </div>
-
+        <div class="header"><div class="logo">🌐 DOKA PRO</div><div class="live"><div class="live-dot"></div> {alive} حي</div></div>
         <div class="stats-row">
             <div class="stat"><div class="stat-num" style="color:#8b5cf6;">{total}</div><div class="stat-lbl">🔰 الإجمالي</div></div>
             <div class="stat"><div class="stat-num" style="color:#10b981;">{alive}</div><div class="stat-lbl">⚡ أونلاين</div></div>
             <div class="stat"><div class="stat-num" style="color:#f59e0b;">{len(src_counts)}</div><div class="stat-lbl">📡 مصادر</div></div>
         </div>
-
         <div class="section-title">📡 فلترة بالمصدر</div>
-        <div class="filters" id="source-filters">
-            <button class="chip active" data-filter="all" style="--c:#8b5cf6">🌐 الكل <span class="cnt">{total}</span></button>
-            {source_btns}
-        </div>
-
+        <div class="filters"><button class="chip active" data-filter="all" style="--c:#8b5cf6">🌐 الكل <span class="cnt">{total}</span></button>{source_btns}</div>
         <div class="section-title">🧩 فلترة بالبروتوكول</div>
-        <div class="filters" id="proto-filters">
-            {proto_btns}
-        </div>
-
+        <div class="filters">{proto_btns}</div>
         <div id="list"></div>
         <div id="empty" style="display:none; text-align:center; color:var(--sub); padding:40px;">😴 لا توجد سيرفرات</div>
     </div>
-
     <div class="toast" id="toast">✅ تم النسخ!</div>
-
     <div class="stats-page" id="stats-pg" style="display:none;">
         <div class="stats-card">
             <h2 style="margin-bottom:20px;">📊 الإحصائيات</h2>
@@ -324,25 +322,17 @@ def gen_html(servers: list[dict], total: int, src_counts: dict) -> str:
             <button onclick="location.reload()" style="margin-top:20px; padding:14px 40px; border-radius:50px; border:none; background:#8b5cf6; color:white; font-family:'Cairo',sans-serif; font-weight:700; cursor:pointer;">⬅️ عودة</button>
         </div>
     </div>
-
-    <div style="text-align:center; padding:20px; color:var(--sub); font-size:0.7rem;">
-        © 2026 DOKA PRO • 3 مصادر • <button id="stats-btn" style="background:none; border:none; color:#8b5cf6; cursor:pointer; font-family:'Cairo',sans-serif;">📊 إحصائيات</button>
-    </div>
-
+    <div style="text-align:center; padding:20px; color:var(--sub); font-size:0.7rem;">© 2026 DOKA PRO • 3 مصادر • <button id="stats-btn" style="background:none; border:none; color:#8b5cf6; cursor:pointer; font-family:'Cairo',sans-serif;">📊 إحصائيات</button></div>
     <script>
         const data = {servers_json};
         const colors = {json.dumps(PROTOCOL_COLORS)};
         const icons = {json.dumps(PROTOCOL_ICONS)};
         const srcIcons = {json.dumps(SOURCE_ICONS)};
         let filter = 'all', chartInst = null;
-
         function render(f) {{
             filter = f;
             const list = document.getElementById('list');
-            let filtered = f === 'all' ? data : data.filter(s => {{
-                if (['exclave','collector','v2root'].includes(f)) return s.source === f;
-                return s.proto.toLowerCase() === f;
-            }});
+            let filtered = f === 'all' ? data : data.filter(s => {{ if (['exclave','collector','v2root'].includes(f)) return s.source === f; return s.proto.toLowerCase() === f; }});
             if(!filtered.length) {{ list.innerHTML = ''; document.getElementById('empty').style.display='block'; return; }}
             document.getElementById('empty').style.display='none';
             list.innerHTML = filtered.map((s,i) => {{
@@ -350,58 +340,22 @@ def gen_html(servers: list[dict], total: int, src_counts: dict) -> str:
                 const ic = icons[s.proto.toLowerCase()] || 'fa-link';
                 const up = s.alive;
                 const srcIcon = srcIcons[s.source] || '';
-                return `<div class="card">
-                    <div class="card-row">
-                        <div class="badge">
-                            <span class="flag">${{s.country}}</span>
-                            <span class="tag" style="background:${{c}}"><i class="fas ${{ic}}"></i> ${{s.proto}}</span>
-                            <span class="status" style="color:${{up?'var(--suc)':'var(--dan)'}}"><span class="dot ${{up?'dot-up':'dot-down'}}"></span> ${{up?'حي':'ميت'}}</span>
-                            <span style="font-size:0.7rem;" title="${{s.source}}">${{srcIcon}}</span>
-                        </div>
-                        <span style="font-size:0.65rem; color:var(--sub);">${{up?s.ping+'ms':'---'}}</span>
-                    </div>
-                    <div class="url-box">${{s.url}}</div>
-                    <div class="actions">
-                        <button class="btn" style="background:${{c}}" onclick="cp('${{s.url.replace(/'/g, "\\'")}}')"><i class="far fa-copy"></i> نسخ</button>
-                        <button class="btn-qr" onclick="qr('q${{i}}','${{s.url.replace(/'/g, "\\'")}}')"><i class="fas fa-qrcode"></i></button>
-                    </div>
-                    <div class="qr-box" id="q${{i}}"></div>
-                </div>`;
+                return `<div class="card"><div class="card-row"><div class="badge"><span class="flag">${{s.country}}</span><span class="tag" style="background:${{c}}"><i class="fas ${{ic}}"></i> ${{s.proto}}</span><span class="status" style="color:${{up?'var(--suc)':'var(--dan)'}}"><span class="dot ${{up?'dot-up':'dot-down'}}"></span> ${{up?'حي':'ميت'}}</span><span style="font-size:0.7rem;" title="${{s.source}}">${{srcIcon}}</span></div><span style="font-size:0.65rem; color:var(--sub);">${{up?s.ping+'ms':'---'}}</span></div><div class="url-box">${{s.url}}</div><div class="actions"><button class="btn" style="background:${{c}}" onclick="cp('${{s.url.replace(/'/g, "\\'")}}')"><i class="far fa-copy"></i> نسخ</button><button class="btn-qr" onclick="qr('q${{i}}','${{s.url.replace(/'/g, "\\'")}}')"><i class="fas fa-qrcode"></i></button></div><div class="qr-box" id="q${{i}}"></div></div>`;
             }}).join('');
         }}
-
-        document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', function() {{
-            // تفعيل الزر في كل مجموعات الفلترة
-            document.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            // لو ضغط على بروتوكول، نخلي المصدر يعود للكل
-            render(this.dataset.filter);
-        }}));
-
+        document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', function() {{ document.querySelectorAll('.chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); render(this.dataset.filter); }}));
         window.cp = t => {{ navigator.clipboard.writeText(t); const toast=document.getElementById('toast'); toast.classList.add('on'); clearTimeout(toast._t); toast._t=setTimeout(()=>toast.classList.remove('on'), 2000); }};
         window.qr = (id, link) => {{ const el=document.getElementById(id); if(el.style.display==='flex') {{ el.style.display='none'; return; }} if(!el.innerHTML) new QRCode(el, {{text:link, width:140, height:140, colorDark:'#1e293b'}}); el.style.display='flex'; }};
-
         document.getElementById('stats-btn').addEventListener('click', async () => {{
-            document.querySelector('.header').style.display='none';
-            document.querySelectorAll('.stats-row,.section-title,.filters').forEach(e=>e.style.display='none');
-            document.getElementById('list').style.display='none';
-            document.querySelector('[style*="text-align:center; padding:20px"]').style.display='none';
-            document.getElementById('stats-pg').style.display='block';
+            document.querySelector('.header').style.display='none'; document.querySelectorAll('.stats-row,.section-title,.filters').forEach(e=>e.style.display='none'); document.getElementById('list').style.display='none'; document.querySelector('[style*="text-align:center; padding:20px"]').style.display='none'; document.getElementById('stats-pg').style.display='block';
             try {{
-                const res = await fetch('stats.json');
-                const stats = await res.json();
+                const res = await fetch('stats.json'); const stats = await res.json();
                 document.getElementById('last-up').innerText = new Date(stats.last_updated).toLocaleString('ar-SA');
-                const ctx = document.getElementById('chart').getContext('2d');
-                if(chartInst) chartInst.destroy();
+                const ctx = document.getElementById('chart').getContext('2d'); if(chartInst) chartInst.destroy();
                 const labels = Object.keys(stats.by_protocol).map(p=>p.toUpperCase());
-                chartInst = new Chart(ctx, {{
-                    type:'doughnut',
-                    data:{{ labels, datasets:[{{ data:Object.values(stats.by_protocol), backgroundColor:labels.map(l=>colors[l.toLowerCase()]||'#8b5cf6'), borderColor:'#0f172a', borderWidth:3 }}] }},
-                    options:{{ responsive:true, plugins:{{ legend:{{ position:'bottom', labels:{{ padding:16, font:{{family:'Cairo',size:13}}, color:'#94a3b8' }} }} }} }}
-                }});
+                chartInst = new Chart(ctx, {{ type:'doughnut', data:{{ labels, datasets:[{{ data:Object.values(stats.by_protocol), backgroundColor:labels.map(l=>colors[l.toLowerCase()]||'#8b5cf6'), borderColor:'#0f172a', borderWidth:3 }}] }}, options:{{ responsive:true, plugins:{{ legend:{{ position:'bottom', labels:{{ padding:16, font:{{family:'Cairo',size:13}}, color:'#94a3b8' }} }} }} }} }});
             }} catch(e) {{}}
         }});
-
         render('all');
         console.log('%c🚀 DOKA PRO %c3 Sources %c📱', 'color:#8b5cf6;font-size:1.5rem;font-weight:900;', 'color:#f59e0b;', 'color:#10b981;');
     </script>
@@ -411,8 +365,8 @@ def gen_html(servers: list[dict], total: int, src_counts: dict) -> str:
 
 # ==================== الدالة الرئيسية ====================
 def main() -> None:
-    print("🚀 DOKA PRO - 3 مصادر للهاتف")
-    print("=" * 40)
+    print("🚀 DOKA PRO - 3 مصادر للهاتف (VMess Fixed)")
+    print("=" * 50)
 
     all_servers: list[dict] = []
     src_counts: dict[str, int] = {}
@@ -439,6 +393,15 @@ def main() -> None:
         return
 
     print(f"\n📊 إجمالي فريد: {len(all_servers)}")
+
+    # إحصائيات البروتوكولات
+    proto_counts: dict[str, int] = {}
+    for s in all_servers:
+        p = s["proto"].lower()
+        proto_counts[p] = proto_counts.get(p, 0) + 1
+    print("📋 البروتوكولات المستخرجة:")
+    for proto, cnt in sorted(proto_counts.items()):
+        print(f"   • {proto.upper()}: {cnt}")
 
     # Ping
     all_servers = measure_pings(all_servers)
