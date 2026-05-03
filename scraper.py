@@ -1,5 +1,4 @@
 # scraper.py - DOKA V2Nodes Ultra Edition
-# مع نظام حذف السيرفرات القديمة (أقدم من 24 ساعة)
 import requests
 import re
 import random
@@ -8,8 +7,7 @@ from datetime import datetime, timedelta
 import os
 import sys
 
-# ========== الإعدادات ==========
-MAX_AGE_HOURS = 24  # ✅ حذف السيرفرات أقدم من 24 ساعة
+MAX_AGE_HOURS = 24
 
 def run_doka_v2nodes():
     """كشط سيرفرات V2Ray من قناة V2Nodes"""
@@ -23,7 +21,7 @@ def run_doka_v2nodes():
     
     try:
         current_time = datetime.now()
-        cutoff_time = current_time - timedelta(hours=MAX_AGE_HOURS)  # نقطة القطع
+        cutoff_time = current_time - timedelta(hours=MAX_AGE_HOURS)
         
         print(f"🔄 [{current_time.strftime('%H:%M:%S')}] جاري الكشط من V2Nodes...")
         print(f"🌐 وقت الخادم: {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
@@ -34,16 +32,14 @@ def run_doka_v2nodes():
         if response.status_code != 200:
             print(f"⚠️ تحذير: استجابة غير متوقعة {response.status_code}")
             if response.status_code == 404:
-                print("❌ القناة غير موجودة. تأكد من اسم القناة.")
+                print("❌ القناة غير موجودة.")
                 sys.exit(1)
         
-        # ========== استخراج الروابط ==========
         patterns = {
             'vmess': r'vmess://[^\s<"\'<>]+',
             'vless': r'vless://[^\s<"\'<>]+',
             'trojan': r'trojan://[^\s<"\'<>]+',
             'ss': r'ss://[^\s<"\'<>]+',
-            'ssr': r'ss://[^\s<"\'<>]+',
             'hysteria2': r'hysteria2://[^\s<"\'<>]+',
             'hysteria': r'hysteria://[^\s<"\'<>]+',
             'tuic': r'tuic://[^\s<"\'<>]+',
@@ -55,13 +51,12 @@ def run_doka_v2nodes():
             found = re.findall(pattern, response.text, re.IGNORECASE)
             all_links.extend(found)
             if found:
-                print(f"   🔍 {proto}: تم العثور على {len(found)} رابط")
+                print(f"   🔍 {proto}: {len(found)} رابط")
         
         clean_links = list(dict.fromkeys([l.replace('&amp;', '&').strip().rstrip('/') for l in all_links]))
         print(f"✅ إجمالي الروابط الفريدة: {len(clean_links)}")
         
-        # ========== تحميل المخزون السابق ==========
-        old_servers = {{}}  # link -> added_time
+        old_servers = {}
         try:
             if os.path.exists("servers_cache.json"):
                 with open("servers_cache.json", "r", encoding="utf-8") as f:
@@ -72,7 +67,6 @@ def run_doka_v2nodes():
         except:
             pass
         
-        # ========== حفظ المخزون مع وقت الإضافة ==========
         cache_servers = []
         for link in clean_links:
             added_time = old_servers.get(link, current_time.isoformat())
@@ -86,7 +80,6 @@ def run_doka_v2nodes():
         with open("servers_cache.json", "w", encoding="utf-8") as f:
             json.dump(cache_data, f, ensure_ascii=False)
         
-        # ========== تصنيف السيرفرات مع فلترة القديم ==========
         servers_by_protocol = {
             "vmess": [], "vless": [], "trojan": [], "ss": [],
             "hysteria2": [], "hysteria": [], "tuic": [], "wireguard": [], "other": []
@@ -100,7 +93,6 @@ def run_doka_v2nodes():
             'VLESS':    {'color': 'blue', 'icon': '🔵', 'gradient': 'from-blue-400 to-cyan-400', 'name': 'VLESS'},
             'TROJAN':   {'color': 'purple', 'icon': '🟣', 'gradient': 'from-purple-400 to-pink-400', 'name': 'Trojan'},
             'SS':       {'color': 'green', 'icon': '🟢', 'gradient': 'from-green-400 to-emerald-400', 'name': 'Shadowsocks'},
-            'SSR':      {'color': 'teal', 'icon': '🟢', 'gradient': 'from-teal-400 to-green-400', 'name': 'SSR'},
             'HYSTERIA2':{'color': 'rose', 'icon': '🩷', 'gradient': 'from-rose-400 to-pink-400', 'name': 'Hysteria2'},
             'HYSTERIA': {'color': 'pink', 'icon': '💗', 'gradient': 'from-pink-400 to-rose-400', 'name': 'Hysteria'},
             'TUIC':     {'color': 'amber', 'icon': '🟡', 'gradient': 'from-amber-400 to-yellow-400', 'name': 'TUIC'},
@@ -110,21 +102,18 @@ def run_doka_v2nodes():
         for link in clean_links:
             link_lower = link.lower()
             
-            # ✅ التحقق من عمر السيرفر
             added_time_str = old_servers.get(link, current_time.isoformat())
             try:
                 added_time = datetime.fromisoformat(added_time_str)
             except:
                 added_time = current_time
             
-            # إذا السيرفر أقدم من 24 ساعة → تخطيه (لا تعرضه)
             if added_time < cutoff_time:
                 deleted_count += 1
                 continue
             
             is_new = link not in old_servers
             
-            # تحديد البروتوكول
             if link_lower.startswith("vmess://"):
                 proto_type = "VMESS"
             elif link_lower.startswith("vless://"):
@@ -148,14 +137,10 @@ def run_doka_v2nodes():
             if proto_key not in servers_by_protocol:
                 proto_key = "other"
             
-            # تخمين الدولة
             country, country_flag = detect_country(link_lower)
             countries_count[country] = countries_count.get(country, 0) + 1
-            
-            # استخراج الملاحظات
             remark = extract_remark(link, proto_type)
             
-            # Ping حسب البروتوكول
             ping_ranges = {
                 'VMESS': (50, 180), 'VLESS': (40, 160), 'TROJAN': (60, 200),
                 'SS': (70, 220), 'HYSTERIA2': (20, 100), 'HYSTERIA': (30, 120),
@@ -191,7 +176,6 @@ def run_doka_v2nodes():
         most_country_count = countries_count.get(most_country, 0)
         new_count = sum(1 for s in all_servers_data if s["is_new"])
         
-        # ========== حفظ الإحصائيات ==========
         stats_data = {
             "last_updated": current_time.isoformat(),
             "source": "V2Nodes",
@@ -208,7 +192,6 @@ def run_doka_v2nodes():
         with open("stats.json", "w", encoding="utf-8") as f:
             json.dump(stats_data, f, ensure_ascii=False)
         
-        # ========== توليد HTML ==========
         servers_json = json.dumps(all_servers_data, ensure_ascii=False)
         stats_json = json.dumps(stats_data, ensure_ascii=False)
         update_time_str = current_time.strftime("%H:%M")
@@ -229,7 +212,6 @@ def run_doka_v2nodes():
         if not os.path.exists("manifest.json"):
             create_manifest()
         
-        # ========== ملخص ==========
         print(f"\n{'='*50}")
         print(f"✅ [DOKA V2NODES] تم بنجاح!")
         print(f"   📊 المعروض: {total_servers} | 🆕 جديد: {new_count} | 🗑️ محذوف (قديم): {deleted_count}")
@@ -242,7 +224,6 @@ def run_doka_v2nodes():
                 print(f"   {icon} {proto.upper()}: {len(servers)}")
         print(f"{'='*50}\n")
         
-        # ========== سجل التحديثات ==========
         with open("changelog.txt", "a", encoding="utf-8") as log:
             log.write(f"[{current_time.strftime('%Y-%m-%d %H:%M:%S')}] ✅ {total_servers} | 🆕 {new_count} | 🗑️ {deleted_count} | 🌍 {most_country} | ⚡ {avg_ping}ms\n")
             
@@ -258,7 +239,6 @@ def run_doka_v2nodes():
 
 
 def detect_country(link_lower):
-    """تخمين الدولة من الرابط"""
     country_map = {
         'singapore': ('سنغافورة', '🇸🇬'), '.sg': ('سنغافورة', '🇸🇬'),
         'germany': ('ألمانيا', '🇩🇪'), '.de': ('ألمانيا', '🇩🇪'),
@@ -277,6 +257,13 @@ def detect_country(link_lower):
         'australia': ('أستراليا', '🇦🇺'), '.au': ('أستراليا', '🇦🇺'),
         'south korea': ('كوريا', '🇰🇷'), '.kr': ('كوريا', '🇰🇷'),
         'sweden': ('السويد', '🇸🇪'), '.se': ('السويد', '🇸🇪'),
+        'norway': ('النرويج', '🇳🇴'), '.no': ('النرويج', '🇳🇴'),
+        'finland': ('فنلندا', '🇫🇮'), '.fi': ('فنلندا', '🇫🇮'),
+        'italy': ('إيطاليا', '🇮🇹'), '.it': ('إيطاليا', '🇮🇹'),
+        'spain': ('إسبانيا', '🇪🇸'), '.es': ('إسبانيا', '🇪🇸'),
+        'switzerland': ('سويسرا', '🇨🇭'), '.ch': ('سويسرا', '🇨🇭'),
+        'poland': ('بولندا', '🇵🇱'), '.pl': ('بولندا', '🇵🇱'),
+        'ukraine': ('أوكرانيا', '🇺🇦'), '.ua': ('أوكرانيا', '🇺🇦'),
     }
     
     for key, (country, flag) in country_map.items():
@@ -287,7 +274,6 @@ def detect_country(link_lower):
 
 
 def extract_remark(link, proto_type):
-    """استخراج اسم/ملاحظة من الرابط"""
     try:
         if proto_type in ['VMESS', 'VLESS', 'TROJAN']:
             remark_match = re.search(r'#([^&\s]+)', link)
@@ -309,6 +295,8 @@ def get_all_greetings():
         "🚀 انطلق بلا حدود مع V2Ray.",
         "🎯 دقة في الاختيار، حرية في التصفح.",
         "💪 أقوى السيرفرات بين يديك.",
+        "🌈 تصفح العالم كما تريد.",
+        "📡 اتصال آمن، سرعة فائقة.",
         "🛡️ درعك الرقمي جاهز."
     ]
 
@@ -322,6 +310,7 @@ def create_manifest():
         "display": "standalone",
         "background_color": "#0f0c29",
         "theme_color": "#6366f1",
+        "orientation": "portrait-primary",
         "icons": [{
             "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>",
             "sizes": "any",
@@ -335,9 +324,7 @@ def create_manifest():
 
 
 def generate_html(servers_json, stats_json, servers_by_protocol, total_servers, new_count, deleted_count, avg_ping, most_country, most_country_count, update_time_str, update_date_str, current_time_iso, max_age_hours, greetings_json):
-    """توليد صفحة HTML كاملة"""
     
-    # تبويبات الفلترة
     filter_tabs_html = f'''
     <button class="tab-btn active px-4 py-2 rounded-full text-xs font-medium" data-filter="all">
         <i class="fas fa-globe ml-1"></i> الكل (<span id="count-all">{total_servers}</span>)
@@ -541,7 +528,7 @@ def generate_html(servers_json, stats_json, servers_by_protocol, total_servers, 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="servers-grid"></div>
         <div id="no-servers-msg" class="text-center py-12 text-gray-500 hidden">
             <i class="fas fa-search text-3xl mb-3 opacity-30"></i>
-            <p id="no-results-text">لا توجد سيرفرات</p>
+            <p id="no-results-text">لا توجد سيرفرات نشطة (تم حذف القديم)</p>
         </div>
     </section>
 
