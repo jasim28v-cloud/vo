@@ -99,7 +99,7 @@
             
             <div class="flex flex-wrap justify-center gap-3 mb-4">
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">8</span>
+                    <span class="text-2xl font-black bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">4</span>
                     <p class="text-gray-500 text-xs mt-1">سيرفر</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
@@ -107,11 +107,11 @@
                     <p class="text-gray-500 text-xs mt-1">جديد</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-red-400">4</span>
+                    <span class="text-2xl font-black text-red-400">2</span>
                     <p class="text-gray-500 text-xs mt-1">محذوف</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-yellow-400">115</span>
+                    <span class="text-2xl font-black text-yellow-400">101</span>
                     <p class="text-gray-500 text-xs mt-1">ms</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[110px]">
@@ -126,13 +126,13 @@
         <div class="flex flex-wrap justify-center gap-2" id="filter-tabs">
             
     <button class="tab-btn active px-4 py-2 rounded-full text-xs font-medium" data-filter="all">
-        <i class="fas fa-globe ml-1"></i> الكل (<span id="count-all">8</span>)
+        <i class="fas fa-globe ml-1"></i> الكل (<span id="count-all">4</span>)
     </button>
     <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="vless">
-        🔵 VLESS (<span id="count-vless">4</span>)
+        🔵 VLESS (<span id="count-vless">2</span>)
     </button>
     <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="ss">
-        🟢 SS (<span id="count-ss">4</span>)
+        🟢 SS (<span id="count-ss">2</span>)
     </button>
             <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" id="fav-filter-btn" data-filter="favorites" style="display:none;">
                 ⭐ المفضلة (<span id="count-fav">0</span>)
@@ -197,14 +197,14 @@
     </div>
 
     <script>
-        const serversData = [{"link": "vless://b43a13be-150c-4a6a-8501-b71c1b6476fb@srv181.towersflowerss.com:443?type=ws&host=&path=/#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 106, "is_new": false, "added_time": "09:42", "added_date": "2026-05-21", "age_hours": 5.8}, {"link": "vless://69a2af58-d74a-44ca-864a-e09b493f4274@152.89.244.75:8443?security=reality&type=tcp&sni=www.vk.ru&fp=chrome&sid=421f9e3c&pbk=lfN9fmmMeh4znL74ZdEelvszEqf7600g3oeZMQc6G0Q&encryption=none#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 105, "is_new": false, "added_time": "09:42", "added_date": "2026-05-21", "age_hours": 5.8}, {"link": "vless://41b92d9f-6c8d-4ac3-8eeb-eb3fcf48e102@92.119.165.11:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=UWUBepTdDtiUpf_ZgYjO2iriD0qc7RX2Gm-vtLDIG0k&security=reality&sid=182de34d29d30341&sni=sw.kickvpn.ru&type=tcp#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 131, "is_new": false, "added_time": "09:42", "added_date": "2026-05-21", "age_hours": 5.8}, {"link": "vless://a2bb8987-a8aa-46f9-9c28-e0a998e2f23b@217.145.226.147:2083?encryption=none&fp=chrome&pbk=t_7D9Igy232LaH3Ds5L4QHaVeY4nUMlSmuJgjaF5Bl4&security=reality&sid=16&sni=www.microsoft.com&type=tcp#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 59, "is_new": true, "added_time": "15:30", "added_date": "2026-05-21", "age_hours": 0.0}, {"link": "ss://b43a13be-150c-4a6a-8501-b71c1b6476fb@srv181.towersflowerss.com:443?type=ws&host=&path=/#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 153, "is_new": false, "added_time": "09:42", "added_date": "2026-05-21", "age_hours": 5.8}, {"link": "ss://69a2af58-d74a-44ca-864a-e09b493f4274@152.89.244.75:8443?security=reality&type=tcp&sni=www.vk.ru&fp=chrome&sid=421f9e3c&pbk=lfN9fmmMeh4znL74ZdEelvszEqf7600g3oeZMQc6G0Q&encryption=none#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 84, "is_new": false, "added_time": "09:42", "added_date": "2026-05-21", "age_hours": 5.8}, {"link": "ss://41b92d9f-6c8d-4ac3-8eeb-eb3fcf48e102@92.119.165.11:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=UWUBepTdDtiUpf_ZgYjO2iriD0qc7RX2Gm-vtLDIG0k&security=reality&sid=182de34d29d30341&sni=sw.kickvpn.ru&type=tcp#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 112, "is_new": false, "added_time": "09:42", "added_date": "2026-05-21", "age_hours": 5.8}, {"link": "ss://a2bb8987-a8aa-46f9-9c28-e0a998e2f23b@217.145.226.147:2083?encryption=none&fp=chrome&pbk=t_7D9Igy232LaH3Ds5L4QHaVeY4nUMlSmuJgjaF5Bl4&security=reality&sid=16&sni=www.microsoft.com&type=tcp#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 176, "is_new": true, "added_time": "15:30", "added_date": "2026-05-21", "age_hours": 0.0}];
-        const statsData = {"last_updated": "2026-05-21T15:30:19.179616", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 8, "new_servers": 2, "deleted_old": 4, "avg_ping": 115, "most_country": "غير معروف", "most_country_count": 8, "countries": {"غير معروف": 8}, "by_protocol": {"vless": 4, "ss": 4}};
+        const serversData = [{"link": "vless://a2bb8987-a8aa-46f9-9c28-e0a998e2f23b@217.145.226.147:2083?encryption=none&fp=chrome&pbk=t_7D9Igy232LaH3Ds5L4QHaVeY4nUMlSmuJgjaF5Bl4&security=reality&sid=16&sni=www.microsoft.com&type=tcp#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 45, "is_new": false, "added_time": "15:30", "added_date": "2026-05-21", "age_hours": 4.4}, {"link": "vless://40bf709c-4353-4552-ba26-406d2bf7821d@fr.gryaz-vpn.com:20567?encryption=none&flow=xtls-rprx-vision&fp=chrome&headerType=none&pbk=1WOtQYIQ-3sJtbrhSA1LW6gAnO-wG0Z5aCnlL_zoiXQ&security=reality&sid=b82d7208fe23&sni=cloudflare.com&type=raw#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 89, "is_new": true, "added_time": "19:54", "added_date": "2026-05-21", "age_hours": 0.0}, {"link": "ss://a2bb8987-a8aa-46f9-9c28-e0a998e2f23b@217.145.226.147:2083?encryption=none&fp=chrome&pbk=t_7D9Igy232LaH3Ds5L4QHaVeY4nUMlSmuJgjaF5Bl4&security=reality&sid=16&sni=www.microsoft.com&type=tcp#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 120, "is_new": false, "added_time": "15:30", "added_date": "2026-05-21", "age_hours": 4.4}, {"link": "ss://40bf709c-4353-4552-ba26-406d2bf7821d@fr.gryaz-vpn.com:20567?encryption=none&flow=xtls-rprx-vision&fp=chrome&headerType=none&pbk=1WOtQYIQ-3sJtbrhSA1LW6gAnO-wG0Z5aCnlL_zoiXQ&security=reality&sid=b82d7208fe23&sni=cloudflare.com&type=raw#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 153, "is_new": true, "added_time": "19:54", "added_date": "2026-05-21", "age_hours": 0.0}];
+        const statsData = {"last_updated": "2026-05-21T19:54:58.813210", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 4, "new_servers": 2, "deleted_old": 2, "avg_ping": 101, "most_country": "غير معروف", "most_country_count": 4, "countries": {"غير معروف": 4}, "by_protocol": {"vless": 2, "ss": 2}};
         const greetings = ["💛 أهلاً بك! سيرفرات V2Nodes جاهزة.", "⚡ سرعة وأمان بين يديك.", "🚀 انطلق بلا حدود.", "🛡️ درعك الرقمي جاهز."];
         const MAX_AGE_HOURS = 24;
         let currentFilter = 'all';
         let chartInstances = {};
         const UPDATE_INTERVAL = 3 * 60 * 60;
-        const updateTime = new Date('2026-05-21T15:30:19.179616');
+        const updateTime = new Date('2026-05-21T19:54:58.813210');
         
         function getFavorites() { try { return JSON.parse(localStorage.getItem('doka_v2nodes_fav') || '[]'); } catch { return []; } }
         function saveFavorites(f) { localStorage.setItem('doka_v2nodes_fav', JSON.stringify(f)); }
@@ -315,7 +315,7 @@
         
         document.getElementById('greeting-message').textContent = greetings[Math.floor(Math.random() * greetings.length)];
         
-        function uv() { document.getElementById('visitor-count').textContent = Math.max(1, 8 + Math.floor(Math.random()*15)-5); }
+        function uv() { document.getElementById('visitor-count').textContent = Math.max(1, 4 + Math.floor(Math.random()*15)-5); }
         uv(); setInterval(uv, 10000);
         
         (function() {
