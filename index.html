@@ -111,7 +111,7 @@
                     <p class="text-gray-500 text-xs mt-1">محذوف</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-yellow-400">124</span>
+                    <span class="text-2xl font-black text-yellow-400">64</span>
                     <p class="text-gray-500 text-xs mt-1">ms</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[110px]">
@@ -197,14 +197,14 @@
     </div>
 
     <script>
-        const serversData = [{"link": "vless://1f4c983e-382c-d2fa-b2dc-7981f02b34de@89.208.113.157:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=2dgS9vJTywAfGZmlkuzDIIXLUR-E1A-0na8_W--ruUc&security=reality&sid=5be8210215&sni=parisjetaime.com&type=tcp#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 90, "is_new": false, "added_time": "04:21", "added_date": "2026-06-22", "age_hours": 16.5}, {"link": "ss://1f4c983e-382c-d2fa-b2dc-7981f02b34de@89.208.113.157:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=2dgS9vJTywAfGZmlkuzDIIXLUR-E1A-0na8_W--ruUc&security=reality&sid=5be8210215&sni=parisjetaime.com&type=tcp#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 159, "is_new": false, "added_time": "04:21", "added_date": "2026-06-22", "age_hours": 16.5}];
-        const statsData = {"last_updated": "2026-06-22T20:50:00.471666", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 2, "new_servers": 0, "deleted_old": 28, "avg_ping": 124, "most_country": "غير معروف", "most_country_count": 2, "countries": {"غير معروف": 2}, "by_protocol": {"vless": 1, "ss": 1}};
+        const serversData = [{"link": "vless://1f4c983e-382c-d2fa-b2dc-7981f02b34de@89.208.113.157:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=2dgS9vJTywAfGZmlkuzDIIXLUR-E1A-0na8_W--ruUc&security=reality&sid=5be8210215&sni=parisjetaime.com&type=tcp#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 58, "is_new": false, "added_time": "04:21", "added_date": "2026-06-22", "age_hours": 18.4}, {"link": "ss://1f4c983e-382c-d2fa-b2dc-7981f02b34de@89.208.113.157:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=2dgS9vJTywAfGZmlkuzDIIXLUR-E1A-0na8_W--ruUc&security=reality&sid=5be8210215&sni=parisjetaime.com&type=tcp#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 71, "is_new": false, "added_time": "04:21", "added_date": "2026-06-22", "age_hours": 18.4}];
+        const statsData = {"last_updated": "2026-06-22T22:47:48.434010", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 2, "new_servers": 0, "deleted_old": 28, "avg_ping": 64, "most_country": "غير معروف", "most_country_count": 2, "countries": {"غير معروف": 2}, "by_protocol": {"vless": 1, "ss": 1}};
         const greetings = ["💛 أهلاً بك! سيرفرات V2Nodes جاهزة.", "⚡ سرعة وأمان بين يديك.", "🚀 انطلق بلا حدود.", "🛡️ درعك الرقمي جاهز."];
         const MAX_AGE_HOURS = 24;
         let currentFilter = 'all';
         let chartInstances = {};
         const UPDATE_INTERVAL = 3 * 60 * 60;
-        const updateTime = new Date('2026-06-22T20:50:00.471666');
+        const updateTime = new Date('2026-06-22T22:47:48.434010');
         
         function getFavorites() { try { return JSON.parse(localStorage.getItem('doka_v2nodes_fav') || '[]'); } catch { return []; } }
         function saveFavorites(f) { localStorage.setItem('doka_v2nodes_fav', JSON.stringify(f)); }
