@@ -74,7 +74,7 @@
                 <div class="flex items-center gap-3 text-gray-400 text-xs">
                     <span id="live-clock">--:--:--</span>
                     <span class="hidden sm:inline">|</span>
-                    <span class="hidden sm:inline" id="update-date">2026/06/23</span>
+                    <span class="hidden sm:inline" id="update-date">2026/06/24</span>
                 </div>
                 <div class="visitor-badge px-3 py-1 text-xs text-green-400 flex items-center gap-1.5">
                     <i class="fas fa-users"></i>
@@ -99,19 +99,19 @@
             
             <div class="flex flex-wrap justify-center gap-3 mb-4">
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">4</span>
+                    <span class="text-2xl font-black bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">10</span>
                     <p class="text-gray-500 text-xs mt-1">سيرفر</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-green-400">0</span>
+                    <span class="text-2xl font-black text-green-400">6</span>
                     <p class="text-gray-500 text-xs mt-1">جديد</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-red-400">28</span>
+                    <span class="text-2xl font-black text-red-400">24</span>
                     <p class="text-gray-500 text-xs mt-1">محذوف</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-yellow-400">141</span>
+                    <span class="text-2xl font-black text-yellow-400">127</span>
                     <p class="text-gray-500 text-xs mt-1">ms</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[110px]">
@@ -126,13 +126,13 @@
         <div class="flex flex-wrap justify-center gap-2" id="filter-tabs">
             
     <button class="tab-btn active px-4 py-2 rounded-full text-xs font-medium" data-filter="all">
-        <i class="fas fa-globe ml-1"></i> الكل (<span id="count-all">4</span>)
+        <i class="fas fa-globe ml-1"></i> الكل (<span id="count-all">10</span>)
     </button>
     <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="vless">
-        🔵 VLESS (<span id="count-vless">2</span>)
+        🔵 VLESS (<span id="count-vless">5</span>)
     </button>
     <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="ss">
-        🟢 SS (<span id="count-ss">2</span>)
+        🟢 SS (<span id="count-ss">5</span>)
     </button>
             <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" id="fav-filter-btn" data-filter="favorites" style="display:none;">
                 ⭐ المفضلة (<span id="count-fav">0</span>)
@@ -197,14 +197,14 @@
     </div>
 
     <script>
-        const serversData = [{"link": "vless://33de2596-d95d-412b-a8c2-410be7060ca3@81.17.154.131:443?flow=xtls-rprx-vision&encryption=none&type=tcp&security=reality&fp=chrome&sni=sellflow.org&pbk=SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 159, "is_new": false, "added_time": "09:41", "added_date": "2026-06-23", "age_hours": 12.6}, {"link": "vless://33de2596-d95d-412b-a8c2-410be7060ca3@5.42.121.174:443?flow=xtls-rprx-vision&fp=chrome&pbk=SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc&security=reality&sni=sellflow.org&type=tcp&note=Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 115, "is_new": false, "added_time": "09:41", "added_date": "2026-06-23", "age_hours": 12.6}, {"link": "ss://33de2596-d95d-412b-a8c2-410be7060ca3@81.17.154.131:443?flow=xtls-rprx-vision&encryption=none&type=tcp&security=reality&fp=chrome&sni=sellflow.org&pbk=SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 163, "is_new": false, "added_time": "09:41", "added_date": "2026-06-23", "age_hours": 12.6}, {"link": "ss://33de2596-d95d-412b-a8c2-410be7060ca3@5.42.121.174:443?flow=xtls-rprx-vision&fp=chrome&pbk=SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc&security=reality&sni=sellflow.org&type=tcp&note=Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 128, "is_new": false, "added_time": "09:41", "added_date": "2026-06-23", "age_hours": 12.6}];
-        const statsData = {"last_updated": "2026-06-23T22:14:25.670774", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 4, "new_servers": 0, "deleted_old": 28, "avg_ping": 141, "most_country": "غير معروف", "most_country_count": 4, "countries": {"غير معروف": 4}, "by_protocol": {"vless": 2, "ss": 2}};
+        const serversData = [{"link": "vless://33de2596-d95d-412b-a8c2-410be7060ca3@81.17.154.131:443?flow=xtls-rprx-vision&encryption=none&type=tcp&security=reality&fp=chrome&sni=sellflow.org&pbk=SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 103, "is_new": false, "added_time": "09:41", "added_date": "2026-06-23", "age_hours": 18.0}, {"link": "vless://33de2596-d95d-412b-a8c2-410be7060ca3@5.42.121.174:443?flow=xtls-rprx-vision&fp=chrome&pbk=SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc&security=reality&sni=sellflow.org&type=tcp&note=Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 157, "is_new": false, "added_time": "09:41", "added_date": "2026-06-23", "age_hours": 18.0}, {"link": "vless://b08d0906-8840-4b27-9261-0fe72600de7f@217.195.200.171:44904?#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 132, "is_new": true, "added_time": "03:41", "added_date": "2026-06-24", "age_hours": 0.0}, {"link": "vless://e4468d51-2528-4d40-a92d-5cf409d00dac@fry2.brocollisuper.click:443?allowInsecure=0&sni=fry2.brocollisuper.click&type=grpc&serviceName=grpc-api&security=tls#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 51, "is_new": true, "added_time": "03:41", "added_date": "2026-06-24", "age_hours": 0.0}, {"link": "vless://33de2596-d95d-412b-a8c2-410be7060ca3@109.73.194.240:443?flow=xtls-rprx-vision&fp=chrome&pbk=SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc&security=reality&sni=sellflow.org&type=tcp#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 146, "is_new": true, "added_time": "03:41", "added_date": "2026-06-24", "age_hours": 0.0}, {"link": "ss://33de2596-d95d-412b-a8c2-410be7060ca3@81.17.154.131:443?flow=xtls-rprx-vision&encryption=none&type=tcp&security=reality&fp=chrome&sni=sellflow.org&pbk=SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 167, "is_new": false, "added_time": "09:41", "added_date": "2026-06-23", "age_hours": 18.0}, {"link": "ss://33de2596-d95d-412b-a8c2-410be7060ca3@5.42.121.174:443?flow=xtls-rprx-vision&fp=chrome&pbk=SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc&security=reality&sni=sellflow.org&type=tcp&note=Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---Telegram---@Raiv2mmr---#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 205, "is_new": false, "added_time": "09:41", "added_date": "2026-06-23", "age_hours": 18.0}, {"link": "ss://b08d0906-8840-4b27-9261-0fe72600de7f@217.195.200.171:44904?#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 153, "is_new": true, "added_time": "03:41", "added_date": "2026-06-24", "age_hours": 0.0}, {"link": "ss://e4468d51-2528-4d40-a92d-5cf409d00dac@fry2.brocollisuper.click:443?allowInsecure=0&sni=fry2.brocollisuper.click&type=grpc&serviceName=grpc-api&security=tls#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 87, "is_new": true, "added_time": "03:41", "added_date": "2026-06-24", "age_hours": 0.0}, {"link": "ss://33de2596-d95d-412b-a8c2-410be7060ca3@109.73.194.240:443?flow=xtls-rprx-vision&fp=chrome&pbk=SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc&security=reality&sni=sellflow.org&type=tcp#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 70, "is_new": true, "added_time": "03:41", "added_date": "2026-06-24", "age_hours": 0.0}];
+        const statsData = {"last_updated": "2026-06-24T03:41:06.866045", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 10, "new_servers": 6, "deleted_old": 24, "avg_ping": 127, "most_country": "غير معروف", "most_country_count": 10, "countries": {"غير معروف": 10}, "by_protocol": {"vless": 5, "ss": 5}};
         const greetings = ["💛 أهلاً بك! سيرفرات V2Nodes جاهزة.", "⚡ سرعة وأمان بين يديك.", "🚀 انطلق بلا حدود.", "🛡️ درعك الرقمي جاهز."];
         const MAX_AGE_HOURS = 24;
         let currentFilter = 'all';
         let chartInstances = {};
         const UPDATE_INTERVAL = 3 * 60 * 60;
-        const updateTime = new Date('2026-06-23T22:14:25.670774');
+        const updateTime = new Date('2026-06-24T03:41:06.866045');
         
         function getFavorites() { try { return JSON.parse(localStorage.getItem('doka_v2nodes_fav') || '[]'); } catch { return []; } }
         function saveFavorites(f) { localStorage.setItem('doka_v2nodes_fav', JSON.stringify(f)); }
@@ -315,7 +315,7 @@
         
         document.getElementById('greeting-message').textContent = greetings[Math.floor(Math.random() * greetings.length)];
         
-        function uv() { document.getElementById('visitor-count').textContent = Math.max(1, 4 + Math.floor(Math.random()*15)-5); }
+        function uv() { document.getElementById('visitor-count').textContent = Math.max(1, 10 + Math.floor(Math.random()*15)-5); }
         uv(); setInterval(uv, 10000);
         
         (function() {
