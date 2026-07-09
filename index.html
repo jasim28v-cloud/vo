@@ -99,19 +99,19 @@
             
             <div class="flex flex-wrap justify-center gap-3 mb-4">
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">5</span>
+                    <span class="text-2xl font-black bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">7</span>
                     <p class="text-gray-500 text-xs mt-1">سيرفر</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-green-400">0</span>
+                    <span class="text-2xl font-black text-green-400">2</span>
                     <p class="text-gray-500 text-xs mt-1">جديد</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-red-400">17</span>
+                    <span class="text-2xl font-black text-red-400">16</span>
                     <p class="text-gray-500 text-xs mt-1">محذوف</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-yellow-400">107</span>
+                    <span class="text-2xl font-black text-yellow-400">118</span>
                     <p class="text-gray-500 text-xs mt-1">ms</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[110px]">
@@ -126,10 +126,16 @@
         <div class="flex flex-wrap justify-center gap-2" id="filter-tabs">
             
     <button class="tab-btn active px-4 py-2 rounded-full text-xs font-medium" data-filter="all">
-        <i class="fas fa-globe ml-1"></i> الكل (<span id="count-all">5</span>)
+        <i class="fas fa-globe ml-1"></i> الكل (<span id="count-all">7</span>)
+    </button>
+    <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="vless">
+        🔵 VLESS (<span id="count-vless">1</span>)
     </button>
     <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="trojan">
         🟣 Trojan (<span id="count-trojan">5</span>)
+    </button>
+    <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="ss">
+        🟢 SS (<span id="count-ss">1</span>)
     </button>
             <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" id="fav-filter-btn" data-filter="favorites" style="display:none;">
                 ⭐ المفضلة (<span id="count-fav">0</span>)
@@ -194,14 +200,14 @@
     </div>
 
     <script>
-        const serversData = [{"link": "trojan://XG59623478@rational-joey.rooster465.autos:443?allowInsecure=1&sni=rational-joey.rooster465.autos#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 69, "is_new": false, "added_time": "22:06", "added_date": "2026-07-08", "age_hours": 17.1}, {"link": "trojan://XG59623478@wise-rhino.rooster465.autos:443?allowInsecure=1#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 162, "is_new": false, "added_time": "22:06", "added_date": "2026-07-08", "age_hours": 17.1}, {"link": "trojan://XG59623478@immense-eagle.rooster465.autos:443?allowInsecure=1#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 109, "is_new": false, "added_time": "22:06", "added_date": "2026-07-08", "age_hours": 17.1}, {"link": "trojan://XG59623478@allowing-ram.rooster465.autos:443?allowInsecure=1#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 138, "is_new": false, "added_time": "22:06", "added_date": "2026-07-08", "age_hours": 17.1}, {"link": "trojan://XG59623478@dashing-bedbug.rooster465.autos:443?allowInsecure=1#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 60, "is_new": false, "added_time": "22:06", "added_date": "2026-07-08", "age_hours": 17.1}];
-        const statsData = {"last_updated": "2026-07-09T15:11:42.265169", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 5, "new_servers": 0, "deleted_old": 17, "avg_ping": 107, "most_country": "غير معروف", "most_country_count": 5, "countries": {"غير معروف": 5}, "by_protocol": {"trojan": 5}};
+        const serversData = [{"link": "vless://39dfd8b4-47a8-158c-80e9-e80a747828fc@rare-creation-production.up.railway.app:443?encryption=none&security=tls&type=ws&host=rare-creation-production.up.railway.app&path=/ws/39dfd8b4-47a8-158c-80e9-e80a747828fc&sni=rare-creation-production.up.railway.app&fp=ios&alpn=http/1.1#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 106, "is_new": true, "added_time": "19:47", "added_date": "2026-07-09", "age_hours": 0.0}, {"link": "trojan://XG59623478@rational-joey.rooster465.autos:443?allowInsecure=1&sni=rational-joey.rooster465.autos#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 106, "is_new": false, "added_time": "22:06", "added_date": "2026-07-08", "age_hours": 21.7}, {"link": "trojan://XG59623478@wise-rhino.rooster465.autos:443?allowInsecure=1#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 119, "is_new": false, "added_time": "22:06", "added_date": "2026-07-08", "age_hours": 21.7}, {"link": "trojan://XG59623478@immense-eagle.rooster465.autos:443?allowInsecure=1#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 108, "is_new": false, "added_time": "22:06", "added_date": "2026-07-08", "age_hours": 21.7}, {"link": "trojan://XG59623478@allowing-ram.rooster465.autos:443?allowInsecure=1#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 142, "is_new": false, "added_time": "22:06", "added_date": "2026-07-08", "age_hours": 21.7}, {"link": "trojan://XG59623478@dashing-bedbug.rooster465.autos:443?allowInsecure=1#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 64, "is_new": false, "added_time": "22:06", "added_date": "2026-07-08", "age_hours": 21.7}, {"link": "ss://39dfd8b4-47a8-158c-80e9-e80a747828fc@rare-creation-production.up.railway.app:443?encryption=none&security=tls&type=ws&host=rare-creation-production.up.railway.app&path=/ws/39dfd8b4-47a8-158c-80e9-e80a747828fc&sni=rare-creation-production.up.railway.app&fp=ios&alpn=http/1.1#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 181, "is_new": true, "added_time": "19:47", "added_date": "2026-07-09", "age_hours": 0.0}];
+        const statsData = {"last_updated": "2026-07-09T19:47:31.914041", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 7, "new_servers": 2, "deleted_old": 16, "avg_ping": 118, "most_country": "غير معروف", "most_country_count": 7, "countries": {"غير معروف": 7}, "by_protocol": {"vless": 1, "trojan": 5, "ss": 1}};
         const greetings = ["💛 أهلاً بك! سيرفرات V2Nodes جاهزة.", "⚡ سرعة وأمان بين يديك.", "🚀 انطلق بلا حدود.", "🛡️ درعك الرقمي جاهز."];
         const MAX_AGE_HOURS = 24;
         let currentFilter = 'all';
         let chartInstances = {};
         const UPDATE_INTERVAL = 3 * 60 * 60;
-        const updateTime = new Date('2026-07-09T15:11:42.265169');
+        const updateTime = new Date('2026-07-09T19:47:31.914041');
         
         function getFavorites() { try { return JSON.parse(localStorage.getItem('doka_v2nodes_fav') || '[]'); } catch { return []; } }
         function saveFavorites(f) { localStorage.setItem('doka_v2nodes_fav', JSON.stringify(f)); }
@@ -312,7 +318,7 @@
         
         document.getElementById('greeting-message').textContent = greetings[Math.floor(Math.random() * greetings.length)];
         
-        function uv() { document.getElementById('visitor-count').textContent = Math.max(1, 5 + Math.floor(Math.random()*15)-5); }
+        function uv() { document.getElementById('visitor-count').textContent = Math.max(1, 7 + Math.floor(Math.random()*15)-5); }
         uv(); setInterval(uv, 10000);
         
         (function() {
