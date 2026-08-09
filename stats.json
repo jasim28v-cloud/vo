@@ -1,1 +1,1 @@
-{"last_updated": "2026-08-08T21:30:36.801584", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 0, "new_servers": 0, "deleted_old": 32, "avg_ping": 0, "most_country": "غير محدد", "most_country_count": 0, "countries": {}, "by_protocol": {}}
+{"last_updated": "2026-08-09T01:47:04.836268", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 4, "new_servers": 4, "deleted_old": 30, "avg_ping": 117, "most_country": "غير معروف", "most_country_count": 4, "countries": {"غير معروف": 4}, "by_protocol": {"vless": 1, "ss": 3}}
