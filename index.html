@@ -103,7 +103,7 @@
                     <p class="text-gray-500 text-xs mt-1">سيرفر</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-green-400">1</span>
+                    <span class="text-2xl font-black text-green-400">0</span>
                     <p class="text-gray-500 text-xs mt-1">جديد</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
@@ -111,7 +111,7 @@
                     <p class="text-gray-500 text-xs mt-1">محذوف</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-yellow-400">127</span>
+                    <span class="text-2xl font-black text-yellow-400">91</span>
                     <p class="text-gray-500 text-xs mt-1">ms</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[110px]">
@@ -194,14 +194,14 @@
     </div>
 
     <script>
-        const serversData = [{"link": "trojan://123123@node5.quaxly.com:25830?allowInsecure=1&sni=node5.quaxly.com#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 127, "is_new": true, "added_time": "14:57", "added_date": "2026-08-28", "age_hours": 0.0}];
-        const statsData = {"last_updated": "2026-08-28T14:57:50.152027", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 1, "new_servers": 1, "deleted_old": 23, "avg_ping": 127, "most_country": "غير معروف", "most_country_count": 1, "countries": {"غير معروف": 1}, "by_protocol": {"trojan": 1}};
+        const serversData = [{"link": "trojan://123123@node5.quaxly.com:25830?allowInsecure=1&sni=node5.quaxly.com#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 91, "is_new": false, "added_time": "14:57", "added_date": "2026-08-28", "age_hours": 9.0}];
+        const statsData = {"last_updated": "2026-08-28T23:59:18.511582", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 1, "new_servers": 0, "deleted_old": 23, "avg_ping": 91, "most_country": "غير معروف", "most_country_count": 1, "countries": {"غير معروف": 1}, "by_protocol": {"trojan": 1}};
         const greetings = ["💛 أهلاً بك! سيرفرات V2Nodes جاهزة.", "⚡ سرعة وأمان بين يديك.", "🚀 انطلق بلا حدود.", "🛡️ درعك الرقمي جاهز."];
         const MAX_AGE_HOURS = 24;
         let currentFilter = 'all';
         let chartInstances = {};
         const UPDATE_INTERVAL = 3 * 60 * 60;
-        const updateTime = new Date('2026-08-28T14:57:50.152027');
+        const updateTime = new Date('2026-08-28T23:59:18.511582');
         
         function getFavorites() { try { return JSON.parse(localStorage.getItem('doka_v2nodes_fav') || '[]'); } catch { return []; } }
         function saveFavorites(f) { localStorage.setItem('doka_v2nodes_fav', JSON.stringify(f)); }
