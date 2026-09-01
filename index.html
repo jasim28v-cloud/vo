@@ -74,7 +74,7 @@
                 <div class="flex items-center gap-3 text-gray-400 text-xs">
                     <span id="live-clock">--:--:--</span>
                     <span class="hidden sm:inline">|</span>
-                    <span class="hidden sm:inline" id="update-date">2026/08/31</span>
+                    <span class="hidden sm:inline" id="update-date">2026/09/01</span>
                 </div>
                 <div class="visitor-badge px-3 py-1 text-xs text-green-400 flex items-center gap-1.5">
                     <i class="fas fa-users"></i>
@@ -99,19 +99,19 @@
             
             <div class="flex flex-wrap justify-center gap-3 mb-4">
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">6</span>
+                    <span class="text-2xl font-black bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">12</span>
                     <p class="text-gray-500 text-xs mt-1">سيرفر</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-green-400">0</span>
+                    <span class="text-2xl font-black text-green-400">6</span>
                     <p class="text-gray-500 text-xs mt-1">جديد</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-red-400">25</span>
+                    <span class="text-2xl font-black text-red-400">20</span>
                     <p class="text-gray-500 text-xs mt-1">محذوف</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[90px]">
-                    <span class="text-2xl font-black text-yellow-400">139</span>
+                    <span class="text-2xl font-black text-yellow-400">111</span>
                     <p class="text-gray-500 text-xs mt-1">ms</p>
                 </div>
                 <div class="glass px-5 py-3 rounded-2xl text-center min-w-[110px]">
@@ -126,16 +126,16 @@
         <div class="flex flex-wrap justify-center gap-2" id="filter-tabs">
             
     <button class="tab-btn active px-4 py-2 rounded-full text-xs font-medium" data-filter="all">
-        <i class="fas fa-globe ml-1"></i> الكل (<span id="count-all">6</span>)
+        <i class="fas fa-globe ml-1"></i> الكل (<span id="count-all">12</span>)
     </button>
     <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="vless">
-        🔵 VLESS (<span id="count-vless">2</span>)
+        🔵 VLESS (<span id="count-vless">5</span>)
     </button>
     <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="trojan">
         🟣 Trojan (<span id="count-trojan">1</span>)
     </button>
     <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="ss">
-        🟢 SS (<span id="count-ss">3</span>)
+        🟢 SS (<span id="count-ss">6</span>)
     </button>
             <button class="tab-btn px-4 py-2 rounded-full text-xs font-medium" id="fav-filter-btn" data-filter="favorites" style="display:none;">
                 ⭐ المفضلة (<span id="count-fav">0</span>)
@@ -200,14 +200,14 @@
     </div>
 
     <script>
-        const serversData = [{"link": "vless://8fb65472-5957-4f64-ba2d-b5812b2f155a@149.130.172.177:62145?#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 122, "is_new": false, "added_time": "12:55", "added_date": "2026-08-31", "age_hours": 7.7}, {"link": "vless://d4cae7df-50a1-428c-bd62-881c8f3bbd90@germany.superbuba.top:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=germany.superbuba.top&fp=firefox&pbk=rCkSHJ7goy7ZvSlau4LfXF-QLloOJMNeMxpeeQtwtVs&sid=4fa44664f6a566d3&type=tcp&headerType=none#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🇩🇪", "country": "ألمانيا", "remark": "", "ping": 97, "is_new": false, "added_time": "12:55", "added_date": "2026-08-31", "age_hours": 7.7}, {"link": "trojan://BxceQaOe@18.167.96.176:52770?allowInsecure=1&sni=t.me%2Fripaojiedian#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 151, "is_new": false, "added_time": "04:11", "added_date": "2026-08-31", "age_hours": 16.5}, {"link": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpPaEdYSkc0bkVxVE42MmNERGNEXzhfQ2RkcnBUSG4wdQ==@de-server-1.zelnora.ir:1080#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 112, "is_new": false, "added_time": "04:11", "added_date": "2026-08-31", "age_hours": 16.5}, {"link": "ss://8fb65472-5957-4f64-ba2d-b5812b2f155a@149.130.172.177:62145?#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 198, "is_new": false, "added_time": "12:55", "added_date": "2026-08-31", "age_hours": 7.7}, {"link": "ss://d4cae7df-50a1-428c-bd62-881c8f3bbd90@germany.superbuba.top:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=germany.superbuba.top&fp=firefox&pbk=rCkSHJ7goy7ZvSlau4LfXF-QLloOJMNeMxpeeQtwtVs&sid=4fa44664f6a566d3&type=tcp&headerType=none#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🇩🇪", "country": "ألمانيا", "remark": "", "ping": 158, "is_new": false, "added_time": "12:55", "added_date": "2026-08-31", "age_hours": 7.7}];
-        const statsData = {"last_updated": "2026-08-31T20:40:52.020072", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 6, "new_servers": 0, "deleted_old": 25, "avg_ping": 139, "most_country": "غير معروف", "most_country_count": 4, "countries": {"غير معروف": 4, "ألمانيا": 2}, "by_protocol": {"vless": 2, "trojan": 1, "ss": 3}};
+        const serversData = [{"link": "vless://8fb65472-5957-4f64-ba2d-b5812b2f155a@149.130.172.177:62145?#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 133, "is_new": false, "added_time": "12:55", "added_date": "2026-08-31", "age_hours": 11.5}, {"link": "vless://d4cae7df-50a1-428c-bd62-881c8f3bbd90@germany.superbuba.top:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=germany.superbuba.top&fp=firefox&pbk=rCkSHJ7goy7ZvSlau4LfXF-QLloOJMNeMxpeeQtwtVs&sid=4fa44664f6a566d3&type=tcp&headerType=none#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🇩🇪", "country": "ألمانيا", "remark": "", "ping": 44, "is_new": false, "added_time": "12:55", "added_date": "2026-08-31", "age_hours": 11.5}, {"link": "vless://90da514d-8888-4a53-912e-ac2981c8c6ee@188.220.67.198:2087?type=ws&host=&path=/8f2690e2d016#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 84, "is_new": true, "added_time": "00:24", "added_date": "2026-09-01", "age_hours": 0.0}, {"link": "vless://c21631d5-36c9-4664-b575-97eca17456be@neth8.lunariai.ru:443?allowInsecure=1&type=ws&host=neth8.lunariai.ru&path=/#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 159, "is_new": true, "added_time": "00:24", "added_date": "2026-09-01", "age_hours": 0.0}, {"link": "vless://8fb65472-5957-4f64-ba2d-b5812b2f155a@143.47.176.112:62145?#", "proto": "VLESS", "proto_color": "blue", "proto_icon": "🔵", "proto_gradient": "from-blue-400 to-cyan-400", "proto_name": "VLESS", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 51, "is_new": true, "added_time": "00:24", "added_date": "2026-09-01", "age_hours": 0.0}, {"link": "trojan://BxceQaOe@18.167.96.176:52770?allowInsecure=1&sni=t.me%2Fripaojiedian#", "proto": "TROJAN", "proto_color": "purple", "proto_icon": "🟣", "proto_gradient": "from-purple-400 to-pink-400", "proto_name": "Trojan", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 60, "is_new": false, "added_time": "04:11", "added_date": "2026-08-31", "age_hours": 20.2}, {"link": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpPaEdYSkc0bkVxVE42MmNERGNEXzhfQ2RkcnBUSG4wdQ==@de-server-1.zelnora.ir:1080#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 76, "is_new": false, "added_time": "04:11", "added_date": "2026-08-31", "age_hours": 20.2}, {"link": "ss://8fb65472-5957-4f64-ba2d-b5812b2f155a@149.130.172.177:62145?#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 152, "is_new": false, "added_time": "12:55", "added_date": "2026-08-31", "age_hours": 11.5}, {"link": "ss://d4cae7df-50a1-428c-bd62-881c8f3bbd90@germany.superbuba.top:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=germany.superbuba.top&fp=firefox&pbk=rCkSHJ7goy7ZvSlau4LfXF-QLloOJMNeMxpeeQtwtVs&sid=4fa44664f6a566d3&type=tcp&headerType=none#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🇩🇪", "country": "ألمانيا", "remark": "", "ping": 215, "is_new": false, "added_time": "12:55", "added_date": "2026-08-31", "age_hours": 11.5}, {"link": "ss://90da514d-8888-4a53-912e-ac2981c8c6ee@188.220.67.198:2087?type=ws&host=&path=/8f2690e2d016#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 165, "is_new": true, "added_time": "00:24", "added_date": "2026-09-01", "age_hours": 0.0}, {"link": "ss://c21631d5-36c9-4664-b575-97eca17456be@neth8.lunariai.ru:443?allowInsecure=1&type=ws&host=neth8.lunariai.ru&path=/#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 115, "is_new": true, "added_time": "00:24", "added_date": "2026-09-01", "age_hours": 0.0}, {"link": "ss://8fb65472-5957-4f64-ba2d-b5812b2f155a@143.47.176.112:62145?#", "proto": "SS", "proto_color": "green", "proto_icon": "🟢", "proto_gradient": "from-green-400 to-emerald-400", "proto_name": "Shadowsocks", "flag": "🌍", "country": "غير معروف", "remark": "", "ping": 88, "is_new": true, "added_time": "00:24", "added_date": "2026-09-01", "age_hours": 0.0}];
+        const statsData = {"last_updated": "2026-09-01T00:24:56.399013", "source": "V2Nodes", "max_age_hours": 24, "total_servers": 12, "new_servers": 6, "deleted_old": 20, "avg_ping": 111, "most_country": "غير معروف", "most_country_count": 10, "countries": {"غير معروف": 10, "ألمانيا": 2}, "by_protocol": {"vless": 5, "trojan": 1, "ss": 6}};
         const greetings = ["💛 أهلاً بك! سيرفرات V2Nodes جاهزة.", "⚡ سرعة وأمان بين يديك.", "🚀 انطلق بلا حدود.", "🛡️ درعك الرقمي جاهز."];
         const MAX_AGE_HOURS = 24;
         let currentFilter = 'all';
         let chartInstances = {};
         const UPDATE_INTERVAL = 3 * 60 * 60;
-        const updateTime = new Date('2026-08-31T20:40:52.020072');
+        const updateTime = new Date('2026-09-01T00:24:56.399013');
         
         function getFavorites() { try { return JSON.parse(localStorage.getItem('doka_v2nodes_fav') || '[]'); } catch { return []; } }
         function saveFavorites(f) { localStorage.setItem('doka_v2nodes_fav', JSON.stringify(f)); }
@@ -318,7 +318,7 @@
         
         document.getElementById('greeting-message').textContent = greetings[Math.floor(Math.random() * greetings.length)];
         
-        function uv() { document.getElementById('visitor-count').textContent = Math.max(1, 6 + Math.floor(Math.random()*15)-5); }
+        function uv() { document.getElementById('visitor-count').textContent = Math.max(1, 12 + Math.floor(Math.random()*15)-5); }
         uv(); setInterval(uv, 10000);
         
         (function() {
